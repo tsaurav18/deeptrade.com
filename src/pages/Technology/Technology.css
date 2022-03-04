@@ -1,0 +1,43 @@
+.technology_container {
+    background-color: #374351;
+    z-index: -10000;
+    position: relative;
+    padding-bottom: 500px;
+}
+
+.technology_title {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;
+    width: auto !important;
+}
+
+.technology_title:before {
+    content: '';
+    background: url('../../../public/assets/title-under-bar.png');
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    top: 20px;
+}
+
+.tech_icon {
+    text-align: center;
+    color: white;
+}
+
+.icon_title {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 20px 0;
+}
+
+.icon_content {
+    font-size: 20px;
+    font-weight: 200;
+    margin: 20px 0;
+}

@@ -1,0 +1,36 @@
+import './Main.css';
+
+function Main() {
+  return (
+      <div className="main_container2">
+          <div className = "col-2 left">
+
+          </div>
+          <div className = "col-10 right">
+
+          </div>
+          <div className="image_container">
+              <div className="col-2">
+              </div>
+              <div className="col-10 image_content">
+                  <div>
+                      <img src="../../assets/logo.png" className="content_img" alt="logo" />
+                  </div>
+                  <div style={{fontWeight: '500', fontSize: 40, padding: '15px 0 50px 0'}}>
+                      AI 투자의 혁신을 주도하는 기업
+                  </div>
+                  <div style={{fontWeight: '200', padding: '0 0 30px 0', fontSize: 20}}>
+                      DeepTrade는 서울대학교(SNU)의 연구실에서 Spin-off 된 스타트업 벤처기업입니다.
+                  </div>
+                  <div style={{fontWeight: '200', fontSize: 20}}>
+                      DeepTrade는 AI투자, 기계학습, 데이터 마이닝 및 대규모 데이터 처리 분야에서 <br />
+                      최첨단 연구를 주도하고 있으며 세계적 수준의 연구 논문(KDD, NeurIPS, SDM)들을 <br />
+                      통해 역량을 입증하였습니다.
+                  </div>
+              </div>
+          </div>
+      </div>
+  );
+}
+
+export default Main;
