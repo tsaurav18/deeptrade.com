@@ -26,7 +26,7 @@
     font-weight: 700;
     position: relative;
     width: auto !important;
-    margin: 100px 0 0 0;
+    margin: 100px 0 0 0 !important;
 }
 
 .recruitment_content {
@@ -36,7 +36,7 @@
     font-weight: 300;
     position: relative;
     width: auto !important;
-    margin: 50px 0;
+    margin: 50px 0 !important;
 }
 
 .recruitment_title:before {
@@ -47,16 +47,16 @@
     position: absolute;
     left: 0;
     z-index: -1;
-    top: 20px;
+    top: 15px;
 }
 
 .recruitment_info {
-    padding: 20px;
+    padding: 20px !important;
 }
 
 .recruitment_info_container {
     background-color: rgba(255, 255, 255, .15);  
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border-radius: 10px;
     height: 390px;

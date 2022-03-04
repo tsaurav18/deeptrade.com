@@ -6,6 +6,7 @@ import Mission from './Mission/Mission';
 import XPercent from './XPercent/XPercent';
 import Technology from './Technology/Technology';
 import Recruitment from './Recruitment/Recruitment';
+import News from './News/News';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <XPercent />
       <Technology />
       <Recruitment />
+      <News />
     </div>
   );
 }

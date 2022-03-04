@@ -6,7 +6,7 @@ function Recruitment() {
           <div className="recruitment_background">
             <div className="row" style={{justifyContent: 'center'}}>
                 <div className="recruitment_title">                        
-                    <div>Technology</div>
+                    <div>Recruitment</div>
                 </div>
             </div>
             <div className="row" style={{justifyContent: 'center'}}>
