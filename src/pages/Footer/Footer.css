@@ -1,0 +1,135 @@
+.footer_container {
+    background-image: url('../../../public/assets/section-8-9-bg.png');
+    width: 100%;
+    background-size: cover;
+    height: 100%;
+    padding-top: 60px;
+    z-index: -2;
+    position: relative;
+    padding-bottom: 100px;
+}
+
+.footer_grid_container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    height: 400px;
+}
+
+.footer_title {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    position: relative;
+    width: auto !important;
+    margin-top: 50px;
+}
+
+.footer_title:before {
+    content: '';
+    background: url('../../../public/assets/title-under-bar.png');
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    top: 15px;
+}
+
+.footer_grid_left {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.footer_grid_right {
+    grid-column: 2;
+    grid-row: 1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer_title {
+    margin-bottom: 40px;
+    font-size: 25px;
+    font-weight: 700;
+    position: relative;
+    z-index: 100;
+    padding-left: 10px;
+}
+
+.footer_title:before {
+    content: '';
+    background: url('../../../public/assets/title-under-bar.png');
+    width: 50px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    top: 20px;
+}
+
+.footer_content {
+    font-weight: 200;
+    font-size: 20px;
+}
+
+.footer_body_title {
+    font-size: 20px;
+    color: white;
+    position: relative;
+    padding-left: 20px;
+}
+
+.footer_body_title:before {
+    content: '';
+    background: url('../../../public/assets/list-square.png');
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    top: 10px;
+}
+
+.footer_body_content {
+    font-size: 18px;
+    color: white;
+    position: relative;
+    padding-left: 20px;
+    font-weight: 300;
+    padding: 30px 0;
+}
+
+.footer_grid_button {
+    margin-top: 60px;
+}
+
+.footer_button {
+    width: 227px;
+    height: 46px;
+    background-color: #FBFBFD;
+    color: black;
+    text-align: center;
+    font-size: 17px;
+    line-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider_2 {
+    border-top: 1px solid white;
+    margin: 80px 0;
+}
+
+.footer_body_content_und {
+    font-size: 20px;
+    color: white;
+    position: relative;
+    border-bottom: 2px solid #7ec2be;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}

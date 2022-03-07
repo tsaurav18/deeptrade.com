@@ -7,6 +7,8 @@ import XPercent from './XPercent/XPercent';
 import Technology from './Technology/Technology';
 import Recruitment from './Recruitment/Recruitment';
 import News from './News/News';
+import Partnership from './Partnership/Partnership';
+import Footer from './Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
       <Technology />
       <Recruitment />
       <News />
+      <Partnership />
+      <Footer />
     </div>
   );
 }
