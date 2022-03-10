@@ -5,9 +5,7 @@
 .xpercent_grid_container {
     height: 500px;
     display: flex;
-}
-
-.xpercent_grid_right {
+    justify-content: center;
 }
 
 .xpercent_grid_right img {
@@ -28,25 +26,18 @@
     font-weight: 700;
     position: relative;
     z-index: 100;
-    padding-left: 10px;
     margin-left: calc(50% - 200px);
-}
-
-.xpercent_title:before {
-    content: '';
-    background: url('../../../public/assets/title-under-bar.png');
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    top: 20px;
+    color: #990000;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .xpercent_content {
     font-weight: 300;
     font-size: 20px;
     margin-left: calc(50% - 200px);
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .xpercent_grid_button {
@@ -56,7 +47,7 @@
 .xpercent_button {
     width: 227px;
     height: 46px;
-    background-color: #384351;
+    background-color: #990000;
     color: white;
     text-align: center;
     font-size: 20px;
@@ -65,4 +56,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.xpercent_show {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 1s;
+}
+
+.xpercent_grid_right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.xpercent_grid_right img {
+    width: 500px;
+    height: 500px;
+}
+
+@media only screen and (max-width: 1050px) {
+    .xpercent_grid_right img {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .xpercent_grid_right {
+        display: none;
+    }
+    .xpercent_grid_left {
+        width: 83.33333333% !important;
+    }
+    .xpercent_title {
+        margin-left: 0;
+    }
+    .xpercent_content {
+        margin-left: 0;
+    }
+    .xpercent_button {
+        margin-left: 0;
+    }
 }

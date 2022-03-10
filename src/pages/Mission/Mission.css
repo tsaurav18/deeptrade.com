@@ -33,21 +33,33 @@
     font-weight: 700;
     position: relative;
     z-index: 100;
-    padding-left: 10px;
-}
-
-.mission_title:before {
-    content: '';
-    background: url('../../../public/assets/title-under-bar.png');
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    top: 20px;
+    color: white;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .mission_content {
-        font-weight: 200;
+    font-weight: 200;
     font-size: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.mission_show {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 1s;
+}
+
+@media only screen and (max-width: 900px) {
+    .mission_grid_container {
+        display: flex;
+        grid-template-columns: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mission_grid_container .col-6 {
+        display: none;
+    }
 }

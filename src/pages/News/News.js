@@ -4,9 +4,9 @@ import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function News() {
+function News(props) {
   return (
-      <div className="news_container">
+      <div className="news_container" ref={props.refProp}>
           <div className="news_title_container">
             <div className="news_title">
                 News
@@ -15,8 +15,31 @@ function News() {
           <div className="news_slide_container">
             <Swiper
                 modules={[Navigation]}
+                breakpoints={{
+                    600: {
+                        slidesPerView: 1,
+                        width: 480
+                    },
+                    800: {
+                        slidesPerView: 2,
+                        width: 800
+                    },
+                    1200: {
+                        slidesPerView: 2,
+                        width: 1200
+                    },
+                    1600: {
+                        slidesPerView:3,
+                        width: 1600
+                    },
+                    2000: {
+                        slidesPerView:3,
+                        width: 2000
+                    }
+                }}
+                width="350"
                 spaceBetween={0}
-                slidesPerView={3}
+                slidesPerView={1}
                 loop={true}
                 navigation = {true}
                 >

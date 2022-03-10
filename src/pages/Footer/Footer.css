@@ -4,7 +4,7 @@
     background-size: cover;
     height: 100%;
     padding-top: 60px;
-    z-index: -2;
+    z-index: 0;
     position: relative;
     padding-bottom: 100px;
 }
@@ -18,22 +18,12 @@
 .footer_title {
     text-align: center;
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     position: relative;
     width: auto !important;
     margin-top: 50px;
-}
-
-.footer_title:before {
-    content: '';
-    background: url('../../../public/assets/title-under-bar.png');
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    top: 15px;
+    margin-bottom: 50px;
 }
 
 .footer_grid_left {
@@ -48,26 +38,6 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-}
-
-.footer_title {
-    margin-bottom: 40px;
-    font-size: 25px;
-    font-weight: 700;
-    position: relative;
-    z-index: 100;
-    padding-left: 10px;
-}
-
-.footer_title:before {
-    content: '';
-    background: url('../../../public/assets/title-under-bar.png');
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    top: 20px;
 }
 
 .footer_content {
@@ -109,14 +79,15 @@
 .footer_button {
     width: 227px;
     height: 46px;
-    background-color: #FBFBFD;
-    color: black;
+    background-color: #990000;
+    color: white;
     text-align: center;
     font-size: 17px;
     line-height: 46px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .divider_2 {
@@ -132,4 +103,45 @@
     padding-bottom: 10px;
     display: flex;
     align-items: center;
+}
+
+.footer_container .row {
+    display: flex;
+    justify-content: center;
+}
+
+.footer_body_content_und.block_1 {
+    width: 225px;
+    cursor: pointer;
+}
+
+.footer_body_content_und.block_2 {
+    width: 290px;
+}
+
+.footer_body_content_und.block_3 {
+    width: 400px;
+}
+
+@media only screen and (max-width: 1400px) {
+    .footer_body_content_und {
+        font-size: 15px;
+    }
+    .footer_body_content_und.block_1 {
+        width: 170px;
+    }
+    
+    .footer_body_content_und.block_2 {
+        width: 220px;
+    }
+    
+    .footer_body_content_und.block_3 {
+        width: 300px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .service_contact .col-4 {
+        width: 100%;
+    }
 }

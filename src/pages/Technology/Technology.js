@@ -1,15 +1,41 @@
 import './Technology.css';
+import React, { useRef, useState, useEffect } from 'react'; 
+import useIntersection from '../useIntersection';
 
-function Technology() {
+function Technology(props) {
+    const contentOneRef = useRef(null);
+    const contentTwoRef = useRef(null);
+    const contentThreeRef = useRef(null);
+    const contentOneInViewport = useIntersection(contentOneRef, '0px');
+    const contentTwoInViewport = useIntersection(contentTwoRef, '0px');
+    const contentThreeInViewport = useIntersection(contentThreeRef, '0px');
+    const [showContentOne, setShowContentOne] = useState(false);
+    const [showContentTwo, setShowContentTwo] = useState(false);
+    const [showContentThree, setShowContentThree] = useState(false);
+
+    useEffect(() => {
+        if(contentOneInViewport) {
+          setShowContentOne(true);
+        }
+        if(contentTwoInViewport) {
+            setShowContentTwo(true);
+        }
+        if(contentThreeInViewport) {
+          setShowContentThree(true);
+      }
+    
+      }, [contentOneInViewport, contentTwoInViewport, contentThreeInViewport])
+
+
   return (
-      <div className="row gx-0 technology_container">
-        <div className="row" style={{margin: '100px 0', justifyContent: 'center'}}>
+      <div className="row gx-0 technology_container" ref={props.refProp}>
+        <div className="row technology_title_container">
             <div className="technology_title">
                 <div>Technology</div>
             </div>
         </div>
-        <div className="row gx-0" style={{padding: '0 300px'}}>
-            <div className="col-4 tech_icon">
+        <div className="row gx-0 tech_icon_container">
+            <div className={showContentOne ? "col-4 tech_icon tech_show1" : "col-4 tech_icon"} ref={contentOneRef}>
                 <img src="assets/section-4--grid-1.png" alt="img1" />
                 <div className="icon_title">
                     Artificial Intelligence (인공지능)
@@ -18,7 +44,7 @@ function Technology() {
                     고도의 인공지능 기반 알고리즘을 통해 최첨단 <br />거래 전략을 개발합니다.
                 </div>
             </div>
-            <div className="col-4 tech_icon">
+            <div className={showContentTwo ? "col-4 tech_icon tech_show2" : "col-4 tech_icon"} ref={contentTwoRef}>
                 <img src="assets/section-4--grid-img-2.png" alt="img1" />
                 <div className="icon_title">
                     Up-to-Date Strategies (최신 전략)
@@ -27,7 +53,7 @@ function Technology() {
                     최신 시장 동향과 기회를 포착할 수 있도록 거래 <br />전략을 지속적으로 자동 업데이트 합니다.
                 </div>
             </div>
-            <div className="col-4 tech_icon">
+            <div className={showContentThree ? "col-4 tech_icon tech_show3" : "col-4 tech_icon"} ref={contentThreeRef}>
                 <img src="assets/section-4--grid-img-3.png" alt="img1" />
                 <div className="icon_title">
                     Trading Infrastructure (거래 인프라)

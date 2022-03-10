@@ -9,22 +9,35 @@ import Recruitment from './Recruitment/Recruitment';
 import News from './News/News';
 import Partnership from './Partnership/Partnership';
 import Footer from './Footer/Footer';
+import React, { useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  const mainRef = useRef(null);
+  const whatRef = useRef(null);
+  const missionRef = useRef(null);
+  const xpercentRef = useRef(null);
+  const technologyRef = useRef(null);
+  const newsRef = useRef(null);
   return (
-    <div className="main_container">
-      <Header />
-      <Main />
-      <What />
-      <Mission />
-      <XPercent />
-      <Technology />
+    <>
+      <Header 
+        whatRef={whatRef} 
+        missionRef={missionRef} 
+        xpercentRef={xpercentRef} 
+        technologyRef={technologyRef} 
+        newsRef={newsRef} 
+      />
+      <Main refProp={mainRef} />
+      <What refProp={whatRef} />
+      <Mission refProp={missionRef} />
+      <XPercent refProp={xpercentRef} />
+      <Technology refProp={technologyRef} />
       <Recruitment />
-      <News />
-      <Partnership />
+      <News refProp={newsRef} />
+      <Partnership mainRef={mainRef} />
       <Footer />
-    </div>
+    </>
   );
 }
 

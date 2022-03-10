@@ -1,21 +1,47 @@
 import './Recruitment.css';
+import React, { useRef, useState, useEffect } from 'react'; 
+import useIntersection from '../useIntersection';
 
 function Recruitment() {
+    const contentOneRef = useRef(null);
+    const contentTwoRef = useRef(null);
+    const contentThreeRef = useRef(null);
+    const contentOneInViewport = useIntersection(contentOneRef, '0px');
+    const contentTwoInViewport = useIntersection(contentTwoRef, '0px');
+    const contentThreeInViewport = useIntersection(contentThreeRef, '0px');
+    const [showContentOne, setShowContentOne] = useState(false);
+    const [showContentTwo, setShowContentTwo] = useState(false);
+    const [showContentThree, setShowContentThree] = useState(false);
+    
+    useEffect(() => {
+        if(contentOneInViewport) {
+          setShowContentOne(true);
+        }
+        if(contentTwoInViewport) {
+            setShowContentTwo(true);
+        }
+        if(contentThreeInViewport) {
+          setShowContentThree(true);
+      }
+    
+      }, [contentOneInViewport, contentTwoInViewport, contentThreeInViewport])
+
+
   return (
       <div className="recruitment_container">
           <div className="recruitment_background">
-            <div className="row" style={{justifyContent: 'center'}}>
+            <div className="row gx-0" style={{justifyContent: 'center'}}>
                 <div className="recruitment_title">                        
                     <div>Recruitment</div>
                 </div>
             </div>
-            <div className="row" style={{justifyContent: 'center'}}>
+            <div className="row gx-0" style={{justifyContent: 'center'}}>
                 <div className="recruitment_content">                        
                     <div>DeepTrade와 함께 할 열정있고 뛰어난 인재들을 찾습니다</div>
                 </div>
             </div>
-            <div className="row gx-0" style={{padding: '0 300px'}}>
-                <div className="col-4 recruitment_info">
+            <div className="row gx-0 recruitment_content_container">
+                <div className={showContentOne ? "col-4 recruitment_info recruitment_show1" : "col-4 recruitment_info"} ref={contentOneRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             웹 개발자
@@ -35,7 +61,7 @@ function Recruitment() {
                         </div>
                     </div>
                 </div>
-                <div className="col-4 recruitment_info">
+                <div className={showContentTwo ? "col-4 recruitment_info recruitment_show2" : "col-4 recruitment_info"} ref={contentTwoRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             앱 개발자
@@ -49,7 +75,7 @@ function Recruitment() {
                         </div>
                     </div>
                 </div>
-                <div className="col-4 recruitment_info">
+                <div className={showContentThree ? "col-4 recruitment_info recruitment_show3" : "col-4 recruitment_info"} ref={contentThreeRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             주가 예측 알고리즘 개발 연구원

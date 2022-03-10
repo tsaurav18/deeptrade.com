@@ -1,6 +1,5 @@
 .technology_container {
     background-color: #374351;
-    z-index: -10000;
     position: relative;
     padding-bottom: 500px;
 }
@@ -8,26 +7,57 @@
 .technology_title {
     text-align: center;
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: 700;
     position: relative;
     width: auto !important;
+    color: white;
 }
 
-.technology_title:before {
-    content: '';
-    background: url('../../../public/assets/title-under-bar.png');
-    width: 50px;
-    height: 10px;
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    top: 15px;
+.technology_title_container {
+    margin: 100px 0 !important; 
+    justify-content: center;
+}
+
+.tech_icon_container {
+    padding: 0 300px !important;
 }
 
 .tech_icon {
     text-align: center;
     color: white;
+    padding: 0px 10px !important;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.tech_show1 {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 1s;
+}
+
+.tech_show2 {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 1s;
+    transition-delay: 0.1s;
+}
+
+.tech_show3 {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: all 1s;
+    transition-delay: 0.2s;
+}
+
+.tech_icon img {
+    width: 100px;
+    height: 100px;
+}
+
+.tech_icon:nth-child(2) img {
+    width: 74px;
 }
 
 .icon_title {
@@ -40,4 +70,58 @@
     font-size: 20px;
     font-weight: 200;
     margin: 20px 0;
+}
+
+@media only screen and (max-width: 1800px) {
+    .icon_title {
+        font-size: 18px;
+    }
+    
+    .icon_content {
+        font-size: 18px;
+    }
+}
+
+@media only screen and (max-width: 1650px) {
+    .icon_title {
+        font-size: 15px;
+    }
+    
+    .icon_content {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .tech_icon_container {
+        padding: 0 80px !important;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .tech_icon_container br {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .tech_icon_container .col-4 {
+        width: 100%;
+    }
+    .technology_container {
+        padding-bottom: 100px;
+    }
+    .tech_icon {
+        padding: 30px 180px !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .tech_icon {
+        padding: 30px 10px !important;
+    }
+
+    .technology_title_container {
+        margin: 50px 0 !important;
+    }
 }
