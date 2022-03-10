@@ -9,7 +9,7 @@ import Recruitment from './Recruitment/Recruitment';
 import News from './News/News';
 import Partnership from './Partnership/Partnership';
 import Footer from './Footer/Footer';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -19,6 +19,11 @@ function App() {
   const xpercentRef = useRef(null);
   const technologyRef = useRef(null);
   const newsRef = useRef(null);
+
+  useEffect(() => {
+    document.title = "DeepTrade | Innovate AI Trading"
+  }, [])
+
   return (
     <>
       <Header 

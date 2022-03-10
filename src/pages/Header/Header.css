@@ -223,7 +223,7 @@
       display: inline-block;
       width: 20px;
       height: 20px;
-      margin: 40px 42px;
+      margin: 20px 32px;
       background-color: transparent;
       border: none;
       cursor: pointer;
@@ -254,7 +254,7 @@
   /* Menu */
   .nav {
       display: inline-block;
-      margin: 40px 40px 20px;
+      margin: 20px 30px 20px;
       pointer-events: none;
       transition: 0.5s;
       flex-direction: column;
