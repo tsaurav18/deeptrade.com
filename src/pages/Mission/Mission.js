@@ -30,7 +30,7 @@ function Mission(props) {
                   Mission
                 </div>
                 <div className={showContentOne ? "mission_content mission_show" : "mission_content"} ref={contentOneRef}>
-                  DeepTrade는 Quantitative Research와 최신의 AI 기술, 그리고 금융 지식을 결합시켜 투자에 반영하는 AI Stock Price Prediction의 선구자로서 시장의 복잡한 패턴을 분석하여 사용자들이 인덱스보다 X% 더 높은 수익률을 얻을 수 있도록 끊임없이 노력할 것입니다.
+                DeepTrade는 Quantitative Research와 최신의 AI 기술, 그리고 금융 지식을 결합시켜 투자에 반영하는 AI Stock Prediction의 선구자로서 시장의 복잡한 패턴을 분석하여 사용자들이 인덱스보다 X% 더 높은 수익률을 얻을 수 있도록 끊임없이 노력합니다.
                 </div>
             </div>
         </div>

@@ -46,12 +46,11 @@ function Main(props) {
                       AI 투자의 혁신을 주도하는 기업
                   </div>
                   <div className={showContentOne ? "main_container_content show" : "main_container_content"} ref={contentOneRef}>
-                      DeepTrade는 서울대학교(SNU)의 연구실에서 Spin-off 된 스타트업 벤처기업입니다.
+                    DeepTrade는 서울대학교(SNU)의 연구실에서 Spin-off 된 인공지능 주식 투자 전문 기업입니다.
                   </div>
                   <div className={showContentTwo ? "main_container_content show" : "main_container_content"} ref={contentTwoRef}>
-                      DeepTrade는 AI투자, 기계학습, 데이터 마이닝 및 대규모 데이터 처리 분야에서 <br />
-                      최첨단 연구를 주도하고 있으며 세계적 수준의 연구 논문(KDD, NeurIPS, SDM)들을 <br />
-                      통해 역량을 입증하였습니다.
+                    DeepTrade는 AI 기반 투자 분야에서 최첨단 연구를 주도하고 있으며 <br />
+                    세계적 수준의 연구 논문(KDD, SDM 등)들을 통해 역량을 입증하였습니다.
                   </div>
               </div>
             </div>

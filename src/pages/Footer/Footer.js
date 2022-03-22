@@ -19,7 +19,7 @@ function Footer() {
         <div className="row gx-0">
             <div className="col-10 col-xl-8 col-lg-10 col-md-10">
                 <div className="footer_body_content">
-                    세계 최고 성능의 딥트레이드 AI 로보 어드바이저를 활용 할 금융사의 소중한 제안을 기다리고 있습니다.
+                    세계 최고 성능의 딥트레이드 AI 로보 어드바이저를 활용할 금융사의 소중한 제안을 기다리고 있습니다.
                 </div>
             </div>
         </div>

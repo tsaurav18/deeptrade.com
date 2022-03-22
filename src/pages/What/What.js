@@ -44,13 +44,13 @@ function What(props) {
                 What We Do
             </div>
             <div className={showContentOne ? "row gx-0 my-2 my-xl-4 right_2 what_show" : "row gx-0 my-2 my-xl-4 right_2"} ref={contentOneRef}>
-                투자안을 제시하고, 위험에 대응하는 소프트웨어를 개발하여 시장에서의 <br className="break" />기회를 탐색합니다.
+              시장에서의 기회를 탐색하여 투자방법을 제시하는 SW를 제공합니다.
             </div>
             <div className={showContentTwo ? "row gx-0 my-2 my-xl-4 right_3 what_show" : "row gx-0 my-2 my-xl-4 right_3"} ref={contentTwoRef}>
-                기계학습과 신경망 기술을 사용하여 거대한 시장과 금융 데이터를 <br className="break" />분석합니다.
+              투자를 위한 고도의 정량적 인공지능 기술을 사용하여 시장의 비효율을 감지합니다
             </div>
             <div className={showContentThree ? "row gx-0 my-2 my-xl-4 right_4 what_show" : "row gx-0 my-2 my-xl-4 right_4"} ref={contentThreeRef}>
-                투자를 위한 고도의 정량적 인공지능 기술을 사용하여 시장의 비효율을 <br className="break" />감지합니다.
+              기계학습 기술을 사용하여 거대한 시장과 금융 데이터를 분석합니다.
             </div>
           </div>
       </div>

@@ -41,7 +41,7 @@ function Recruitment() {
                 </div>
             </div>
             <div className="row gx-0 recruitment_content_container">
-                <div className={showContentOne ? "col-4 recruitment_info recruitment_show1" : "col-4 recruitment_info"} ref={contentOneRef}>
+                <div className={showContentOne ? "col-3 recruitment_info recruitment_show1" : "col-3 recruitment_info"} ref={contentOneRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             웹 개발자
@@ -61,7 +61,7 @@ function Recruitment() {
                         </div>
                     </div>
                 </div>
-                <div className={showContentTwo ? "col-4 recruitment_info recruitment_show2" : "col-4 recruitment_info"} ref={contentTwoRef}>
+                <div className={showContentTwo ? "col-3 recruitment_info recruitment_show2" : "col-3 recruitment_info"} ref={contentTwoRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             앱 개발자
@@ -75,7 +75,7 @@ function Recruitment() {
                         </div>
                     </div>
                 </div>
-                <div className={showContentThree ? "col-4 recruitment_info recruitment_show3" : "col-4 recruitment_info"} ref={contentThreeRef}>
+                <div className={showContentThree ? "col-3 recruitment_info recruitment_show3" : "col-3 recruitment_info"} ref={contentThreeRef}>
                     <div className="recruitment_info_container">
                         <div className="recruitment_info_title">
                             주가 예측 알고리즘 개발 연구원
@@ -83,6 +83,20 @@ function Recruitment() {
                         <div className="divider"></div>
                         <div className="recruitment_info_content_body" style={{marginTop: 20}}>
                             머신러닝 및 딥러닝 알고리즘을 이용 가능하고 구현 능력 보유
+                        </div>
+                    </div>
+                </div>
+                <div className={showContentThree ? "col-3 recruitment_info recruitment_show3" : "col-3 recruitment_info"} ref={contentThreeRef}>
+                    <div className="recruitment_info_container">
+                        <div className="recruitment_info_title">
+                            Business Developer
+                        </div>
+                        <div className="divider"></div>
+                        <div className="recruitment_info_content_body" style={{marginTop: 20}}>
+                            신규 사업 개발
+                        </div>
+                        <div className="recruitment_info_content_body">
+                            투자자산운용사 우대
                         </div>
                     </div>
                 </div>

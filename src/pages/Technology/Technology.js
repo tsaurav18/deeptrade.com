@@ -41,7 +41,7 @@ function Technology(props) {
                     Artificial Intelligence (인공지능)
                 </div>
                 <div className="icon_content">
-                    고도의 인공지능 기반 알고리즘을 통해 최첨단 <br />거래 전략을 개발합니다.
+                고도의 AI 기반 알고리즘을 통해 최첨단 <br />거래 전략을 개발합니다.
                 </div>
             </div>
             <div className={showContentTwo ? "col-4 tech_icon tech_show2" : "col-4 tech_icon"} ref={contentTwoRef}>
@@ -50,7 +50,7 @@ function Technology(props) {
                     Up-to-Date Strategies (최신 전략)
                 </div>
                 <div className="icon_content">
-                    최신 시장 동향과 기회를 포착할 수 있도록 거래 <br />전략을 지속적으로 자동 업데이트 합니다.
+                최신 시장 동향과 기회를 포착하도록 거래 전략을 <br />지속적으로 자동 업데이트 합니다.
                 </div>
             </div>
             <div className={showContentThree ? "col-4 tech_icon tech_show3" : "col-4 tech_icon"} ref={contentThreeRef}>

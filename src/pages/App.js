@@ -11,6 +11,10 @@ import Partnership from './Partnership/Partnership';
 import Footer from './Footer/Footer';
 import React, { useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ReactGA from 'react-ga';
+
+ReactGA.initialize('UA-177879135-2')
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
   const mainRef = useRef(null);

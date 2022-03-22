@@ -75,14 +75,14 @@
 }
 
 .recruitment_content_container {
-    padding: 0 300px;
+    padding: 0 100px;
     display: flex;
 }
 
 .recruitment_info_title {
     padding: 50px 40px 30px 40px;
     color: #7ec2be;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .divider {
@@ -91,13 +91,13 @@
 }
 
 .recruitment_info_content_title {
-    font-size: 20px;
+    font-size: 18px;
     color: white;
     padding: 30px 40px 0 40px;
 }
 
 .recruitment_info_content_body {
-    font-size: 20px;
+    font-size: 18px;
     color: white;
     font-weight: 200;
     padding: 10px 40px 0 60px;
@@ -123,13 +123,13 @@
     }
 }
 
-@media only screen and (max-width: 2090px) {
+@media only screen and (max-width: 2030px) {
     .recruitment_content_container {
-        padding: 0 150px;
+        padding: 0 50px;
     }
 }
 
-@media only screen and (max-width: 1715px) {
+@media only screen and (max-width: 1900px) {
     .recruitment_info_content_title {
         font-size: 17px;
         color: white;
@@ -149,7 +149,7 @@
     }
 }
 
-@media only screen and (max-width: 1590px) {
+@media only screen and (max-width: 1735px) {
     .recruitment_info_content_title {
         font-size: 17px;
         color: white;
@@ -181,7 +181,7 @@
     }
 }
 
-@media only screen and (max-width: 1265px) {
+@media only screen and (max-width: 1635px) {
     .recruitment_info_content_title {
         font-size: 15px;
         color: white;
@@ -216,7 +216,7 @@
     }
 }
 
-@media only screen and (max-width: 1170px) {
+@media only screen and (max-width: 1510px) {
     .recruitment_content_container {
         padding: 0 10px;
     }
@@ -226,11 +226,7 @@
     }
 }
 
-@media only screen and (max-width: 900px) {
-    .recruitment_container {
-        margin-top: -10px;
-    }
-
+@media only screen and (max-width: 1310px) {
     .recruitment_background {
         background-position: center center;
         width: 100%;
@@ -238,7 +234,7 @@
     }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1050px) {
     .recruitment_title {
         margin: 50px 0 50px 0 !important;
     }
@@ -257,12 +253,18 @@
     }
 
     .recruitment_info_container {
-        height: 210px;
+        height: 230px;
     }
 
     .recruitment_container {
-        height: 900px;
+        height: 1220px;
         margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .recruitment_container {
+        margin-top: -10px;
     }
 }
 
