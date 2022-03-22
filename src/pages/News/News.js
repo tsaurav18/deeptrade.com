@@ -46,6 +46,24 @@ function News(props) {
                     <SwiperSlide>
                         <div className="news_slide">
                             <div className="news_image">
+                                <img src="assets/news/news7.png" alt="news7" />
+                            </div>
+                            <div className="news_content">
+                                <h6>딥트레이드 XPercent, 6개월만에 약 30%의 지수 대비 초과 수익 확보</h6>
+                                <p>2022/03</p>
+                                <p>딥트레이드의 유진투자증권내 XPercent 서비스가
+                                    서비스를 개시한  2021년 9월 이후 2022/2 까지
+                                    14.73%의 수익율을 기록했습니다 (1주 모델).
+                                    이는 동 기간 코스피 지수 대비 29.18%, 코스닥 지수 대비 29.7% 의 초과 수익을
+                                    올린 것입니다.
+                                    딥트레이드 로보 어드바이저는 금융 서비스에 혁신을 가져오고 있습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="news_slide">
+                            <div className="news_image">
                                 <img src="assets/news/news6.png" alt="news6" />
                             </div>
                             <div className="news_content">
