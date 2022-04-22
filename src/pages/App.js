@@ -41,7 +41,7 @@ function App() {
     const timeNow = new Date();
     if(!modalCookie)
     {
-      setModalVisible(true);
+      //setModalVisible(true);
     }
     else
     {
@@ -63,7 +63,7 @@ function App() {
     var dateDiff = diffInDays / (1000 * 60 * 60 * 24);
     if(dateDiff > 1)
     {
-      setModalVisible(true);
+      //setModalVisible(true);
     }
   }
 
@@ -93,6 +93,7 @@ function App() {
         }}
         onCancel={closeModal}
         closeIcon={<CloseOutlined style={{color: 'white', fontSize:20}} />}
+        width={400}
         >
         <div>
           {
