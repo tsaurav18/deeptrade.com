@@ -17,7 +17,13 @@ function Partnership(props) {
                 <img src="assets/spring_camp.png" alt="img1" />
             </div>
             <div className="col-4 partnership_icon">
-                <img src="assets/push_news.png" alt="img1" />
+                <img src="assets/kb_investment.png" alt="img1" />
+            </div>
+            <div className="col-4 partnership_icon bottom_row">
+                <img src="assets/samsung_investment.png" alt="img1" />
+            </div>
+            <div className="col-4 partnership_icon bottom_row">
+                <img src="assets/quantit_logo.png" alt="img1" />
             </div>
         </div>
         <div className="up_arrow" onClick={() => props.mainRef.current.scrollIntoView()}>    

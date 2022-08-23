@@ -43,7 +43,7 @@ function Main(props) {
                       <img src="../../assets/logo.png" className="content_img" alt="logo" />
                   </div>
                   <div className={showTitle ? "main_container_title show" : "main_container_title"} ref={titleRef}>
-                      AI 투자의 혁신을 주도하는 기업
+                    AI 기반 주식 투자 서비스의 미래를 선도하는 기업
                   </div>
                   <div className={showContentOne ? "main_container_content show" : "main_container_content"} ref={contentOneRef}>
                     DeepTrade는 서울대학교(SNU)의 연구실에서 Spin-off 된 인공지능 주식 투자 전문 기업입니다.

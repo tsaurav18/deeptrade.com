@@ -45,6 +45,51 @@ function News(props) {
                 >
                     <SwiperSlide>
                         <div className="news_slide">
+                            <div className="news_image" style={{paddingTop: 15}}>
+                                <img src="assets/news/news12.png" alt="news12" />
+                            </div>
+                            <div className="news_content">
+                                <h6>딥트레이드 X 퀀팃 로보어드바이저 공동 연구/사업화 MOU 체결</h6>
+                                <p>2022/08</p>
+                                <p>딥트레이드가 금융 투자 및 운용 솔루션 공급 핀테크 기업인 퀀팃과 AI 로보어드바이저 서비스 고도화를 위한 협업 MOU를 체결하였습니다 (2022.08.22).
+                                    본 협약은 딥트레이드의 AI 로보 어드바이저와 퀀팃의 로보어드바이저 및 운영 플랫폼 기술을 접목하여 성능 향상 및 사업화를 목표로 합니다.
+                                </p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="news_slide">
+                            <div className="news_image" style={{paddingTop: 15}}>
+                                <img src="assets/news/news11.png" alt="news11" />
+                            </div>
+                            <div className="news_content">
+                                <h6>딥트레이드, 삼성증권에서 자문사 서비스 제공</h6>
+                                <p>2022/06</p>
+                                <p>딥트레이드가 삼성증권 고객들에게 자문 서비스를 제공합니다. 해당
+                                    서비스는 일반형, 연금형, IRP 형 등 다양한 고객 자산 유형별로 고객에게 투자
+                                    포트폴리오를 제공하며 고객은 일괄매매형 및 자율형 거래를 통해 편하게 포트폴리오를
+                                    매매할 수 있습니다. 딥트레이드는 더 많은 고객들의 자산을 안정적으로
+                                    증식시키기 위해 꾸준히 노력하고 있습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="news_slide">
+                            <div className="news_image" style={{paddingTop: 15}}>
+                                <img src="assets/news/news10.png" alt="news10" />
+                            </div>
+                            <div className="news_content">
+                                <h6>딥트레이드, 2022 창업도약패키지 대기업협업형 최종 선정</h6>
+                                <p>2022/05</p>
+                                <p>딥트레이드가 한국기술벤처재단과 KB금융 그룹이 주관하는 창업도약패키지 대기업협업형 프로그램에 최종 선정되었습니다.
+                                    창업도약패키지 프로그램은 21년 기준 13.5:1의 매우 높은 경쟁률을 보인 프로그램으로, 딥트레이드는 KB 금융 그룹과 AI 기반 로보어드바이저 관련 다양한 협력을 진행할 계획입니다.
+                                </p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="news_slide">
                             <div className="news_image">
                                 <img src="assets/news/news7.png" alt="news7" />
                             </div>
@@ -57,22 +102,6 @@ function News(props) {
                                     이는 동 기간 코스피 지수 대비 29.18%, 코스닥 지수 대비 29.7% 의 초과 수익을
                                     올린 것입니다.
                                     딥트레이드 로보 어드바이저는 금융 서비스에 혁신을 가져오고 있습니다.
-                                </p>
-                            </div>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className="news_slide">
-                            <div className="news_image">
-                                <img src="assets/news/news6.png" alt="news6" />
-                            </div>
-                            <div className="news_content">
-                                <h6>딥트레이드, (주)푸시와 AI 주가 예측 알고리즘 서비스 개시</h6>
-                                <p>2021/11</p>
-                                <p>딥트레이드의 인공지능 기술을 통해 주식 종목을 추천하는 XPercent 서비스를
-                                    (주)푸시에 '푸시블랙 알고리즘'이라는 이름으로 공급을 시작하였습니다.    <br />
-                                    <button className="news_link_button" onClick={()=>window.open("https://news.mt.co.kr/mtview.php?no=2021110309182225907", '_blank')}>기사 보기</button>
-
                                 </p>
                             </div>
                         </div>

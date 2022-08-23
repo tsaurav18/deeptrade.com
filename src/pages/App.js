@@ -41,7 +41,7 @@ function App() {
     const timeNow = new Date();
     if(!modalCookie)
     {
-      //setModalVisible(true);
+      setModalVisible(true);
     }
     else
     {
@@ -63,7 +63,7 @@ function App() {
     var dateDiff = diffInDays / (1000 * 60 * 60 * 24);
     if(dateDiff > 1)
     {
-      //setModalVisible(true);
+      setModalVisible(true);
     }
   }
 
@@ -86,7 +86,7 @@ function App() {
       <Partnership mainRef={mainRef} />
       <Footer />
       <Modal 
-        visible={modalVisible} 
+        visible={false} 
         footer={null}
         bodyStyle={{
           padding: 0,
@@ -98,7 +98,7 @@ function App() {
         <div>
           {
             width > 800 ?
-            <img src="../../assets/modal/newcomer_event_mobile.png" style={{
+            <img src="../../assets/modal/event_desktop.png" style={{
               width: '100%',
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
@@ -107,7 +107,7 @@ function App() {
             alt="Modal"
             onClick={() => {window.open('https://xpct.net', '_blank')}}
             /> :
-            <img src="../../assets/modal/newcomer_event_desktop.png" style={{
+            <img src="../../assets/modal/event_mobile.png" style={{
               width: '100%',
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
@@ -118,7 +118,7 @@ function App() {
             />
           }
           <div style={{
-            backgroundColor: width > 800 ? '#392a16' : '#006e3f',
+            backgroundColor: width > 800 ? '#990000' : '#990000',
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
             paddingBottom: 10,
