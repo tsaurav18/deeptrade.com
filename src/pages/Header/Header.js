@@ -17,7 +17,7 @@ function Header(props) {
               Mission
             </div>
             <div className="menu_item" onClick={()=>props.xpercentRef.current.scrollIntoView()}>
-              XPercent
+              Service
             </div>
             <div className="menu_item" onClick={()=>props.technologyRef.current.scrollIntoView()}>
               Technology

@@ -27,7 +27,7 @@ function XPercent(props) {
             <div className="row">
               <div className="col-12">
                 <div className={showTitle ? "xpercent_title xpercent_show" : "xpercent_title"} ref={titleRef}>
-                    Product
+                    Service
                 </div>
               </div>
             </div>
@@ -44,12 +44,12 @@ function XPercent(props) {
                                     <img src="assets/product/samsung_logo.png" alt="samsung_logo" style={{width: '100%'}} />
                                   </div>
                                   <div className="col-9 xpercent_text">
-                                    한달에 한번씩 편리하게 일괄 리밸런싱을 통해 장기적인 우상향 포트폴리오 서비스를 제공받을 수 있습니다.
+                                    정기적으로 편리하게 일괄 리밸런싱을 통해 장기적인 우상향 포트폴리오 서비스를 제공받을 수 있습니다.
                                   </div>
                                 </div>
                                 <div className="row" style={{marginTop: 10}}>
                                   <div className="col-12">
-                                    <img src="assets/product/monimo.png" alt="monimo" style={{width: '100%'}} />
+                                    <img src="assets/product/mpop.png" alt="monimo" style={{width: '100%'}} />
                                   </div>
                                 </div>
                           </div>
