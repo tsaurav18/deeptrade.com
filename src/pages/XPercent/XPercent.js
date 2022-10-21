@@ -52,6 +52,14 @@ function XPercent(props) {
                                     <img src="assets/product/mpop.png" alt="monimo" style={{width: '100%'}} />
                                   </div>
                                 </div>
+                                <div 
+                                  className="service_button"
+                                  onClick={() => {
+                                    window.open('/spop', '_blank');
+                                  }}
+                                >
+                                  서비스 상세 보기
+                                </div>
                           </div>
                           <div className="col-12 col-md-8">
                                 <div className="signal_class" style={{textAlign: 'center', backgroundColor: '#16334f', borderRadius: 5, color: 'white', fontSize: 15, padding: '5px 0'}}>
@@ -72,6 +80,14 @@ function XPercent(props) {
                                         <img src="assets/product/xpct_logo.png" alt="xpct_logo" style={{width: '100%'}} />
                                       </div>
                                     </div>
+                                    <div 
+                                      className="service_button"
+                                      onClick={() => {
+                                        window.open('https://xpct.net/', '_blank');
+                                      }}
+                                    >
+                                      서비스 상세 보기
+                                    </div>
                                   </div>
                                   <div className="col-12 col-md-6">
                                     <div className="row" style={{marginTop: 10}}>
@@ -86,6 +102,14 @@ function XPercent(props) {
                                       <div className="col-12">
                                         <img src="assets/product/champion_logo.png" alt="champion_logo" style={{width: '100%'}} />
                                       </div>
+                                    </div>
+                                    <div 
+                                      className="service_button"
+                                      onClick={() => {
+                                        window.open('/eugene', '_blank');
+                                      }}
+                                    >
+                                      서비스 상세 보기
                                     </div>
                                   </div>
                                 </div>

@@ -1,0 +1,758 @@
+.spop_container {
+    width: 100%;
+    display: flex;
+}
+
+.spop_background {
+    background-image: url('../../../public/assets/spop/spop_top_background.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.service_intro {
+    background-color: #990000;
+    width: 15vw;
+    font-size: 2.3vw;
+    color: white;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 40px;
+    font-weight: bold;
+    padding: 0.2vw 0;
+    margin-top: 3vw;
+}
+
+.spop_top_title_img {
+    position: absolute;
+    top: 12vw;
+    left: 18vw;
+    width: 25vw;
+}
+
+.spop_top_title_text {
+    width: 30vw;
+    position: absolute;
+    left: 18vw;
+    top: 16vw;
+    font-size: 1vw;
+}
+
+.spop_intro_title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 10vw;
+    margin-top: 4vw;
+}
+
+.portfolio_container {
+    background-color: #f9f9f9;
+    margin: 0 20vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    border-radius: 20px;
+    margin-top: -120px;
+}
+
+.intro_inner_container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50vw;
+    justify-content: space-around;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+}
+
+.spop_center_text {
+    text-align: center;
+    margin-top: 3vw;
+    font-size: 1.3vw;
+    padding: 0 25vw;
+}
+
+.spop_service_body {
+    margin-bottom: 200px;
+}
+
+.spop_portfolio_center_text {
+    text-align: center;
+    margin: 1vw 0;
+    font-size: 1.3vw;
+}
+
+.spop_portfolio_inner_container {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40vw;
+    align-items: center;
+}
+
+.spop_portfolio_right_container {
+    padding: 1vw;
+}
+
+.portfolio_img {
+    width: 10vw;
+    height: 10vw;
+}
+
+.port_top {
+    background-color: white;
+    border-color: #d4d4d4;
+    border-width: 4px;
+    border-style: solid;
+    padding: 1vw;
+}
+
+.port_bottom {
+    display: flex;
+    align-items: center;
+}
+
+.port_bottom_title {
+    background-color: #394350;
+    color: white;
+    width: 8vw;
+    height: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    font-size: 0.7vw;
+}
+
+.port_bottom_body {
+    padding: 10px;
+    text-align: left;
+    font-size: 0.7vw;
+}
+
+.port_top_title {
+    color: #990000;
+    font-weight: bold;
+    font-size: 1.5vw;
+    text-align: left;
+}
+
+.port_top_body {
+    text-align: left;
+    font-size: 0.7vw;
+}
+
+.spop_hashtag {
+    font-size: 1.2vw;
+    color: #990000
+}
+
+.spop_steps {
+    width: 12vw;
+    margin-left: auto;
+}
+
+.spop_checkpoint_background {
+    background-image: url('../../../public/assets/spop/spop_checkpoint_background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.checkpoint_title {
+    font-family: 'GmarketBold';
+    color: #1b54bc;
+    font-size: 1.6vw;
+}
+
+.checkpoint_body {
+    font-size: 1vw;
+}
+
+.checkpoint_right_container {
+    display: flex;
+}
+
+.text_title {
+    font-family: 'GmarketBold';
+    text-align: center;
+    font-size: 2.2vw;
+    margin-top: 2vw;
+}
+
+
+.spop_checkpoint_text {
+    color: white;
+    font-size: 2.2vw;
+    font-family: 'GmarketBold';
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.spop_checkpoint_inner_container {
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.spop_checkpoint_hashtag {
+    background-color: white;
+    color: #2a60c1;
+    font-family: 'GmarketBold';
+    padding: 0.5vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    margin-bottom: 1.5vw;
+}
+
+.spop_register_button {
+    color: #06293a;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+    padding: 1vw 2vw;
+    font-family: 'GmarketBold';
+    font-size: 1.2vw;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.portfolio_outer_container {
+    padding-bottom: 120px;
+}
+
+.download_icon {
+    width: 35px;
+    height: 35px;
+    margin-left: 1vw;
+}
+
+@media only screen and (max-width: 1300px) {
+    .portfolio_container {
+        margin: 0 10vw;
+        margin-top: -120px;
+    }
+
+    .spop_portfolio_inner_container {
+        width: 50vw;
+    }
+
+    .portfolio_img {
+        width: 15vw;
+        height: 15vw;
+    }
+
+    .port_top_title {
+        font-size: 2.2vw;
+    }
+
+    .port_top_body {
+        font-size: 1.1vw;
+    }
+
+    .port_bottom_title {
+        width: 10.6vw;
+        height: 2vw;
+        font-size: 1.1vw;
+    }
+
+    .port_bottom_body {
+        font-size: 0.9vw;
+    }
+
+    .download_icon {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .spop_portfolio_inner_container {
+        width: 60vw;
+    }
+
+    .spop_top_title_img {
+        top: 9vw;
+        width: 64vw;
+        left: 9vw;
+    }
+
+    .spop_top_title_text {
+        top: 17vw;
+        width: 52vw;
+        font-size: 2vw;
+        left: 9vw;
+    }
+
+    .service_intro {
+        background-color: #990000;
+        width: 15vw;
+        font-size: 2.3vw;
+        color: white;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 40px;
+        font-weight: bold;
+        padding: 0.2vw 0;
+        margin-top: 3vw;
+    }
+
+    .checkpoint_inner_container {
+        flex-direction: column;
+        width: 80vw;
+    }
+
+    .checkpoint_text {
+        text-align: center;
+    }
+
+    .checkpoint_right_container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .checkpoint_right_inner_container {
+        width: 37vw;
+        height: 35vw;
+    }
+
+    .spop_checkpoint_sect1 {
+        width: 35vw;
+        height: 17vw;
+    }
+
+    .spop_checkpoint_sect2 {
+        width: 35vw;
+        height: 17vw;
+    }
+
+    .spop_checkpoint_sect3 {
+        width: 35vw;
+        height: 35vw;
+    }
+    
+    .checkpoint_title {
+        font-size: 2.5vw;
+    }
+
+    .checkpoint_body {
+        font-size: 1.5vw;
+    }
+
+    .register_container {
+        width: 60vw;
+    }
+
+    .register_title {
+        font-size: 2.5vw;
+    }
+
+    .register_normal_text {
+        font-size: 1.6vw;
+    }
+
+    .register_list_title {
+        font-size: 2vw;
+    }
+
+    .register_dot_top_container {
+        font-size: 1.5vw;
+    }
+
+    .register_dot_bottom_container {
+        font-size: 1.5vw;
+    }
+
+    .steps_image {
+        width: 2vw;
+    }
+
+    .steps_text {
+        font-size: 1.5vw;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .spop_portfolio_inner_container {
+        width: 70vw;
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    .register_container {
+        width: 100vw;
+        padding: 0 3vw;
+    }
+
+    .download_icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .spop_register_mobile {
+        flex-direction: column;
+    }
+
+    .download_icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .spop_portfolio_left_container {
+        display: none;
+    }
+
+    .portfolio_outer_container {
+        padding-bottom: 0;
+    }
+
+    .portfolio_container {
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .spop_portfolio_inner_container {
+        width: 80vw;
+    }
+
+    .portfolio_img {
+        width: 25vw;
+        height: 25vw;
+    }
+
+    .spop_portfolio_center_text {
+        font-size: 4vw;
+        padding: 0 8vw;
+    }
+
+    .port_bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 2vw;
+    }
+
+    .port_top_title {
+        font-size: 6.3vw;
+    }
+
+    .port_top_body {
+        font-size: 4vw;
+    }
+
+    .port_bottom_title {
+        width: 25vw;
+        height: 4.6vw;
+        font-size: 2.9vw;
+    }
+
+    .port_bottom_body {
+        font-size: 3.7vw;
+    }
+
+    .text_title {
+        font-size: 4.2vw;
+    }
+
+    .spop_service_body {
+        margin-bottom: 60px;
+    }
+
+    .spop_center_text {
+        font-size: 2.3vw;
+        padding: 0 10vw;
+    }
+
+    .spop_checkpoint_text {
+        width: 90vw;
+        font-size: 7.2vw;
+    }
+
+    .spop_checkpoint_inner_container {
+        width: 90vw;
+    }
+
+    .spop_checkpoint_hashtag {
+        font-size: 4vw;
+    }
+
+    .spop_register_button {
+        font-size: 5.2vw;
+        margin-top: 8vw;
+    }
+
+    .spop_register_mobile {
+        padding-bottom: 8vw;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .spop_background {
+        background-size: cover;
+        height: 260px;
+        background-position: center;
+    }
+
+    .spop_top_title_img {
+        top: 3vw;
+        width: 64vw;
+        left: 9vw;
+    }
+
+    .spop_top_title_text {
+        top: 10vw;
+        width: 52vw;
+        font-size: 2vw;
+        left: 9vw;
+    }
+
+    .service_intro {
+        background-color: #990000;
+        width: 20vw;
+        font-size: 3.3vw;
+        color: white;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 40px;
+        font-weight: bold;
+        padding: 0.2vw 0;
+        margin-top: 7vw;
+    }
+
+    .text_title {
+        font-size: 4.2vw;
+        margin-top: 4vw;
+    }
+
+    .spop_intro_title {
+        width: 22vw;
+    }
+
+    .spop_center_text {
+        font-size: 2vw;
+    }
+
+    .spop_hashtag {
+        font-size: 2vw;
+    }
+
+    .mobile_container {
+        height: 450px;
+    }
+
+    .three_container {
+        width: 75vw;
+        margin-top: 12vw;
+    }
+
+    .three_container_ind {
+        width: 25vw;
+        text-align: center;
+    }
+
+    .spop_steps {
+        width: 20vw;
+    }
+
+    .three_container_text {
+        font-size: 2vw;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .spop_top_title_img {
+        top: 9vw;
+    }
+
+    .spop_top_title_text {
+        top: 17vw;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .download_icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .spop_portfolio_left_container {
+        display: none;
+    }
+
+    .port_bottom_title {
+        width: 25vw;
+        height: 7.6vw;
+    }
+
+    .spop_top_title_text {
+        font-size: 3vw;
+    }
+
+    .spop_background {
+        height: 270px;
+    }
+
+    .intro_inner_container {
+        width: 90vw;
+        margin-bottom: 40px;
+    }
+    
+    .mobile_container {
+        height: 390px;
+        padding-top: 30px;
+    }
+
+    .three_container {
+        width: 95vw;
+    }
+
+    .three_container_ind {
+        width: 32vw;
+    }
+
+    .service_intro {
+        width: 30vw;
+        font-size: 5.3vw;
+    }
+
+    .text_title {
+        font-size: 6.2vw;
+    }
+
+    .spop_intro_title {
+        width: 40vw;
+    }
+
+    .spop_center_text {
+        font-size: 4vw;
+        padding: 0 2vw;
+    }
+
+    .spop_hashtag {
+        font-size: 3vw;
+    }
+
+    .spop_steps {
+        width: 27vw;
+    }
+
+    .three_container_text {
+        font-size: 3vw;
+    }
+
+    .three_container {
+        margin-top: 7vw;
+    }
+
+    .checkpoint_text {
+        font-size: 6.2vw;
+    }
+
+    .checkpoint_right_container {
+        flex-direction: column;
+    }
+
+    .checkpoint_inner_container {
+        justify-content: center;
+    }
+
+    .checkpoint_right_inner_container {
+        width: 80vw;
+        height: 75vw;
+    }
+
+    .spop_checkpoint_sect1 {
+        width: 80vw;
+        height: 30vw;
+        padding: 3.5vw;
+    }
+
+    .spop_checkpoint_sect2 {
+        width: 80vw;
+        height: 43vw;
+        padding: 3.5vw;
+    }
+
+    .spop_checkpoint_sect3 {
+        width: 80vw;
+        height: 64vw;
+        padding: 3.5vw;
+    }
+
+    .checkpoint_title {
+        font-size: 5.5vw;
+    }
+
+    .checkpoint_body {
+        font-size: 4.5vw;
+    }
+
+    .register_title {
+        font-size: 6.5vw;
+    }
+
+    .register_normal_text {
+        font-size: 4.6vw;
+    }
+
+    .register_list_title {
+        font-size: 6vw;
+    }
+
+    .register_dot_top_container {
+        font-size: 4.5vw;
+    }
+
+    .register_dot_bottom_container {
+        font-size: 4.5vw;
+    }
+
+    .dot {
+        width: 1.4vw;
+    }
+
+    .steps_image {
+        width: 5vw;
+    }
+
+    .steps_text {
+        font-size: 4.6vw;
+    }
+
+    .register_info_img {
+        width: 90vw;
+    }
+
+    .inverted_chevron {
+        font-size: 6.5vw;
+    }
+
+    .steps_container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .steps_inner_container {
+        margin: 1vw 0;
+    }
+
+    .inverted_chevron {
+        display: none;
+    }
+
+    .register_title {
+        margin-top: 8vw;
+    }
+}

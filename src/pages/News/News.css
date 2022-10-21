@@ -25,7 +25,7 @@
 }
 
 .news_slide {
-    height: 500px;
+    height: 550px;
     width: 500px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     margin: 50px;
@@ -116,7 +116,7 @@
     }
 
     .news_slide {
-      height: 400px;
+      height: 430px;
       width: 400px;
     }
 
@@ -135,7 +135,7 @@
     }
 
     .news_slide {
-      height: 350px;
+      height: 380px;
       width: 350px;
     }
 
@@ -165,7 +165,7 @@
     }
 
     .news_slide {
-      height: 300px;
+      height: 340px;
       width: 250px;
     }
 

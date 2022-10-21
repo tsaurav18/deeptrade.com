@@ -46,6 +46,23 @@ function News(props) {
                     <SwiperSlide>
                         <div className="news_slide">
                             <div className="news_image" style={{paddingTop: 15}}>
+                                <img src="assets/news/news13.png" alt="news13" />
+                            </div>
+                            <div className="news_content">
+                                <h6>딥트레이드 X KB증권 로보어드바이저 개발 MOU 체결</h6>
+                                <p>2022/09</p>
+                                <p>딥트레이드가 KB증권과 로보어드바이저 개발을 위한 API 사용에 대한 MOU를 체결하였습니다(2022.09).
+                                    딥트레이드는 인공지능 로보어드바이저 XPercent의 사용자 편의성을 향상시키기 위한 고도화 협업을 KB 증권과 진행합니다.
+                                    본 협업을 통해 XPercent의 사용자는 계좌 개설 및 포트폴리오 자문 내역에 대한 매매를 KB증권을 통해 편리하게 편리하게 사용할 수 있을 것으로 기대됩니다.
+                                    그 외에도 KB 증권과의 협업을 통해 XPercent에 다양한 편의 기능을 추가할 예정이며 완성된 XPercent는 앱 버전으로 연내 출시 예정입니다. 
+                                    {" "}<a href="https://news.mt.co.kr/mtview.php?no=2022100517433057424)%EA%B0%80" target="_blank">(머니투데이 2022/10/6)</a>
+                                </p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <div className="news_slide">
+                            <div className="news_image" style={{paddingTop: 15}}>
                                 <img src="assets/news/news12.png" alt="news12" />
                             </div>
                             <div className="news_content">
