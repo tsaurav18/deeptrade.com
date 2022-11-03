@@ -74,7 +74,7 @@ function Footer() {
                             담당자 이메일
                         </div>
                         <div className="footer_body_content_und block_2">
-                            deeptrade.contact@gmail.com
+                            contact@deeptrade.co
                         </div>
                     </div>
                     <div className="col-4">

@@ -15,7 +15,7 @@
 .service_intro {
     background-color: #990000;
     width: 15vw;
-    font-size: 2.3vw;
+    font-size: 1.3vw;
     color: white;
     text-align: center;
     margin-left: auto;
@@ -70,7 +70,7 @@
 .spop_center_text {
     text-align: center;
     margin-top: 3vw;
-    font-size: 1.3vw;
+    font-size: 1vw;
     padding: 0 25vw;
 }
 
@@ -81,7 +81,7 @@
 .spop_portfolio_center_text {
     text-align: center;
     margin: 1vw 0;
-    font-size: 1.3vw;
+    font-size: 1vw;
 }
 
 .spop_portfolio_inner_container {
@@ -346,7 +346,7 @@
     }
 
     .checkpoint_body {
-        font-size: 1.5vw;
+        font-size: 2vw;
     }
 
     .register_container {
@@ -358,7 +358,7 @@
     }
 
     .register_normal_text {
-        font-size: 1.6vw;
+        font-size: 2vw;
     }
 
     .register_list_title {
@@ -366,11 +366,11 @@
     }
 
     .register_dot_top_container {
-        font-size: 1.5vw;
+        font-size: 2vw;
     }
 
     .register_dot_bottom_container {
-        font-size: 1.5vw;
+        font-size: 2vw;
     }
 
     .steps_image {
@@ -378,7 +378,36 @@
     }
 
     .steps_text {
-        font-size: 1.5vw;
+        font-size: 2vw;
+    }
+
+    .text_title {
+        font-size: 3vw;
+    }
+
+    .spop_center_text {
+        font-size: 2vw;
+    }
+
+    .spop_portfolio_center_text {
+        font-size: 2vw;
+    }
+
+    .spop_checkpoint_hashtag {
+        font-size: 2vw;
+    }
+
+    .spop_checkpoint_inner_container {
+        width: 70vw;
+    }
+
+    .spop_checkpoint_text {
+        width: 70vw;
+        font-size: 3vw;
+    }
+
+    .spop_register_button {
+        font-size: 2vw;
     }
 }
 
@@ -424,7 +453,7 @@
     }
 
     .spop_portfolio_inner_container {
-        width: 80vw;
+        width: 90vw;
     }
 
     .portfolio_img {
@@ -458,11 +487,11 @@
     }
 
     .port_bottom_body {
-        font-size: 3.7vw;
+        font-size: 4vw;
     }
 
     .text_title {
-        font-size: 4.2vw;
+        font-size: 4vw;
     }
 
     .spop_service_body {
@@ -512,7 +541,7 @@
 
     .spop_top_title_text {
         top: 10vw;
-        width: 52vw;
+        width: 66vw;
         font-size: 2vw;
         left: 9vw;
     }
@@ -597,7 +626,7 @@
     }
 
     .spop_top_title_text {
-        font-size: 3vw;
+        font-size: 4vw;
     }
 
     .spop_background {
@@ -610,7 +639,7 @@
     }
     
     .mobile_container {
-        height: 390px;
+        height: 440px;
         padding-top: 30px;
     }
 
@@ -649,7 +678,7 @@
     }
 
     .three_container_text {
-        font-size: 3vw;
+        font-size: 4vw;
     }
 
     .three_container {
@@ -696,7 +725,7 @@
     }
 
     .checkpoint_body {
-        font-size: 4.5vw;
+        font-size: 4vw;
     }
 
     .register_title {
@@ -704,7 +733,7 @@
     }
 
     .register_normal_text {
-        font-size: 4.6vw;
+        font-size: 4vw;
     }
 
     .register_list_title {
@@ -712,11 +741,11 @@
     }
 
     .register_dot_top_container {
-        font-size: 4.5vw;
+        font-size: 4vw;
     }
 
     .register_dot_bottom_container {
-        font-size: 4.5vw;
+        font-size: 4vw;
     }
 
     .dot {
@@ -728,7 +757,7 @@
     }
 
     .steps_text {
-        font-size: 4.6vw;
+        font-size: 4vw;
     }
 
     .register_info_img {

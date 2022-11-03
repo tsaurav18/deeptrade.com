@@ -47,11 +47,11 @@
 .eugene_center_text {
     text-align: center;
     margin-top: 3vw;
-    font-size: 1.3vw;
+    font-size: 1vw;
 }
 
 .eugene_hashtag {
-    font-size: 1.2vw;
+    font-size: 1vw;
     color: #990000
 }
 
@@ -148,7 +148,7 @@
 
 .three_container_text {
     text-align: center;
-    font-size: 1.2vw;
+    font-size: 1vw;
     margin-top: 1vw;
 }
 
@@ -197,7 +197,7 @@
 
 .register_list_title {
     margin-top: 1vw; 
-    font-size: 1.2vw; 
+    font-size: 1.5vw; 
     font-weight: bold;
 }
 
@@ -278,13 +278,17 @@
 }
 
 .instructions_body {
-    font-size: 0.7vw;
+    font-size: 1vw;
 }
 
 .instructions_border {
     width: 10vw;
     border-top: solid 3px #990000;
     margin-left: 0.5vw;
+}
+
+.instructions_margin {
+    padding: 0 10px;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -316,7 +320,7 @@
     }
 
     .eugene_checkpoint_background {       
-        height: 450px;
+        height: 510px;
         background-size: cover;
         background-position: center;
     }
@@ -328,6 +332,8 @@
 
     .checkpoint_text {
         text-align: center;
+        font-size: 3vw;
+        margin-top: 3vw;
     }
 
     .checkpoint_right_container {
@@ -364,7 +370,7 @@
     }
 
     .eugene_register_container {
-        width: 60vw;
+        width: 80vw;
     }
 
     .register_title {
@@ -401,6 +407,45 @@
 
     .instructions_inner_container {
         width: 30vw;
+    }
+
+    .text_title {
+        font-size: 3vw;
+    }
+
+    .eugene_center_text {
+        font-size: 2vw;
+    }
+
+    .eugene_hashtag {
+        font-size: 2vw;
+    }
+
+    .three_container_text {
+        font-size: 2vw;
+    }
+
+    .three_container {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        width: 70vw;
+        justify-content: space-around;
+        margin-top: 2vw;
+        margin-bottom: 2vw;
+    }
+    
+    .three_container_ind {
+        width: 100%;
+        text-align: center;
+    }
+
+    .instructions_title {
+        font-size: 2.5vw;
+    }
+
+    .instructions_body {
+        font-size: 2vw;
     }
 }
 
@@ -525,11 +570,12 @@
 
 @media only screen and (max-width: 500px) {
     .eugene_top_title_text {
-        font-size: 3vw;
+        font-size: 4vw;
+        width: 70vw;
     }
 
     .eugene_background {
-        height: 200px;
+        height: 290px;
     }
 
     .intro_inner_container {
@@ -569,7 +615,7 @@
     }
 
     .eugene_hashtag {
-        font-size: 3vw;
+        font-size: 4vw;
     }
 
     .eugene_steps {
@@ -577,7 +623,7 @@
     }
 
     .three_container_text {
-        font-size: 3vw;
+        font-size: 4vw;
     }
 
     .three_container {
@@ -689,10 +735,10 @@
     }
 
     .instructions_title {
-        font-size: 5.5vw;
+        font-size: 6vw;
     }
 
     .instructions_body {
-        font-size: 3.2vw;
+        font-size: 4vw;
     }
 }

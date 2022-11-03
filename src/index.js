@@ -4,6 +4,7 @@ import './index.css';
 import App from './pages/App';
 import Eugene from './pages/Eugene/Eugene';
 import Spop from './pages/Spop/Spop';
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
@@ -14,6 +15,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}/>
         <Route path="eugene" element={<Eugene />} />
         <Route path="spop" element={<Spop />} />
+        <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
       </Routes>
     </Router>
   </React.StrictMode>,

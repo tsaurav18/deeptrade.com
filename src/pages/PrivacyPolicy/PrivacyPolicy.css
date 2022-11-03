@@ -1,0 +1,30 @@
+.privacy_policy_container {
+    background-color: white;
+    padding: 30px;
+    height: 100%;
+}
+
+.privacy_policy_innerContainer {
+    flex-grow: 1
+}
+
+.privacy_policy_title {
+    font-size: 50px;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px
+}
+
+.privacy_policy_subTitle {
+    font-size: 20px;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-weight: bold
+}
+
+.privacy_policy_content {
+    font-size: 15px;
+    color: black;
+    line-height: 30px
+}
