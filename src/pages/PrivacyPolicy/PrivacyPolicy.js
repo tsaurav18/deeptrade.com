@@ -95,12 +95,12 @@ export default function PrivacyPolicy() {
                     <div className="privacy_policy_content">① '회사'는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</div>
                     <div className="privacy_policy_content">개인정보 보호책임자</div>
                     <div className="privacy_policy_content">성명 : 천미애</div>
-                    <div className="privacy_policy_content">연락처 : 02-875-5677, deeptrade.contact@gmail.com</div>
+                    <div className="privacy_policy_content">연락처 : 02-875-5677, contact@deeptrade.co</div>
                     <div className="privacy_policy_content">※ 개인정보 보호 담당부서로 연결됩니다.</div>
                     <div className="privacy_policy_content">개인정보 보호 담당부서</div>
                     <div className="privacy_policy_content">부서명 : 총무팀</div>
                     <div className="privacy_policy_content">담당자 : 천미애</div>
-                    <div className="privacy_policy_content">연락처 : 02-875-5677, deeptrade.contact@gmail.com</div>
+                    <div className="privacy_policy_content">연락처 : 02-875-5677, contact@deeptrade.co</div>
                     <div className="privacy_policy_content">② 정보주체께서는 '회사'의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. '회사' 는 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.</div>
                     <div className="privacy_policy_subTitle">제9조(개인정보 열람청구)</div>
                     <div className="privacy_policy_content">정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.</div>
@@ -108,7 +108,7 @@ export default function PrivacyPolicy() {
                     <div className="privacy_policy_content">개인정보 열람청구 접수·처리 부서</div>
                     <div className="privacy_policy_content">부서명 : 총무팀</div>
                     <div className="privacy_policy_content">담당자 : 천미애</div>
-                    <div className="privacy_policy_content">연락처 : 02-875-5677, deeptrade.contact@gmail.com</div>
+                    <div className="privacy_policy_content">연락처 : 02-875-5677, contact@deeptrade.co</div>
                     <div className="privacy_policy_subTitle">제10조(권익침해 구제방법)</div>
                     <div className="privacy_policy_content">정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.</div>
                     <div className="privacy_policy_content">1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)</div>

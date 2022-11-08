@@ -1,7 +1,9 @@
 .xpercent_grid_container {
     height: auto;
     justify-content: center;
-    padding-bottom: 100px;
+    padding-bottom: 200px;
+    /* background-color: #374351; */
+    /* position: relative; */
 }
 
 .xpercent_grid_left {

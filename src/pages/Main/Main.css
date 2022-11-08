@@ -1,5 +1,5 @@
 .main_container2 {
-    height: 1000px;
+    height: 900px;
     display: flex;
     position: relative;
 }
@@ -17,7 +17,7 @@
     position: absolute;
     top: 130px;
     left: 0;
-    width: calc(100% - 200px);
+    width: calc(100%);
     background-image: url("../../../public/assets/main-hero--img.png");
     background-size: cover;
     height: 100%;
@@ -61,7 +61,7 @@
 @media only screen and (max-width: 2000px)
 {
     .main_container2 {
-        height: 800px;
+        height: 1000px;
     }
     
     .image_container {
@@ -70,7 +70,7 @@
         width: calc(100% - 200px);
         background-image: url("../../../public/assets/main-hero--img.png");
         background-size: cover;
-        height: 100%;
+        height: 87%;
         display: flex;
     }
 
@@ -91,7 +91,7 @@
         width: calc(100% - 200px);
         background-image: url("../../../public/assets/main-hero--img.png");
         background-size: cover;
-        height: 100%;
+        height: 83.5%;
         display: flex;
     }
 
@@ -130,6 +130,10 @@
 }
 
 @media only screen and (max-width: 800px) {
+    .main_container2 {
+        height: 650px;
+    }
+
     .left {
         display: none;
     }
