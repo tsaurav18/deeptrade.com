@@ -16,6 +16,7 @@ import { Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import Cookies from "universal-cookie";
 import ReactGA from "react-ga";
+import Newsletter from "./Newsletter/Newsletter";
 
 ReactGA.initialize("UA-177879135-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -81,6 +82,7 @@ function App() {
       <Recruitment />
       <News refProp={newsRef} />
       <Partnership mainRef={mainRef} />
+      <Newsletter mainRef={mainRef} />
       <Footer />
       <Modal
         visible={false}
