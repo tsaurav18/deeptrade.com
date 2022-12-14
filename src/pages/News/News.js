@@ -44,6 +44,27 @@ function News(props) {
           <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news13.png" alt="news13" />
+              </div>
+              <div className="news_content">
+                <h6>
+                  딥트레이드, NH투자증권 및 펀도라의 고객을 대상으로 자문 상품
+                  제공 개시
+                </h6>
+                <p>2022/12</p>
+                <p>
+                  딥트레이드가 코스콤의 자문 플랫폼인 펀도라에서 NH투자증권의
+                  고객을 대상으로 자문 상품 판매를 개시했습니다. 딥트레이드는
+                  NH투자증권의 고객을 대상으로 자체 개발한 인공지능 기술을
+                  활용하여 위험자산과 안전자산의 비중을 조절하여 다양한 펀드 및
+                  ETF로 구성된 포트폴리오를 고객 유형별로 제공합니다.{" "}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
                 <img src="assets/news/news14.png" alt="news13" />
               </div>
               <div className="news_content">
