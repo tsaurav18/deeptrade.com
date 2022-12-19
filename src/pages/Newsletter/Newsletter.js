@@ -60,11 +60,10 @@ function Newsletter(props) {
         <div className="row justify-content-md-center gx-0 newsletter_content_container">
           <div class="col col-lg-9 gx-5 left_newletter_container">
             <div className="left_newsletterContainer_title">
-              AI 위험관리 뉴스레터 서비스는 딥트레이드의 자산관리 서비스를
-              사용하는 고객을 위한 시장 예측 정보 및 AI 분석 정보 전달을 위한
-              서비스입니다. 딥트레이드가 자체 개발한 AI 모델을 통해 한달 간 증시
-              방향성 예측과 상위 2개 경제 지표, 주식형 자산과 안정형 자산의
-              포트폴리오 투자 비율을 제안합니다.
+              딥트레이드의 AI 위험관리 뉴스레터는 딥트레이드의 AI 섀넌이 국내외
+              데이터를 통해 분석한 증시 전망을 제공합니다. AI 섀넌은 한달 후
+              증시 움직임을 예측하며, 이를 통해 투자자는 국내외 시장의 움직임에
+              대하여 다른 투자자보다 1개월 먼저 대응할 수 있습니다.
             </div>
           </div>
           <div className="col col-lg-3 gx-5 newsletter_form">
