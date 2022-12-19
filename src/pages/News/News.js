@@ -44,7 +44,7 @@ function News(props) {
           <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
-                <img src="assets/news/news13.png" alt="news13" />
+                <img src="assets/news/news15.png" alt="news15" />
               </div>
               <div className="news_content">
                 <h6>
