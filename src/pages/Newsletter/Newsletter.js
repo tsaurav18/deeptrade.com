@@ -4,6 +4,7 @@ import "./Newsletter.css";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 function Newsletter(props) {
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState("");
@@ -50,7 +51,7 @@ function Newsletter(props) {
   };
 
   return (
-    <div className="newsletter_container">
+    <div className="newsletter_container" ref={props.refProp}>
       <div className="row justify-content-md-center justify-content-sm-center gy-0 gx-0 py-4">
         <div className="newsletter_title">
           <div>위험관리 AI 뉴스레터 </div>

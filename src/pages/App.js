@@ -17,11 +17,16 @@ import { CloseOutlined } from "@ant-design/icons";
 import Cookies from "universal-cookie";
 import ReactGA from "react-ga";
 import Newsletter from "./Newsletter/Newsletter";
+import { useSearchParams } from 'react-router-dom';
 
 ReactGA.initialize("UA-177879135-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-function App() {
+function App(props) {
+  //add(12/23/2022)
+  const [searchParams, setSearchParams] = useSearchParams();
+  //
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const mainRef = useRef(null);
@@ -30,10 +35,13 @@ function App() {
   const xpercentRef = useRef(null);
   const technologyRef = useRef(null);
   const newsRef = useRef(null);
+  const newsletterRef = useRef(null);
 
   const cookies = new Cookies();
 
   const width = window.innerWidth;
+
+
 
   useEffect(() => {
     document.title = "DeepTrade | Innovate AI Trading";
@@ -45,6 +53,13 @@ function App() {
     } else {
       getDateDifference(cookieDate, timeNow);
     }
+    //add(2022/12/23)
+    const state = searchParams.get('goto')
+    if(state){
+      newsletterRef.current.scrollIntoView();
+    }
+    //
+    
   }, []);
 
   const closeModal = () => {
@@ -72,6 +87,7 @@ function App() {
         xpercentRef={xpercentRef}
         technologyRef={technologyRef}
         newsRef={newsRef}
+        newsletterRef = {newsletterRef}
       />
       <Main refProp={mainRef} />
       <Mission refProp={missionRef} />
@@ -82,7 +98,7 @@ function App() {
       <Recruitment />
       <News refProp={newsRef} />
       <Partnership mainRef={mainRef} />
-      <Newsletter mainRef={mainRef} />
+      <Newsletter refProp={newsletterRef} />
       <Footer />
       <Modal
         visible={false}
@@ -152,6 +168,7 @@ function App() {
           </div>
         </div>
       </Modal>
+
     </>
   );
 }
