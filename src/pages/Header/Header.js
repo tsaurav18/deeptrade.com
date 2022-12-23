@@ -86,6 +86,12 @@ function Header(props) {
           >
             News
           </div>
+          <div
+            className="nav-item"
+            onClick={() => props.newsletterRef.current.scrollIntoView()}
+          >
+            Newsletter
+          </div>
         </nav>
       </div>
     </div>
