@@ -40,6 +40,14 @@ function Header(props) {
           >
             News
           </div>
+
+          <div
+            className="menu_item"
+            onClick={() => props.newsletterRef.current.scrollIntoView()}
+          >
+            Newsletter
+          </div>
+
         </div>
       </div>
       <div>
@@ -77,6 +85,12 @@ function Header(props) {
             onClick={() => props.newsRef.current.scrollIntoView()}
           >
             News
+          </div>
+          <div
+            className="nav-item"
+            onClick={() => props.newsletterRef.current.scrollIntoView()}
+          >
+            Newsletter
           </div>
         </nav>
       </div>

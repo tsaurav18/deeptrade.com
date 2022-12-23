@@ -78,22 +78,10 @@
      
     }
 }
-
-@media only screen and (max-width: 900px) {
-
-    .partnership_content_container {
-        padding: 0 100px;
-        display: flex;
-    }
-}
 @media only screen and (max-width: 800px) {
     .newsletter_container {
         
         margin-top: -88px;
-    }
-    .partnership_content_container {
-        padding: 0 100px;
-        display: flex;
     }
 
 }
@@ -118,6 +106,9 @@
     .left_newletter_container{
         width: 500px;
     }
+    .newsletter_content_container {
+        padding: 0 5px !important;
+    }
 }
 
 @media only screen and (max-width: 700px) {
@@ -128,6 +119,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-left: 50px;
     }
   .container{
     margin-top:50px !important

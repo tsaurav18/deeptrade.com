@@ -27,7 +27,7 @@
   padding: 50px 180px;
   display: flex;
   justify-content: space-between;
-  width: 1000px;
+  width: 1050px;
   float: right;
 }
 
@@ -93,7 +93,7 @@
     padding: 40px 40px;
     display: flex;
     justify-content: space-between;
-    width: 700px;
+    width: 750px;
     float: right;
   }
   .logo {
