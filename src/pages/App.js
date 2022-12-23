@@ -98,7 +98,7 @@ function App(props) {
       <Recruitment />
       <News refProp={newsRef} />
       <Partnership mainRef={mainRef} />
-      <Newsletter refProp={newsletterRef} />
+      <Newsletter refProp={newsletterRef} mainRef={mainRef} />
       <Footer />
       <Modal
         visible={false}
