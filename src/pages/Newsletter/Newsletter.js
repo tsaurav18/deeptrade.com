@@ -59,7 +59,7 @@ function Newsletter(props) {
       </div>
       <div className="container">
         <div className="row justify-content-md-center gx-0 newsletter_content_container">
-          <div class="col col-lg-9 gx-5 left_newletter_container">
+          <div class="col-md-9 gx-5 left_newletter_container">
             <div className="left_newsletterContainer_title">
               딥트레이드의 AI 위험관리 뉴스레터는 딥트레이드의 AI 섀넌이 국내외
               데이터를 통해 분석한 증시 전망을 제공합니다. AI 섀넌은 한달 후
@@ -67,7 +67,7 @@ function Newsletter(props) {
               대하여 다른 투자자보다 1개월 먼저 대응할 수 있습니다.
             </div>
           </div>
-          <div className="col col-lg-3 gx-5 newsletter_form">
+          <div className="col-md-3 gx-5 newsletter_form">
             <form onSubmit={subscribeNewsletter}>
               <div class="mb-3">
                 <input

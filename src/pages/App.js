@@ -54,11 +54,19 @@ function App(props) {
       getDateDifference(cookieDate, timeNow);
     }
     //add(2022/12/23)
-    const state = searchParams.get('goto')
-    if(state){
-      newsletterRef.current.scrollIntoView();
-    }
-    //
+    setTimeout(() => {
+      const state = searchParams.get('goto')
+      if(state){
+        newsletterRef.current.scrollIntoView();
+      }
+      //
+    }, 500)
+
+    // const state = searchParams.get('goto')
+    // if(state){
+    //   newsletterRef.current.scrollIntoView();
+    // }
+
     
   }, []);
 
