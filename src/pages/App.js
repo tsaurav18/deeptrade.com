@@ -60,7 +60,7 @@ function App(props) {
         newsletterRef.current.scrollIntoView();
       }
       //
-    }, 500)
+    }, 1000)
 
     // const state = searchParams.get('goto')
     // if(state){
