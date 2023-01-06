@@ -20,6 +20,7 @@
     grid-row: 1 / span 5;
     display: flex;
     align-items: center;
+    background-color: red
 }
 .outerContainer{
     display: flex;
@@ -36,7 +37,8 @@
 
     position: relative;
     width: auto !important;
-    color: white;
+ 
+
 }
 .email_text{
     text-align: center;
@@ -118,11 +120,19 @@
     .left_newletter_container{
         width: 500px;
     }
+    .newsletter_inner{
+        justify-content: center;
+        
+    }
 }
 
 @media only screen and (max-width: 700px) {
     .newsletter_container{
         margin-top:50px !important
+    }
+    .newsletter_inner{
+        justify-content: center;
+        
     }
     .newsletter_title{
         display: flex;
@@ -142,4 +152,16 @@
     .newsletter_form{
     margin-top: 50px;
     }
+}
+@media only screen and (max-width: 480px) {
+   
+  
+    .newsletter_inner{
+        justify-content: center;
+        
+    }
+    .newsletter_content_container {
+        padding: 0 20px !important;
+    }
+
 }

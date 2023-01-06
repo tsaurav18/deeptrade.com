@@ -35,7 +35,9 @@ function Recruitment() {
         </div>
         <div className="row gx-0" style={{ justifyContent: "center" }}>
           <div className="recruitment_content">
-            <div>DeepTrade와 함께 할 열정있고 뛰어난 인재들을 찾습니다</div>
+            <div>
+              DeepTrade Technologies와 함께 할 열정있고 뛰어난 인재들을 찾습니다
+            </div>
           </div>
         </div>
         <div className="row gx-0 recruitment_content_container">
