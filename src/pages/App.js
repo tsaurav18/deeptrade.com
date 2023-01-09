@@ -18,11 +18,13 @@ import Cookies from "universal-cookie";
 import ReactGA from "react-ga";
 import Newsletter from "./Newsletter/Newsletter";
 import AOS from "aos";
+import { useSearchParams } from 'react-router-dom'; 
 
 ReactGA.initialize("UA-177879135-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App() {
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     AOS.init({ duration: 2000 });
   }, []);

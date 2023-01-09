@@ -51,7 +51,7 @@ function Newsletter(props) {
   };
 
   return (
-    <div className="newsletter_container">
+    <div className="newsletter_container" ref={props.refProp}>
       <div className="row justify-content-md-center justify-content-sm-center gy-0 gx-0 py-4 newsletter_inner">
         <div className="newsletter_title">
           <div>위험관리 AI 뉴스레터 </div>
