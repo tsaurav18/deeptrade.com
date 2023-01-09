@@ -17,16 +17,15 @@ import { CloseOutlined } from "@ant-design/icons";
 import Cookies from "universal-cookie";
 import ReactGA from "react-ga";
 import Newsletter from "./Newsletter/Newsletter";
-import { useSearchParams } from 'react-router-dom';
+import AOS from "aos";
 
 ReactGA.initialize("UA-177879135-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-function App(props) {
-  //add(12/23/2022)
-  const [searchParams, setSearchParams] = useSearchParams();
-  //
-
+function App() {
+  useEffect(() => {
+    AOS.init({ duration: 2000 });
+  }, []);
   const [modalVisible, setModalVisible] = useState(false);
 
   const mainRef = useRef(null);
@@ -44,7 +43,7 @@ function App(props) {
 
 
   useEffect(() => {
-    document.title = "DeepTrade | Innovate AI Trading";
+    document.title = "DeepTrade Technologies | Innovate AI Trading";
     const modalCookie = cookies.get("showModal");
     const cookieDate = new Date(modalCookie);
     const timeNow = new Date();

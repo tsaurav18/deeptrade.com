@@ -51,8 +51,8 @@ function Newsletter(props) {
   };
 
   return (
-    <div className="newsletter_container" ref={props.refProp}>
-      <div className="row justify-content-md-center justify-content-sm-center gy-0 gx-0 py-4">
+    <div className="newsletter_container">
+      <div className="row justify-content-md-center justify-content-sm-center gy-0 gx-0 py-4 newsletter_inner">
         <div className="newsletter_title">
           <div>위험관리 AI 뉴스레터 </div>
         </div>
@@ -61,10 +61,11 @@ function Newsletter(props) {
         <div className="row justify-content-md-center gx-0 newsletter_content_container">
           <div class="col-md-9 gx-5 left_newletter_container">
             <div className="left_newsletterContainer_title">
-              딥트레이드의 AI 위험관리 뉴스레터는 딥트레이드의 AI 섀넌이 국내외
-              데이터를 통해 분석한 증시 전망을 제공합니다. AI 섀넌은 한달 후
-              증시 움직임을 예측하며, 이를 통해 투자자는 국내외 시장의 움직임에
-              대하여 다른 투자자보다 1개월 먼저 대응할 수 있습니다.
+              딥트레이드테크놀로지스의 AI 위험관리 뉴스레터는
+              딥트레이드테크놀로지스의 AI 섀넌이 국내외 데이터를 통해 분석한
+              증시 전망을 제공합니다. AI 섀넌은 한달 후 증시 움직임을 예측하며,
+              이를 통해 투자자는 국내외 시장의 움직임에 대하여 다른 투자자보다
+              1개월 먼저 대응할 수 있습니다.
             </div>
           </div>
           <div className="col-md-3 gx-5 newsletter_form">
@@ -87,7 +88,11 @@ function Newsletter(props) {
               <button
                 type="submit"
                 class="btn"
-                style={{ backgroundColor: "#990000", color: "#fff" }}
+                style={{
+                  backgroundColor: "#990000",
+                  color: "#fff",
+                  width: "100px",
+                }}
               >
                 구독하기
               </button>
