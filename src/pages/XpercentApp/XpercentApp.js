@@ -91,7 +91,7 @@ function XpercentApp() {
                     rel="noreferrer"
                   >
                     <img
-                      src="assets/xpercentapp/playStoreBtn.png"
+                      src="assets/xpercentapp/playstoreBtn.png"
                       alt="img"
                       height={"50rem"}
                       width={"140rem"}

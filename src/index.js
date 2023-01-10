@@ -21,7 +21,7 @@ ReactDOM.render(
         <Route path="spop" element={<Spop />} />
         <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
         <Route path="unsub_email" element={<Unsubscribe />} />
-        <Route path="xpct" element={<XpercentApp />} />
+        <Route path="xpercent" element={<XpercentApp />} />
       </Routes>
     </Router>
   </React.StrictMode>,
