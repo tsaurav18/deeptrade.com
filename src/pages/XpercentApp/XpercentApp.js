@@ -80,7 +80,7 @@ function XpercentApp() {
                   #인공지능
                 </div>
                 <div className="tag__box animate__animated animate__slideInUp">
-                  #Xpercent
+                  #XPercent
                 </div>
               </div>
               <div className="buttons">
