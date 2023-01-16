@@ -144,6 +144,7 @@
     .partnership_container .row {
         margin: 150px 0 -110px 0;
         justify-content: center;
+        /* background-color: #990000; */
     }
 
     .bottom_row {

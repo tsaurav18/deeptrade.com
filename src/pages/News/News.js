@@ -44,6 +44,51 @@ function News(props) {
           <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news17.png" alt="news17" />
+              </div>
+              <div className="news_content">
+                <h6>
+                  딥트레이드테크놀로지스, DS 자산운용과 인공지능 펀드 개발 MOU
+                  체결
+                </h6>
+                <p>2023/01</p>
+                <p>
+                  딥트레이드테크놀로지스가 DS 자산운용과 인공지능 펀드 개발을
+                  위한 협업을 개시했습니다. 본 협업을 통해
+                  딥트레이드테크놀로지스의 최신 인공지능 기술이 적용된 주가 예측
+                  AI SHANNON의 성능을 DS 자산운용이 실제 투자를 통해 검증합니다.
+                  딥트레이드테크놀로지스는 객관적인 성능 검증 이후 DS
+                  자산운용과의 인공지능 공모 펀드 개발을 목표로 합니다.{" "}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news16.png" alt="news16" />
+              </div>
+              <div className="news_content">
+                <h6>
+                  딥트레이드테크놀로지스, DB금융투자 및 펀도라의 고객을 대상으로
+                  자문 상품 제공 개시
+                </h6>
+                <p>2023/01</p>
+                <p>
+                  딥트레이드테크놀로지스가 코스콤의 자문 플랫폼인 펀도라에서
+                  DB금융투자의 고객을 대상으로 자문 상품 판매를 개시했습니다.
+                  딥트레이드테크놀로지스는 DB금융투자의 고객을 대상으로 자체
+                  개발한 인공지능 기술을 활용하여 매시점 경제 상황을 고려하여
+                  상승 확률이 가장 높은 펀드 및 ETF로 구성된 포트폴리오를 고객
+                  유형 별로 제공합니다.{" "}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
                 <img src="assets/news/new15.png" alt="news15" />
               </div>
               <div className="news_content">
