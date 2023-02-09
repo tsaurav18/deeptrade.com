@@ -59,6 +59,12 @@ function News(props) {
                   AI SHANNON의 성능을 DS 자산운용이 실제 투자를 통해 검증합니다.
                   딥트레이드테크놀로지스는 객관적인 성능 검증 이후 DS
                   자산운용과의 인공지능 공모 펀드 개발을 목표로 합니다.{" "}
+                  <a
+                    href="https://www.aitimes.kr/news/articleView.html?idxno=27312"
+                    target="_blank"
+                  >
+                    (인공지능신문 2023/02/07)
+                  </a>
                 </p>
               </div>
             </div>
