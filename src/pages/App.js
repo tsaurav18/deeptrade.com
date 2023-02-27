@@ -18,7 +18,8 @@ import Cookies from "universal-cookie";
 import ReactGA from "react-ga";
 import Newsletter from "./Newsletter/Newsletter";
 import AOS from "aos";
-import { useSearchParams } from 'react-router-dom'; 
+import { useSearchParams } from "react-router-dom";
+import VideoSection from "./VideoSection/VideoSection";
 
 ReactGA.initialize("UA-177879135-2");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -42,8 +43,6 @@ function App() {
 
   const width = window.innerWidth;
 
-
-
   useEffect(() => {
     document.title = "DeepTrade Technologies | Innovate AI Trading";
     const modalCookie = cookies.get("showModal");
@@ -56,19 +55,17 @@ function App() {
     }
     //add(2022/12/23)
     setTimeout(() => {
-      const state = searchParams.get('goto')
-      if(state){
+      const state = searchParams.get("goto");
+      if (state) {
         newsletterRef.current.scrollIntoView();
       }
       //
-    }, 1000)
+    }, 1000);
 
     // const state = searchParams.get('goto')
     // if(state){
     //   newsletterRef.current.scrollIntoView();
     // }
-
-    
   }, []);
 
   const closeModal = () => {
@@ -96,14 +93,14 @@ function App() {
         xpercentRef={xpercentRef}
         technologyRef={technologyRef}
         newsRef={newsRef}
-        newsletterRef = {newsletterRef}
+        newsletterRef={newsletterRef}
       />
       <Main refProp={mainRef} />
       <Mission refProp={missionRef} />
       <What refProp={whatRef} />
       <Technology refProp={technologyRef} />
       <XPercent refProp={xpercentRef} />
-
+      <VideoSection />
       <Recruitment />
       <News refProp={newsRef} />
       <Partnership mainRef={mainRef} />
@@ -177,7 +174,6 @@ function App() {
           </div>
         </div>
       </Modal>
-
     </>
   );
 }

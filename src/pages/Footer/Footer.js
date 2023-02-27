@@ -42,7 +42,7 @@ function Footer() {
             <div
               className="footer_button"
               onClick={() => {
-                window.location.href = "mailto:deeptrade.contact@gmail.com";
+                window.location.href = "mailto:contact@deeptrade.co";
               }}
             >
               제휴 문의 바로가기
