@@ -10,7 +10,7 @@ import News from "./News/News";
 import Partnership from "./Partnership/Partnership";
 import Footer from "./Footer/Footer";
 import React, { useRef, useEffect, useState } from "react";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Modal } from "antd";
 import { CloseOutlined } from "@ant-design/icons";

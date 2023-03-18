@@ -10,7 +10,8 @@ import Unsubscribe from "./pages/Unsubscribe/Unsubscribe";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import XpercentApp from "./pages/XpercentApp/XpercentApp";
-
+import PortfolioList from "./pages/RATB/PortfolioList";
+import RebalancingStatus from "./pages/RATB/RebalancingStatus";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +23,8 @@ ReactDOM.render(
         <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
         <Route path="unsub_email" element={<Unsubscribe />} />
         <Route path="xpercent" element={<XpercentApp />} />
+        <Route path="portfolio_list" element={<PortfolioList />} />
+        <Route path="rebalancing_status" element={<RebalancingStatus />} />
       </Routes>
     </Router>
   </React.StrictMode>,
