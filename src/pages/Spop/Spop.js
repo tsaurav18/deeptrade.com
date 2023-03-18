@@ -61,14 +61,14 @@ export default function Spop() {
       >
         <div className="service_intro">서비스 소개</div>
         <div className="text_title" style={{ color: "white" }}>
-          딥트레이드테크놀로지스 그랜드슬램
+          딥트레이드테크놀로지스 AI 포트폴리오
         </div>
         <div
           className="spop_center_text spop_service_body"
           style={{ color: "white" }}
         >
-          딥트레이드테크놀로지스의 그랜드슬램은 삼성증권 플랫폼을 통해 제공되는
-          정기적으로 AI 포트폴리오를 제공해주는 투자자문 서비스로 매달
+          딥트레이드테크놀로지스는 삼성증권 플랫폼을 통해 정기적으로 AI
+          포트폴리오를 제공해주는 투자 자문 서비스를 제공하고 있습니다. 매달
           전송해드리는 포트폴리오를 수락만 하면 자동으로 리밸런싱 해주는 최적의
           편의성을 갖춘 상품입니다.
         </div>
@@ -94,7 +94,7 @@ export default function Spop() {
             </div>
             <div className="spop_portfolio_right_container">
               <div className="port_top">
-                <div className="port_top_title">그랜드슬램 알파</div>
+                <div className="port_top_title">딥트레이드 알파</div>
                 <div className="port_top_body">
                   딥트레이드테크놀로지스 AI 엔진이 구성한 주식 포트폴리오와
                   수익률 상위권 주식형 및 채권형 펀드 및 MMF에 투자하는 액티브
@@ -120,7 +120,7 @@ export default function Spop() {
             </div>
             <div className="spop_portfolio_right_container">
               <div className="port_top">
-                <div className="port_top_title">그랜드슬램 루비 (IRP/DC)</div>
+                <div className="port_top_title">딥트레이드 루비 (IRP/DC)</div>
                 <div className="port_top_body">
                   딥트레이드테크놀로지스 AI 엔진이 추천하는 국내 및 해외 주식형
                   펀드와 안정성 높은 채권형 펀드 및 MMF에 투자하는 안정적인
@@ -145,7 +145,7 @@ export default function Spop() {
             </div>
             <div className="spop_portfolio_right_container">
               <div className="port_top">
-                <div className="port_top_title">그랜드슬램 루비 (연금저축)</div>
+                <div className="port_top_title">딥트레이드 루비 (연금저축)</div>
                 <div className="port_top_body">
                   딥트레이드테크놀로지스 AI 엔진이 추천하는 국내 및 해외 주식형
                   펀드와 안정성 높은 채권형 펀드 및 MMF에 투자하는 안정적인
