@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideBar from "./SideBar";
 import './index.css'
 import { DatePicker, Space, Dropdown, Typography, Select, Table, Tag } from 'antd';
 import { DownOutlined, SmileOutline, CaretDownOutlined } from '@ant-design/icons';
+import axios from "axios";
+import dayjs from 'dayjs';
+import { useMediaQuery } from 'react-responsive';
 
 const { RangePicker } = DatePicker;
 
@@ -48,25 +51,16 @@ const columns = [
       dataIndex: 'weight'
     },
   ];
-  const data = [
-    {
-      key: '1',
-      name: '주식형4호',
-      type: '공격형',
-      recom_date: '2022-05-30',
-      stock_name: '태원불산',
-      danger: '고',
-      buy_date: '2022-05-30',
-      sell_date: '2022-05-30',
-      weight: '0.05'
-    }
-  ];
 
 export default function PortfolioList() {
 
-	const [navVisible, showNavbar] = useState(false);
-    const [product, setProduct] = useState("0")
-    const [type, setType] = useState("all")
+    const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+	const [navVisible, showNavbar] = useState(isMobile ? false : true);
+    const [product, setProduct] = useState("전체");
+    const [type, setType] = useState("전체");
+    const [buyDate, setBuyDate] = useState(dayjs().subtract(12, 'months'));
+    const [sellDate, setSellDate] = useState(dayjs());
+    const [data, setData] = useState([]);
 
     const handleChange = (value) => {
         setProduct(value)
@@ -74,6 +68,26 @@ export default function PortfolioList() {
     const handleTypeChange = (value) => {
         setType(value)
     };
+
+    const search = () => {
+        axios.post('https://xpct.net/api/ratb/get_portfolio_list/', {
+            buy_date: buyDate.format('YYYY-MM-DD'),
+            sell_date: sellDate.format('YYYY-MM-DD'),
+            name: product,
+            type: type
+          })
+          .then(function (response) {
+            var data = response.data;
+            setData(data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    useEffect(() => {
+        search();
+    }, [])
 
     return (
         <>
@@ -108,7 +122,15 @@ export default function PortfolioList() {
                                     >
                                         기간
                                     </div>
-                                    <RangePicker size={'small'} />
+                                    <RangePicker 
+                                        size={'small'} 
+                                        defaultValue={[buyDate, sellDate]}
+                                        onChange={(dates, dateStrings) => {
+                                            console.log(dateStrings)
+                                            setBuyDate(dayjs(dateStrings[0]));
+                                            setSellDate(dayjs(dateStrings[1]));
+                                        }}    
+                                    />
                                 </div>
                                 <div
                                     style={{
@@ -135,23 +157,23 @@ export default function PortfolioList() {
                                         size={"small"}
                                         options={[
                                             {
-                                                value: '0',
+                                                value: '전체',
                                                 label: '전체',
                                             },
                                             {
-                                                value: '1',
+                                                value: '주식형1호',
                                                 label: '주식형1호',
                                             },
                                             {
-                                                value: '2',
+                                                value: '주식형2호',
                                                 label: '주식형2호',
                                             },
                                             {
-                                                value: '3',
+                                                value: '주식형3호',
                                                 label: '주식형3호',
                                             },
                                             {
-                                                value: '4',
+                                                value: '주식형4호',
                                                 label: '주식형4호',
                                             },
                                         ]}
@@ -182,19 +204,19 @@ export default function PortfolioList() {
                                         onChange={handleTypeChange}
                                         options={[
                                             {
-                                            value: 'all',
+                                            value: '전체',
                                             label: '전체',
                                             },
                                             {
-                                            value: 'attack',
+                                            value: '공격형',
                                             label: '공격형',
                                             },
                                             {
-                                            value: 'mixed',
+                                            value: '혼합형',
                                             label: '혼합형',
                                             },
                                             {
-                                            value: 'safe',
+                                            value: '안전형',
                                             label: '안전형',
                                             },
                                         ]}
@@ -203,6 +225,10 @@ export default function PortfolioList() {
                             </div>
                             <div
                                 className="portfolio-header-button"
+                                onClick={() => {
+                                    console.log('working')
+                                    search();
+                                }}
                             >
                                 조회 하기
                             </div>
@@ -218,7 +244,7 @@ export default function PortfolioList() {
                             >
                                 포트폴리오 목록
                             </div>
-                            <Table columns={columns} dataSource={data} />
+                            <Table columns={columns} dataSource={data} size={'small'} />
                         </div>
                     </div>
                 </>

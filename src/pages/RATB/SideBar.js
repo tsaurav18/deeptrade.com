@@ -15,7 +15,7 @@ export default function SideBar({visible, show}) {
 					<MenuOutlined />
 				</button>
 			</div>
-			<nav className={''}>
+			<nav className={!visible ? 'navbar' : ''}>
 				{/* <button
 					type="button"
 					className="nav-btn"
