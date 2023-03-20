@@ -308,11 +308,11 @@ export default function Survey() {
             <MDBContainer className="d-flex justify-content-center">
                 <div className="mx-0 mx-sm-auto">
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            총 자산대비 금융자산의 비중
+                        <p className="fw-bold text-left">
+                            1. 총 자산대비 금융자산의 비중
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault1"
                                 id="question1_1"
@@ -361,11 +361,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            감당할 수 있는 손실 정도
+                        <p className="fw-bold text-left">
+                            2. 감당할 수 있는 손실 정도
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault2"
                                 id="question2_1"
@@ -405,11 +405,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            투자자 연령대
+                        <p className="fw-bold text-left">
+                            3. 투자자 연령대
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault3"
                                 id="question3_1"
@@ -467,11 +467,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            투자 목적
+                        <p className="fw-bold text-left">
+                            4. 투자 목적
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault4"
                                 id="question4_1"
@@ -511,11 +511,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            투자경험이 있는 금융투자상품 (복수선택가능)
+                        <p className="fw-bold text-left">
+                            5. 투자경험이 있는 금융투자상품 (복수선택가능)
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBCheckbox
                                 name="flexCheckboxDefault"
                                 id="question5_1"
@@ -580,7 +580,7 @@ export default function Survey() {
                                 }}
                             />
                         </div>
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBCheckbox
                                 name="flexCheckboxDefault"
                                 id="question5_8"
@@ -647,11 +647,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            금융투자상품 투자경험기간
+                        <p className="fw-bold text-left">
+                            6. 금융투자상품 투자경험기간
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault6"
                                 id="question6_1"
@@ -700,11 +700,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            목표하는 투자 기간
+                        <p className="fw-bold text-left">
+                            7. 목표하는 투자 기간
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault7"
                                 id="question7_1"
@@ -744,11 +744,11 @@ export default function Survey() {
                         </div>
                     </div>
                     <div className="bg-white mt-3">
-                        <p className="fw-bold text-center">
-                            투자 이해도의 정도
+                        <p className="fw-bold text-left">
+                            8. 투자 이해도의 정도
                         </p>
 
-                        <div className="text-center">
+                        <div className="text-left">
                             <MDBRadio
                                 name="flexRadioDefault8"
                                 id="question8_1"
