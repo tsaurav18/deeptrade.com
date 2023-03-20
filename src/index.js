@@ -12,6 +12,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import XpercentApp from "./pages/XpercentApp/XpercentApp";
 import PortfolioList from "./pages/RATB/PortfolioList";
 import RebalancingStatus from "./pages/RATB/RebalancingStatus";
+import Survey from "./pages/Survey/Survey";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,6 +28,7 @@ ReactDOM.render(
         <Route path="xpercent" element={<XpercentApp />} />
         <Route path="portfolio_list" element={<PortfolioList />} />
         <Route path="rebalancing_status" element={<RebalancingStatus />} />
+        <Route path="survey" element={<Survey />} />
       </Routes>
     </Router>
   </React.StrictMode>,
