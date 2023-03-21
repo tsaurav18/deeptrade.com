@@ -198,18 +198,27 @@ export default function Survey() {
         if(question5_13 || (question5_12 && !question5_1 && !question5_2 && !question5_3 && !question5_4 && !question5_5 && !question5_6 && !question5_7 && !question5_8 && !question5_9 && !question5_10 && !question5_11) || (question5_6 && !question5_1 && !question5_2 && !question5_3 && !question5_4 && !question5_5 && !question5_12 && !question5_7 && !question5_8 && !question5_9 && !question5_10 && !question5_11))
         {
             totalPoints += 0;
+            console.log("nothing")
         }
-        else if(question5_10 || question5_11 || question5_12)
+        else if(question5_3 || question5_5 || question5_2)
+        {
+            totalPoints += 20;
+            console.log("20")
+        }
+        else if((question5_10 || question5_11 || question5_12) && (!question5_1 && !question5_2 && !question5_3 && !question5_4 && !question5_5 && !question5_6 && !question5_7 && !question5_8 && !question5_9))
         {
             totalPoints += 5;
+            console.log("5")
         }
         else if((question5_1 || question5_2 || question5_4 ||  question5_7 || question5_8 || question5_9) && (!question5_3 && !question5_5 && !question5_6 && !question5_10 && !question5_11 && !question5_12 && !question5_13))
         {
             totalPoints += 10;
+            console.log("10")
         }
-        else if(question5_3 || question5_5)
+        else if((question5_1 || question5_4 ||  question5_7 || question5_8 || question5_9) && (question5_6 || question5_7 || question5_8 || question5_9 || question5_10 || question5_11))
         {
-            totalPoints += 20;
+            totalPoints += 15;
+            console.log("15")
         }
 
         if(question2 == 1)
