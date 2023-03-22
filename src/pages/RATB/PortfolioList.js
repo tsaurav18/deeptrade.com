@@ -21,11 +21,6 @@ const columns = [
       key: 'type',
     },
     {
-      title: '추천날짜',
-      dataIndex: 'recom_date',
-      key: 'recom_date',
-    },
-    {
       title: '종목명',
       key: 'stock_name',
       dataIndex: 'stock_name'
