@@ -6,8 +6,8 @@ function VideoSection() {
     const refVideo2 = useRef(null);
     const [isMuted, setIsMuted] = useState(false)
     const [isMuted2, setIsMuted2] = useState(true)
-    const [src, setsrc] = useState("assets/video/XPercentmp4.mp4")
-    const [src2, setsrc2] = useState("assets/video/samsungmp4.mp4")
+    const [src, setsrc] = useState("https://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/XPercentmp4.mp4")
+    const [src2, setsrc2] = useState("ahttps://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/samsungmp4.mp4")
     console.log("ismuted outside", isMuted)
     useEffect(() => {
        console.log("ismuted", isMuted)
@@ -21,7 +21,7 @@ function VideoSection() {
             refVideo.current.muted = true;
             setIsMuted(!isMuted)
         }
-        setsrc("assets/video/XPercentmp4.mp4")
+        setsrc("https://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/XPercentmp4.mp4")
         refVideo.current.src = src;
     }, [src,isMuted]);
     useEffect(() => {
@@ -37,19 +37,19 @@ function VideoSection() {
          
         }
 
-        setsrc2("assets/video/samsungmp4.mp4")
+        setsrc2("https://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/samsungmp4.mp4")
         refVideo2.current.src = src2;
     }, [src2]);
   return <div className="video_containter">
     <div className="video_outer_wrapper">
     <div className="video_wrapper">
-    <video ref={refVideo} src="assets/video/XPercentmp4.mp4" height="400" loop controls autoPlay playsInline muted controlsList="nodownload">
+    <video ref={refVideo} src="https://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/XPercentmp4.mp4" height="400" loop controls autoPlay playsInline muted controlsList="nodownload">
  
      </video>
     
     </div>
     <div className="video_wrapper">
-    <video  ref={refVideo2} src="assets/video/samsungmp4.mp4" height="400" loop controls  playsInline muted controlsList="nodownload">
+    <video  ref={refVideo2} src="https://deeptrade-bucket.s3.ap-northeast-2.amazonaws.com/samsungmp4.mp4" height="400" loop controls  playsInline muted controlsList="nodownload">
  
  </video>
  </div>

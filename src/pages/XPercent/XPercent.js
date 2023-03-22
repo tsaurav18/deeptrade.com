@@ -138,7 +138,7 @@ function XPercent(props) {
                       <div
                         className="service_button"
                         onClick={() => {
-                          window.open("/xpercent", "_blank");
+                          window.open("https://xpercent.io", "_blank");
                         }}
                       >
                         서비스 상세 보기
