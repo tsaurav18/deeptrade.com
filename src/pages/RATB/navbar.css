@@ -55,7 +55,7 @@ nav{
 	height: 100%;
 }
 
-.nav-link{
+.nav-link-ratb{
 	display: flex;
 	align-items: center;
 	color: #fff;
@@ -69,12 +69,12 @@ nav{
     color: #37c5d9
 }
 
-.nav-link:hover{
+.nav-link-ratb:hover{
 	background-color:#37c5d9;
 	color: #4e4e4e;
 }
 
-.nav-link span{
+.nav-link-ratb span{
 	margin-left: 10px;
 }
 

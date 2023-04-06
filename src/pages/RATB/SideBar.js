@@ -41,7 +41,7 @@ export default function SideBar({visible, show}) {
 						<NavLink 
                             to="/portfolio_list" 
                             className={({ isActive }) => {
-                                return isActive ? "nav-link focused" : "nav-link"}}
+                                return isActive ? "nav-link-ratb focused" : "nav-link-ratb"}}
                         >
                             <RightOutlined />
 							<span>포트폴리오 목록 관리</span>
@@ -49,7 +49,7 @@ export default function SideBar({visible, show}) {
 						<NavLink 
                             to="/rebalancing_status" 
                             className={({ isActive }) => {
-                                return isActive ? "nav-link focused" : "nav-link"}}
+                                return isActive ? "nav-link-ratb focused" : "nav-link-ratb"}}
                         >
                             <RightOutlined />
 							<span>리밸런싱 현황 관리 </span>
