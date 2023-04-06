@@ -11,28 +11,32 @@ function Partnership(props) {
       </div>
       <div className="row gx-0 gy-2 partnership_content_container">
         <div className="col-4 partnership_icon bottom_row">
-          <img src="assets/partnership/DB_investment.png" alt="DB_investment" />
-        </div>
-        <div className="col-4 partnership_icon bottom_row">
           <img src="assets/partnership/DSAssets.png" alt="DSAssets" />
-        </div>
-        <div className="col-4 partnership_icon bottom_row">
-          <img src="assets/partnership/nh_investment.png" alt="nh_investment" />
-        </div>
-        <div className="col-4 partnership_icon bottom_row">
-          <img src="assets/eugene_investment.png" alt="img1" />
-        </div>
-        <div className="col-4 partnership_icon bottom_row">
-          <img src="assets/spring_camp.png" alt="img1" />
-        </div>
-        <div className="col-4 partnership_icon bottom_row">
-          <img src="assets/kb_investment.png" alt="img1" />
         </div>
         <div className="col-4 partnership_icon bottom_row">
           <img src="assets/samsung_investment.png" alt="img1" />
         </div>
         <div className="col-4 partnership_icon bottom_row">
+          <img src="assets/eugene_investment.png" alt="img1" />
+        </div>
+        <div className="col-4 partnership_icon bottom_row">
+          <img src="assets/kb_investment.png" alt="img1" />
+        </div>
+
+        <div className="col-4 partnership_icon bottom_row">
           <img src="assets/quantit_logo.png" alt="img1" />
+        </div>
+
+        <div className="col-4 partnership_icon bottom_row">
+          <img src="assets/partnership/nh_investment.png" alt="nh_investment" />
+        </div>
+
+        <div className="col-4 partnership_icon bottom_row">
+          <img src="assets/partnership/DB_investment.png" alt="DB_investment" />
+        </div>
+
+        <div className="col-4 partnership_icon bottom_row">
+          <img src="assets/spring_camp.png" alt="img1" />
         </div>
       </div>
       {/* <div
