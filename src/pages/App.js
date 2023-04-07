@@ -44,7 +44,7 @@ function App() {
   const width = window.innerWidth;
 
   useEffect(() => {
-    document.title = "DeepTrade Technologies | Innovate AI Trading";
+    document.title = "딥트레이드테크놀로지스";
     const modalCookie = cookies.get("showModal");
     const cookieDate = new Date(modalCookie);
     const timeNow = new Date();
