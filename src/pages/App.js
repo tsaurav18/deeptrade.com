@@ -93,7 +93,7 @@ function App() {
         xpercentRef={xpercentRef}
         technologyRef={technologyRef}
         newsRef={newsRef}
-        newsletterRef={newsletterRef}
+        // newsletterRef={newsletterRef}
       />
       <Main refProp={mainRef} />
       <Mission refProp={missionRef} />
@@ -104,7 +104,7 @@ function App() {
       <Recruitment />
       <News refProp={newsRef} />
       <Partnership mainRef={mainRef} />
-      <Newsletter refProp={newsletterRef} mainRef={mainRef} />
+      {/* <Newsletter refProp={newsletterRef} mainRef={mainRef} /> */}
       <Footer />
       <Modal
         visible={false}
