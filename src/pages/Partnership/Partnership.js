@@ -14,6 +14,12 @@ function Partnership(props) {
           <img src="assets/partnership/DSAssets.png" alt="DSAssets" />
         </div>
         <div className="col-4 partnership_icon bottom_row">
+        
+          <img src="assets/partnership/korea_investment.png" alt="korea_investment" />
+       
+        </div>
+
+        <div className="col-4 partnership_icon bottom_row">
           <img src="assets/samsung_investment.png" alt="img1" />
         </div>
         <div className="col-4 partnership_icon bottom_row">

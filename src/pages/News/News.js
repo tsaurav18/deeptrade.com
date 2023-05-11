@@ -44,6 +44,30 @@ function News(props) {
           <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news18.png" alt="news18" />
+              </div>
+              <div className="news_content">
+                <h6>
+                  딥트레이드테크놀로지스, 한국투자신탁운용과 인공지능 자산 관리
+                  기술 사업화를 위한 MOU 체결
+                </h6>
+                <p>2023/05</p>
+                <p>
+                  딥트레이드테크놀로지스가 국내 AUM 최대 규모 한국투자신탁운용과
+                  인공지능 기술을 활용한 자산관리 기술 사업화를 위한 MOU를
+                  체결하였습니다. 본 협업을 통해 딥트레이드테크놀로지스의 최신
+                  인공지능 기술이 적용된 주가 예측 AI SHANNON의 성능을
+                  한국투자신탁운용의 주식운용본부와 함께 객관적인 성능 검증을
+                  수행하고 결과적으로 인공지능을 활용한 금융 상품 및 서비스
+                  개발을 통한 사업화를 목표로 합니다.{" "}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+
+          <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
                 <img src="assets/news/news17.png" alt="news17" />
               </div>
               <div className="news_content">
