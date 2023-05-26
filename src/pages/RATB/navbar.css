@@ -1,4 +1,4 @@
-nav{
+aside{
 	position:absolute;
 	top:0;
 	left:0;
@@ -13,12 +13,12 @@ nav{
     z-index: 999999;
 }
 
-.navbar{
+.ratb_navbar{
 	transform: translateX(-100%);
     position: absolute;
 }
 
-.nav-btn{
+.ratb-nav-btn{
 	position: absolute;
 	transform: translateX(38px);
 	top: 20px;
@@ -39,7 +39,7 @@ nav{
 	color: #fff;
 }
 
-.navbar-logo{
+.ratb-navbar-logo{
 	display: block;
 	width: 150px;
 	margin: auto;
@@ -49,7 +49,7 @@ nav{
     cursor: pointer;
 }
 
-.navbar-logo img{
+.ratb-navbar-logo img{
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -78,18 +78,18 @@ nav{
 	margin-left: 10px;
 }
 
-.nav-top{
+.nav-ratb-top{
 	margin-top: 10rem;
 }
 
-.mobile-nav{
+.mobile-ratb-nav{
 	background-color:#282828;
 	width: 100%;
 	height:40px;
 	display: none;
 }
 
-.mobile-nav-btn{
+.mobile-ratb-nav-btn{
 	color: #fff;
 	background: transparent;
 	outline: none;
@@ -99,17 +99,17 @@ nav{
 
 
 @media only screen and (max-width: 768px){
-	.mobile-nav{
+	.mobile-ratb-nav{
 		display: flex;
 		align-items: center;
 	}
-	nav{
+	aside{
 		width: 250px;
 		top: 38px;
 		min-height: calc(100vh - 38px);
 	}
 
-	.nav-btn{
+	.ratb-nav-btn{
 		display: none;
 	}
 }

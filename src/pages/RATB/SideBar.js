@@ -1,63 +1,58 @@
-import React, {} from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import "./navbar.css"
+import "./navbar.css";
 import { RightOutlined, MenuOutlined } from "@ant-design/icons";
 
-export default function SideBar({visible, show}) {
-
-    return (
-        <>
-			<div className="mobile-nav">
-				<button
-					className="mobile-nav-btn"
-					onClick={() => show(!visible)}
-				>
-					<MenuOutlined />
-				</button>
-			</div>
-			<nav className={!visible ? 'navbar' : ''}>
-				{/* <button
+export default function SideBar({ visible, show }) {
+  return (
+    <>
+      <div className="mobile-ratb-nav">
+        <button className="mobile-ratb-nav-btn" onClick={() => show(!visible)}>
+          <MenuOutlined />
+        </button>
+      </div>
+      <aside className={!visible ? "ratb_navbar" : ""}>
+        {/* <button
 					type="button"
-					className="nav-btn"
+					className="ratb-nav-btn"
 					onClick={() => show(!visible)}
 				>
 					{ !visible
 						? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
 				</button> */}
-				<div>
-					<NavLink
-						className="navbar-logo"
-						to="/portfolio_list"
-                        style={{
-                            backgroundColor: 'white'
-                        }}
-					>
-                        <img
-                            src={"assets/xpercent_logo.png"}
-                            alt="logo"
-                        />
-					</NavLink>
-					<div className="links nav-top">
-						<NavLink 
-                            to="/portfolio_list" 
-                            className={({ isActive }) => {
-                                return isActive ? "nav-link-ratb focused" : "nav-link-ratb"}}
-                        >
-                            <RightOutlined />
-							<span>포트폴리오 목록 관리</span>
-						</NavLink>
-						<NavLink 
-                            to="/rebalancing_status" 
-                            className={({ isActive }) => {
-                                return isActive ? "nav-link-ratb focused" : "nav-link-ratb"}}
-                        >
-                            <RightOutlined />
-							<span>리밸런싱 현황 관리 </span>
-						</NavLink>
-					</div>
-				</div>
+        <div>
+          <NavLink
+            className="ratb-navbar-logo"
+            to="/portfolio_list"
+            style={{
+              backgroundColor: "white",
+            }}
+          >
+            <img src={"assets/xpercent_logo.png"} alt="logo" />
+          </NavLink>
+          <div className="links nav-ratb-top">
+            <NavLink
+              to="/portfolio_list"
+              className={({ isActive }) => {
+                return isActive ? "nav-link-ratb focused" : "nav-link-ratb";
+              }}
+            >
+              <RightOutlined />
+              <span>포트폴리오 목록 관리</span>
+            </NavLink>
+            <NavLink
+              to="/rebalancing_status"
+              className={({ isActive }) => {
+                return isActive ? "nav-link-ratb focused" : "nav-link-ratb";
+              }}
+            >
+              <RightOutlined />
+              <span>리밸런싱 현황 관리 </span>
+            </NavLink>
+          </div>
+        </div>
 
-				{/* <div className="links">
+        {/* <div className="links">
 					<NavLink to="/settings" className="nav-link">
 						<FaCog size={ICON_SIZE} />
 						<span>Settings</span> 
@@ -67,7 +62,7 @@ export default function SideBar({visible, show}) {
 						<span>Logout</span> 
 					</NavLink>
 				</div> */}
-			</nav>
-		</>
-    )
+      </aside>
+    </>
+  );
 }

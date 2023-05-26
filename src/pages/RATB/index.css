@@ -29,17 +29,17 @@
 		margin-left: 0;
 	}
 
-    .mobile-nav{
+    .mobile-ratb-nav{
 		display: flex;
 		align-items: center;
 	}
-	nav{
+	aside{
 		width: 70%;
 		top: 38px;
 		min-height: calc(100vh - 38px);
 	}
 
-	.nav-btn{
+	.ratb-nav-btn{
 		display: none;
 	}
 
