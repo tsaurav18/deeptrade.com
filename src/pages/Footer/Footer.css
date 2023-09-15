@@ -145,3 +145,32 @@
         width: 100%;
     }
 }
+
+
+
+.social-icons {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+
+  
+  .icon{
+    font-size: 30px;
+    margin-right: 10px; 
+}
+  /* Media queries for responsive design */
+  
+  @media (max-width: 768px) {
+    .social-icons {
+        display: flex;
+        margin-top: 10px;
+    }
+  
+    .icon{
+        font-size: 30px;
+        margin-right: 10px; 
+    }
+   
+  }
+  

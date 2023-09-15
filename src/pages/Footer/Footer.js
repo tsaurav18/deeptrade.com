@@ -1,9 +1,8 @@
 import "./Footer.css";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FaInstagram, FaFacebook } from "react-icons/fa";
 function Footer() {
   return (
     <div className="footer_container">
@@ -76,30 +75,48 @@ function Footer() {
                 }}
               >
                 <div>
-                  <div>   네이버 블로그</div>
-             <div>바로가기 <FontAwesomeIcon icon={faArrowRight} />
-
-              
-               {/* <FontAwesomeIcon icon="fa-sharp fa-light fa-arrow-right" /> */}
-               </div>
-             {/* <ArrowRightOutlined style={{ marginLeft: 10 }} /> */}
+                  <div> 네이버 블로그</div>
+                  <div>
+                    바로가기 <FontAwesomeIcon icon={faArrowRight} />
+                    {/* <FontAwesomeIcon icon="fa-sharp fa-light fa-arrow-right" /> */}
+                  </div>
+                  {/* <ArrowRightOutlined style={{ marginLeft: 10 }} /> */}
                 </div>
               </div>
-          <div></div>
+              <div className="social-icons">
+                <div className="footer_body_content_sns">
+                  <a
+                    href="https://www.facebook.com/deeptrade.co"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebook className="icon" color="#fff" />
+                  </a>
+                </div>
+                <div className="footer_body_content_sns">
+                  <a
+                    href="https://www.instagram.com/deeptradetechnologies/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram className="icon" color="#fff" />
+                  </a>
+                </div>
+              </div>
+              <div></div>
             </div>
             <div className="col-4">
               <div className="footer_body_content">담당자 이메일</div>
               <div className="footer_body_content_und block_2">
-              contact@deeptrade.co
-          
+                contact@deeptrade.co
               </div>
             </div>
             <div className="col-4">
               <div className="footer_body_content">오시는 길</div>
               <div className="footer_body_content_und block_3">
                 <div>
-                <div> 서울시 관악구 관악로1</div>
-                <div> 서울대학교 컴퓨터연구소</div>
+                  <div> 서울시 관악구 관악로1</div>
+                  <div> 서울대학교 컴퓨터연구소</div>
                 </div>
               </div>
             </div>

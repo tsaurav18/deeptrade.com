@@ -224,7 +224,7 @@ function XpercentApp() {
             </div>
             <div className={`incDetail col text-left`}>
               <ScrollAnimation animateIn="fadeInRight">
-                대표자명: 손예준 <br />
+                대표자명: 김남균 <br />
                 TEL: 02-875-5677 <br />
                 EMAIL: contact@deeptrade.co <br />
                 주소: 서울특별시 관악구 관악로 1, 138동 3층 314호 (신림동,

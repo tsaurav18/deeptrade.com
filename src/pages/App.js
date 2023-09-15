@@ -106,6 +106,7 @@ function App() {
       <Partnership mainRef={mainRef} />
       {/* <Newsletter refProp={newsletterRef} mainRef={mainRef} /> */}
       <Footer />
+
       <Modal
         visible={false}
         footer={null}

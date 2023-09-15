@@ -59,7 +59,24 @@ function News(props) {
                   인공지능 기술이 적용된 주가 예측 AI SHANNON의 성능을
                   한국투자신탁운용의 주식운용본부와 함께 객관적인 성능 검증을
                   수행하고 결과적으로 인공지능을 활용한 금융 상품 및 서비스
-                  개발을 통한 사업화를 목표로 합니다.{" "}
+                  개발을 통한 사업화를 목표로 합니다. <br />
+                  {/* <a
+                    href="https://www.datanet.co.kr/news/articleView.html?idxno=183674"
+                    target="_blank"
+                  >
+                    (데이터넷 신문 2023/05)
+                  </a> */}
+                  <button
+                    className="news_link_button"
+                    onClick={() =>
+                      window.open(
+                        "https://www.datanet.co.kr/news/articleView.html?idxno=183674",
+                        "_blank"
+                      )
+                    }
+                  >
+                    기사 보기
+                  </button>
                 </p>
               </div>
             </div>
@@ -82,13 +99,24 @@ function News(props) {
                   딥트레이드테크놀로지스의 최신 인공지능 기술이 적용된 주가 예측
                   AI SHANNON의 성능을 DS 자산운용이 실제 투자를 통해 검증합니다.
                   딥트레이드테크놀로지스는 객관적인 성능 검증 이후 DS
-                  자산운용과의 인공지능 공모 펀드 개발을 목표로 합니다.{" "}
-                  <a
+                  자산운용과의 인공지능 공모 펀드 개발을 목표로 합니다. <br />
+                  <button
+                    className="news_link_button"
+                    onClick={() =>
+                      window.open(
+                        "https://www.aitimes.kr/news/articleView.html?idxno=27312",
+                        "_blank"
+                      )
+                    }
+                  >
+                    기사 보기
+                  </button>
+                  {/* <a
                     href="https://www.aitimes.kr/news/articleView.html?idxno=27312"
                     target="_blank"
                   >
                     (인공지능신문 2023/02/07)
-                  </a>
+                  </a> */}
                 </p>
               </div>
             </div>
@@ -179,12 +207,24 @@ function News(props) {
                   편리하게 사용할 수 있을 것으로 기대됩니다. 그 외에도 KB
                   증권과의 협업을 통해 XPercent에 다양한 편의 기능을 추가할
                   예정이며 완성된 XPercent는 앱 버전으로 연내 출시 예정입니다.{" "}
-                  <a
+                  <br />
+                  <button
+                    className="news_link_button"
+                    onClick={() =>
+                      window.open(
+                        "https://news.mt.co.kr/mtview.php?no=2022100517433057424)%EA%B0%80",
+                        "_blank"
+                      )
+                    }
+                  >
+                    기사 보기
+                  </button>
+                  {/* <a
                     href="https://news.mt.co.kr/mtview.php?no=2022100517433057424)%EA%B0%80"
                     target="_blank"
                   >
                     (머니투데이 2022/10/6)
-                  </a>
+                  </a> */}
                 </p>
               </div>
             </div>
