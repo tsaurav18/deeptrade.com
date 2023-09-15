@@ -1,4 +1,3 @@
-
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -13,8 +12,11 @@ import XpercentApp from "./pages/XpercentApp/XpercentApp";
 import PortfolioList from "./pages/RATB/PortfolioList";
 import RebalancingStatus from "./pages/RATB/RebalancingStatus";
 import Survey from "./pages/Survey/Survey";
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
+import EnterprisesLogin from "./pages/Enterprises/LoginPage/EnterprisesLogin";
+import EnterprisesService from "./pages/Enterprises/Service/EnterprisesService";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,6 +31,8 @@ ReactDOM.render(
         <Route path="portfolio_list" element={<PortfolioList />} />
         <Route path="rebalancing_status" element={<RebalancingStatus />} />
         <Route path="survey" element={<Survey />} />
+        <Route path="enterprise" element={<EnterprisesLogin />} />
+        <Route path="enterprise/service" element={<EnterprisesService />} />
       </Routes>
     </Router>
   </React.StrictMode>,
