@@ -1,67 +1,67 @@
 .enterprises_service_container{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    width: 900px;
-    margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 900px;
+  margin: 0 auto;
 }
 .enterprises_service_container .enterprises_service_company_text{
-    border: 1px solid #bdbdbd;
-    padding: 10px 13px;
-    width: 500px;
-    margin: 48px 0px;
+  border: 1px solid #bdbdbd;
+  padding: 10px 13px;
+  width: 500px;
+  margin: 48px 0px;
 }
 
 
 
 .enterprises_service_container  .enterprises_button-row {
-    display: flex;
-    justify-content: space-between; /* Buttons are evenly spaced */
-    
-  }
+  display: flex;
+  justify-content: space-between; /* Buttons are evenly spaced */
   
-  .enterprises_service_container  .enterprises_button {
-    padding: 10px 20px; /* Add padding to style buttons */
-    background-color: #007bff; /* Example background color */
-    color: #fff; /* Example text color */
-    border: none;
-    cursor: pointer;
-  }
-  
-  /* Responsive Styles (Optional) */
-  @media (max-width: 768px) {
-    .enterprises_service_container  .enterprises_button-row {
-      flex-direction: column; /* Stack buttons vertically on smaller screens */
-    }
-  }
+}
 
-  /* Style for the table */
+.enterprises_service_container  .enterprises_button {
+  padding: 10px 20px; /* Add padding to style buttons */
+  background-color: #007bff; /* Example background color */
+  color: #fff; /* Example text color */
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive Styles (Optional) */
+@media (max-width: 768px) {
+  .enterprises_service_container  .enterprises_button-row {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+  }
+}
+
+/* Style for the table */
 .enterprises_service_table_responsive {
-    overflow-x: auto;
-    width: 100%;
-    margin-top: 50px;
-  }
-  
-  .enterprises_service_table_responsive .enterprises_service_table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border: 1px solid #ddd;
-  }
-  
-  .enterprises_service_table_responsive table th,
-  table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  /* Add styles for even and odd rows */
-  .enterprises_service_table_responsive table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  /* Hover effect on rows */
-  .enterprises_service_table_responsive table tbody tr:hover {
-    background-color: #e0e0e0;
-  }
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.enterprises_service_table_responsive .enterprises_service_table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.enterprises_service_table_responsive table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Add styles for even and odd rows */
+.enterprises_service_table_responsive table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect on rows */
+.enterprises_service_table_responsive table tbody tr:hover {
+  background-color: #e0e0e0;
+}

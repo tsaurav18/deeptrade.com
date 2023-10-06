@@ -1,6 +1,10 @@
 import React from "react";
 import "./EnterprisesService.css";
+import { useSelector } from "react-redux";
 function EnterprisesService() {
+  const user_info_reducer = useSelector((state) => state.loginReducer);
+
+  console.log("user_info_reducer", user_info_reducer);
   const data = [
     {
       stock_id: "005290",
@@ -68,7 +72,9 @@ function EnterprisesService() {
   }
   return (
     <div className="enterprises_service_container">
-      <div className="enterprises_service_company_text">DeepTrade & 기업명</div>
+      <div className="enterprises_service_company_text">
+        DeepTrade & {user_info_reducer.company_name}
+      </div>
       <div className="enterprises_button-row">
         <button className="enterprises_button">2주 Top 5</button>
         <button className="enterprises_button">2주 Top 20</button>

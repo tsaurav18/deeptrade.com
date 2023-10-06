@@ -17,25 +17,54 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import EnterprisesLogin from "./pages/Enterprises/LoginPage/EnterprisesLogin";
 import EnterprisesService from "./pages/Enterprises/Service/EnterprisesService";
+import { configureStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+
+import { PersistGate } from "redux-persist/integration/react";
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import persistedReducers from "./redux/store";
+
+const store = configureStore({
+  reducer: persistedReducers,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+const persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="eugene" element={<Eugene />} />
-        <Route path="spop" element={<Spop />} />
-        <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
-        <Route path="unsub_email" element={<Unsubscribe />} />
-        <Route path="xpercent" element={<XpercentApp />} />
-        <Route path="portfolio_list" element={<PortfolioList />} />
-        <Route path="rebalancing_status" element={<RebalancingStatus />} />
-        <Route path="survey" element={<Survey />} />
-        <Route path="enterprise" element={<EnterprisesLogin />} />
-        <Route path="enterprise/service" element={<EnterprisesService />} />
-      </Routes>
-    </Router>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <Router>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="eugene" element={<Eugene />} />
+            <Route path="spop" element={<Spop />} />
+            <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
+            <Route path="unsub_email" element={<Unsubscribe />} />
+            <Route path="xpercent" element={<XpercentApp />} />
+            <Route path="portfolio_list" element={<PortfolioList />} />
+            <Route path="rebalancing_status" element={<RebalancingStatus />} />
+            <Route path="survey" element={<Survey />} />
+            <Route path="enterprise" element={<EnterprisesLogin />} />
+            <Route path="enterprise/service" element={<EnterprisesService />} />
+          </Routes>
+        </Router>
+      </React.StrictMode>{" "}
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );
 
