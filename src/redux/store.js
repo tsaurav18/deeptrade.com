@@ -8,6 +8,7 @@ import { persistReducer } from "redux-persist";
 import loginReducer from "./slices/loginSlice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
+
 const persistConfig = {
   key: "root",
   version: 1,

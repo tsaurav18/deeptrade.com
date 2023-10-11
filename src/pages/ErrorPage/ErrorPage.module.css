@@ -1,0 +1,28 @@
+.layout {
+    background-color: rgb(239, 240, 240);
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    width: 80vw;
+}
+.link:link, .link:visited, .link:hover, .link:active{
+    color: rgb(38, 48, 60);
+    font-size: 16px;
+    text-decoration: none;
+    width: 140px;
+}
+.button {
+    border-radius: 50px;
+    background-color: #990000;
+    justify-content: center;
+    color: white;
+}
+
+@media (min-width: 600px) {
+    .image {
+        width: 600px;
+    }
+}

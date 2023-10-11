@@ -13,7 +13,7 @@
 .logoSection {
   height: 238px;
   width: 580px;
-  background-color: whitesmoke;
+  
 }
 
 .enterprises_logo_wrapper{
@@ -21,6 +21,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .formSection {
   text-align: center;
   background-color: #f0f0f0;
@@ -67,7 +68,7 @@ input[type="password"] {
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  height: 86px;
+  height: 106px;
   width: 109px;
 }
 
@@ -78,7 +79,7 @@ input[type="password"] {
   .logoSection {
     height: 174px;
     width: 372px;
-    background-color: whitesmoke;
+    
   }
   .formSection {
 
@@ -91,6 +92,9 @@ input[type="password"] {
     
 
   }
+  .enterprises_logo_wrapper >img{
+    width: 380px;
+   }
 } 
 @media only screen and (max-width: 768px) and (min-width: 481px){
 

@@ -31,6 +31,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import persistedReducers from "./redux/store";
+import { VerifyAuth } from "./routing/VerifyAuth";
+import authRoles from "./routing/authRoles";
 
 const store = configureStore({
   reducer: persistedReducers,
@@ -58,8 +60,21 @@ ReactDOM.render(
             <Route path="portfolio_list" element={<PortfolioList />} />
             <Route path="rebalancing_status" element={<RebalancingStatus />} />
             <Route path="survey" element={<Survey />} />
-            <Route path="enterprise" element={<EnterprisesLogin />} />
-            <Route path="enterprise/service" element={<EnterprisesService />} />
+            <Route
+              path="enterprise"
+              exact={true}
+              element={<EnterprisesLogin />}
+            />
+            <Route
+              path="enterprise/service"
+              exact={true}
+              element={
+                <VerifyAuth
+                  authRoles={authRoles}
+                  component={EnterprisesService}
+                />
+              }
+            />
           </Routes>
         </Router>
       </React.StrictMode>{" "}

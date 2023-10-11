@@ -45,3 +45,24 @@ export const loginAPI = {
       });
   },
 };
+
+export const getDtData = {
+  async fetchDtData(company_name, modelType) {
+    let body = JSON.stringify({
+      company_name: company_name,
+      model: modelType,
+    });
+    let csrf = await instance.get("mobile/get_csrf/");
+
+    return instance
+      .post(`dtenter/dt_service/`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+};

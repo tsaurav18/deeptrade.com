@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./EnterprisesLogin.css";
 import { loginAPI } from "../../../api";
 import { loginInfo } from "../../../redux/slices/loginSlice";
+
 function EnterprisesLogin() {
+  const user_info_reducer = useSelector((state) => state.loginReducer);
   const [formInput, setFormInput] = useState({
     company_usrnm: "",
     company_pass: "",
@@ -15,9 +17,17 @@ function EnterprisesLogin() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  // const handleKeyDown = (event) => {
+  //   if (event.key === "Enter") {
+  //     if (formInput.company_pass !== "" && formInput.company_usrnm !== "") {
+  //       submitLogin(event);
+  //     }
+  //   }
+  // };
+
   const submitLogin = async (event) => {
     event.preventDefault();
-    console.log("formInput", formInput);
     const res = await loginAPI.dtLogin(formInput);
     if (res.status === 200) {
       if (res.data) {
@@ -27,20 +37,25 @@ function EnterprisesLogin() {
         navigate("/enterprise/service");
       }
     } else {
-      console.log(res);
       if (res.data.msg) {
         toast(res.data.msg);
       }
     }
   };
+  // useEffect(() => {
+  //   // Add event listeners when the component mounts
+  //   document.addEventListener("keydown", handleKeyDown);
+  //   return () => {
+  //     // Clean up the event listener when the component unmounts
+  //     document.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
   return (
     <div className="loginContainer">
       <div className="logoSection">
         {/* Your logo */}
         <div className="enterprises_logo_wrapper">
-          <div>딥트레이드 로고</div>
-          <span>&</span>
-          <div>소개 및 안내 문구</div>
+          <img src={"/assets/deeptrade_logo.png"} alt="logo" />
         </div>
         {/* <img src="logo.png" alt="Logo" /> */}
       </div>
@@ -51,9 +66,12 @@ function EnterprisesLogin() {
             <input
               type="text"
               placeholder="아이디 입력해주세요"
-              onChange={(text) =>
-                setFormInput({ ...formInput, company_usrnm: text.target.value })
-              }
+              onChange={(e) => {
+                setFormInput({
+                  ...formInput,
+                  company_usrnm: e.target.value,
+                });
+              }}
             />
           </div>
           <div className="inputGroup">
@@ -62,9 +80,9 @@ function EnterprisesLogin() {
               type="password"
               id="pass"
               placeholder="비밀번호 입력해주세요"
-              onChange={(text) =>
-                setFormInput({ ...formInput, company_pass: text.target.value })
-              }
+              onChange={(e) => {
+                setFormInput({ ...formInput, company_pass: e.target.value });
+              }}
             />
           </div>
         </form>
@@ -76,10 +94,10 @@ function EnterprisesLogin() {
           로그인
         </button>
       </div>
-      <div className="infoSection">
+      {/* <div className="infoSection">
         <h3>서비스 안내 가이드</h3>
-        {/* Your service information */}
-      </div>
+     
+      </div> */}
       <ToastContainer />
     </div>
   );

@@ -1,15 +1,27 @@
-.enterprises_service_container{
+html{
+  margin: 0
+}
+ .enterprises_service_container{
   height: 100vh;
   display: flex;
   flex-direction: column;
   width: 900px;
   margin: 0 auto;
+
 }
-.enterprises_service_container .enterprises_service_company_text{
-  border: 1px solid #bdbdbd;
-  padding: 10px 13px;
-  width: 500px;
+.enterprises_service_container .enterprises_service_inner_box{
+  display: flex;
+    width: 900px;
+    margin: 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text{
+  
   margin: 48px 0px;
+  font-size: 30px;
+  font-weight: 800;
 }
 
 
@@ -26,6 +38,7 @@
   color: #fff; /* Example text color */
   border: none;
   cursor: pointer;
+  width:  120px;
 }
 
 /* Responsive Styles (Optional) */
@@ -40,14 +53,29 @@
   overflow-x: auto;
   width: 100%;
   margin-top: 50px;
+  position: relative; 
+  margin-bottom: 50px;
 }
 
+/* Style for the table header */
+.enterprises_service_table_responsive .enterprises_service_table thead {
+  position: sticky;
+  top: 0; /* Stick the header to the top of the container */
+  background-color: #fff;
+  z-index: 1; /* Ensure the header is above the content */
+}
 .enterprises_service_table_responsive .enterprises_service_table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
   border: 1px solid #ddd;
 }
+
+.enterprises_service_table_responsive .enterprises_service_table .table_head {
+
+  display: contents;
+}
+
 
 .enterprises_service_table_responsive table th,
 table td {
