@@ -3,6 +3,7 @@ const initialState = {
   company_usrnm: "",
   company_name: "",
   is_staff: false,
+  date_list: [],
 };
 
 export const loginSlice = createSlice({
@@ -14,6 +15,7 @@ export const loginSlice = createSlice({
       state.company_usrnm = action.payload.username;
       state.company_name = action.payload.company;
       state.is_staff = action.payload.is_staff;
+      state.date_list = action.payload.date_list;
     },
     resetState: (state) => {
       return initialState; // Reset the state to the initial state

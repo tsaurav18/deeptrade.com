@@ -2,26 +2,102 @@ import React, { useState, useEffect } from "react";
 import "./EnterprisesService.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getDtData } from "../../../api";
-
+import Calendar from 'react-calendar';
 import { useNavigate } from "react-router-dom";
 import { resetState } from "../../../redux/slices/loginSlice";
+import Modal from 'react-modal';
+import 'react-calendar/dist/Calendar.css';
+
+import { AiOutlineCalendar } from 'react-icons/ai';
+Modal.setAppElement("#root"); 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-76%, -92%)',
+    background: 'white',  // Set the background color
+    border: '1px solid #ccc',  // Add a border
+    borderRadius: '5px',  // Add rounded corners
+    padding: '10px',  // Add padding
+    maxWidth: '500px',  // Set a maximum width
+    width:"454px",
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',  // Add a 
+  },
+};
 function EnterprisesService() {
+
   const user_info_reducer = useSelector((state) => state.loginReducer);
+  
+  const [value, onChange] = useState(new Date());
+  const [showCalendar, setShowCalendar] = useState(false); // Add state for calendar visibility
 
   const [dataList, setDataList] = useState(null);
   const [serverError, setServerError] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("");
+  const [currentModel, setcurrentModel] = useState(()=>{
+    if (user_info_reducer.company_name === "Hantoo") {
+      return "1w-5";
+    } else if (user_info_reducer.company_name === "Cresendo") {
+     return "5";
+    } else {
+      return "1w";
+    }
+  })
+
+  console.log("currentModel", currentModel)
+  const dateObjects = user_info_reducer.date_list.map((dateString) => new Date(dateString));
+  
+  const [vaildSignalDateList, setVaildSignalDateList] = useState(dateObjects)
+  const [selectedDate, setSelectedDate] = useState(vaildSignalDateList.slice(-1)[0])
+  const convertDate=()=>{
+    const date = new Date(selectedDate)
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate
+
+  }
+  const [currentSelectedDate, setCurrentSelectedDate] = useState(convertDate())
+
+
+
   const onLogout = () => {
     dispatch(resetState());
     navigate("/enterprise", { replace: true });
   };
-  const getModelData = async (modelType) => {
+  const getModelData = async (modelType, currentdate) => {
+    console.log("modelType>>>>", modelType, currentSelectedDate)
+    console.log("currentdate", currentdate)
+    if(currentdate!==undefined){
+      const res = await getDtData.fetchDtData(
+        user_info_reducer.company_name,
+        modelType, 
+        currentdate
+      );
+      
+      if (res.status === 200) {
+        setDataList(res.data);
+        setSelected(modelType);
+  
+        // console.log("data is feteched", res.data);
+      } else {
+        setServerError(true);
+        console.log("something went wrong");
+      }
+    }else{
     const res = await getDtData.fetchDtData(
       user_info_reducer.company_name,
-      modelType
+      modelType, 
+      currentSelectedDate
     );
+    
     if (res.status === 200) {
       setDataList(res.data);
       setSelected(modelType);
@@ -31,6 +107,7 @@ function EnterprisesService() {
       setServerError(true);
       console.log("something went wrong");
     }
+  }
   };
 
   useEffect(() => {
@@ -60,7 +137,7 @@ function EnterprisesService() {
     return (
       <div className="enterprises_service_table_responsive">
         <table className="enterprises_service_table enterprises_service_table-bordered">
-          <thead>
+          <thead className={showCalendar?"nonsticky_table_header": "sticky_table_header"}>
             <tr>
               <th>Stock ID</th>
               <th>Name</th>
@@ -84,49 +161,99 @@ function EnterprisesService() {
       </div>
     );
   }
+
+  function closeModal() {
+    setShowCalendar(false);
+  }
+
+  // Calculate min and max dates based on your clickable dates
+  const minDate = new Date(Math.min(...vaildSignalDateList));
+  minDate.setFullYear(minDate.getFullYear() - 3); // Adjust the range as needed
+
+  const maxDate = new Date(Math.max(...vaildSignalDateList));
+  // maxDate.setFullYear(maxDate.getFullYear() + 1); // Adjust the range as needed
+  
+
+  const isDateDisabled = (date) => {
+    return !vaildSignalDateList.some(d => d.toDateString() === date.toDateString());
+  };
+
+  const handleDateSelection = (date) => {
+    setSelectedDate(date);
+    const _date = new Date(date)
+    const year = _date.getFullYear();
+    const month = String(_date.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-based
+    const day = String(_date.getDate()).padStart(2, '0');
+    
+    const formattedDate = `${year}-${month}-${day}`;
+    setCurrentSelectedDate(formattedDate)
+    setShowCalendar(false);
+    console.log("currentModel", currentModel)
+    getModelData(currentModel, formattedDate)
+  };
+
   return (
     <>
       {user_info_reducer.is_staff ? (
+        <div style={{backgroundColor:"#F5F4FF", height: "110vh"}}>
         <div className="enterprises_service_container">
           <div className="enterprises_service_inner_box">
             <div className="enterprises_service_company_text">
-              DeepTrade Signal
+              DeepTrade Market AI
             </div>
             <div
-              style={{
-                fontWeight: "bold",
-                cursor: "pointer",
-                padding: "10px",
-                backgroundColor: "#d4d4d4",
-                borderRadius: "5px",
-              }}
+            className="enter_logout_button"
+        
               onClick={onLogout}
             >
               로그아웃
             </div>
           </div>
+          <div className="enterprises_service_calendar_btn">
+            
+           <div onClick={() => setShowCalendar(!showCalendar)} className="calendar_icon">
+            <AiOutlineCalendar size={25} />
+ {showCalendar ? convertDate(): convertDate()}
+              </div>
+           <Modal
+        isOpen={showCalendar}
+        onRequestClose={closeModal}
+        style={customStyles}
+        
+      >
+        <Calendar 
+        defaultValue	={selectedDate}
+        onClickDay={(date) => handleDateSelection(date)}
+        onChange={onChange}
+        value={value} minDate={minDate}
+        maxDate={maxDate}
+        tileClassName={({ date }) => {
+          // Add a custom CSS class to the default selected date
+          return date.toDateString() === selectedDate.toDateString ? "selected-date" : "";
+        }}
+        tileDisabled={({ date }) => isDateDisabled(date)}
+    
+        />
+        
+      </Modal>
+          </div>
+          <div className="enterprises_outer">
           <div className="enterprises_button-row">
             {user_info_reducer.company_name === "Hantoo" ? (
               <div
                 className="button_container"
-                style={{
-                  display: "flex",
-                  flexDirection: " column",
-                  width: "100%",
-                }}
+               
               >
                 <div
                   className="button_row"
                   style={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "space-between",
-                    marginBottom: "20px",
+                
                   }}
                 >
                   <button
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("1w-5")
                       getModelData("1w-5");
                     }}
                     style={{
@@ -143,6 +270,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("2w-5")
                       getModelData("2w-5");
                     }}
                   >
@@ -155,6 +283,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("4w-5")
                       getModelData("4w-5");
                     }}
                   >
@@ -167,6 +296,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("8w-5")
                       getModelData("8w-5");
                     }}
                   >
@@ -174,12 +304,8 @@ function EnterprisesService() {
                   </button>
                 </div>
                 <div
-                  className="button_row"
-                  style={{
-                    display: "flex",
-                    width: "100%",
-                    justifyContent: "space-between",
-                  }}
+                  className="button_row2"
+                 
                 >
                   <button
                     style={{
@@ -188,6 +314,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("1w")
                       getModelData("1w");
                     }}
                   >
@@ -200,6 +327,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("2w")
                       getModelData("2w");
                     }}
                   >
@@ -212,6 +340,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("4w")
                       getModelData("4w");
                     }}
                   >
@@ -224,6 +353,7 @@ function EnterprisesService() {
                     }}
                     className="enterprises_button"
                     onClick={() => {
+                      setcurrentModel("8w")
                       getModelData("8w");
                     }}
                   >
@@ -240,6 +370,7 @@ function EnterprisesService() {
                   }}
                   className="enterprises_button"
                   onClick={() => {
+                    setcurrentModel("5")
                     getModelData("5");
                   }}
                 >
@@ -252,6 +383,7 @@ function EnterprisesService() {
                   }}
                   className="enterprises_button"
                   onClick={() => {
+                    setcurrentModel("20")
                     getModelData("20");
                   }}
                 >
@@ -313,408 +445,11 @@ function EnterprisesService() {
           </div>
 
           {dataList != null ? <StockTable data={dataList} /> : null}
-        </div>
+          </div>
+        </div></div>
       ) : null}
     </>
   );
 }
 
 export default EnterprisesService;
-
-// import React, { useEffect, useMemo, useState } from "react";
-// import "./EnterprisesService.css";
-
-// import {
-//   ShadowCol,
-//   Col,
-//   WhiteSpace,
-//   Row,
-//   ShadowRow,
-// } from "../../../style/globalStyled";
-// import {
-//   BrowserRouter,
-//   Routes,
-//   Route,
-//   Link,
-//   useParams,
-//   useNavigate,
-//   Router,
-// } from "react-router-dom";
-// import color from "../../../style/color";
-// import Arrow from "../../../assets/icons/arrow.png";
-// import Logout from "../../../assets/icons/logout.png";
-// import Setting from "../../../assets/icons/setting.png";
-// import Bell from "../../../assets/icons/bell.png";
-// import RightArrow from "../../../assets/icons/rightArrow.png";
-
-// const EnterprisesService = () => {
-//     const user_info_reducer = useSelector((state) => state.loginReducer);
-//   const [dataList, setDataList] = useState(null);
-//   const [modelType, setModelType] = useState("1w");
-//   const getModelData = async (modelType) => {
-//     const res = await getDtData.fetchDtData(
-//       user_info_reducer.company_name,
-//       modelType
-//     );
-//     if (res.status === 200) {
-//       setDataList(res.data);
-//       console.log("data is feteched", res.data);
-//     } else {
-//       console.log("something went wrong");
-//     }
-//   };
-//   useEffect(() => {
-//     getModelData(modelType);
-
-//     return () => {};
-//   }, []);
-//   const onLogout = () => {
-//     alert("로그아웃 수행!");
-//   };
-//   return (
-//     <Col
-//       style={{
-//         width: "100vw",
-//         height: "100vh",
-//         background:
-//           "linear-gradient(90deg, #FAFAFF 0.24%, #F2F0FF 99.7%, #F2F0FF 99.7%)",
-//         overflow: "hidden",
-//       }}
-//     >
-//       <WhiteSpace height={56} />
-//       <Row style={{ width: 1100, alignItems: "flex-start" }}>
-//         <Col
-//           style={{
-//             width: 860,
-//             height: 820,
-//             overflowY: "scroll",
-//             justifyContent: "flex-start",
-//           }}
-//         >
-//           <Routes>
-//             <Route path="/" element={<Home />} />
-//             <Route path="/:id" element={<StockPage />} />
-//           </Routes>
-//         </Col>
-//         <WhiteSpace width={20} />
-//         <ShadowCol
-//           style={{
-//             width: 240,
-//             height: 820,
-//             padding: 20,
-//             justifyContent: "flex-start",
-//           }}
-//         >
-//           {/* <WhiteSpace height={20} /> */}
-//           <Row style={{ height: "auto" }}>
-//             <div
-//               style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}
-//               onClick={onLogout}
-//             >
-//               로그아웃
-//             </div>
-//             <img
-//               src={Logout}
-//               style={{ width: 22, height: 22, cursor: "pointer" }}
-//               onClick={onLogout}
-//             />
-//           </Row>
-//           <WhiteSpace height={36} />
-//           <Col style={{ height: 110, width: 110, position: "relative" }}>
-//             <Col
-//               style={{
-//                 backgroundColor: "#7A769B",
-//                 borderRadius: 55,
-//                 overflow: "hidden",
-//               }}
-//             >
-//               <img
-//                 style={{ height: 110, width: 110 }}
-//                 src={
-//                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlWU0MYkJdTe_PIlGAdDpCbR0HltrLQjGSOw&usqp=CAU"
-//                 }
-//                 alt="기업로고"
-//               />
-//             </Col>
-//             <Col
-//               style={{
-//                 backgroundColor: color.Purple,
-//                 width: 33,
-//                 height: 33,
-//                 borderRadius: 17,
-//                 position: "absolute",
-//                 bottom: -5,
-//                 right: 0,
-//               }}
-//             >
-//               <img src={Setting} style={{ width: 19, height: 19 }} />
-//             </Col>
-//           </Col>
-//           <WhiteSpace height={30} />
-//           <div style={{ fontWeight: "bold", fontSize: 14 }}>홍길동 님</div>
-//           <WhiteSpace height={8} />
-//           <div
-//             style={{
-//               fontWeight: "bold",
-//               fontSize: 10,
-//               color: color.LightPurple,
-//             }}
-//           >
-//             유진투자증권
-//           </div>
-//           <WhiteSpace height={48} />
-//           <Row style={{ height: "auto" }}>
-//             <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
-//               최근알림
-//             </div>
-//             <img
-//               src={Bell}
-//               style={{ width: 22, height: 22, cursor: "pointer" }}
-//             />
-//           </Row>
-//         </ShadowCol>
-//       </Row>
-//     </Col>
-//   );
-// };
-
-// const Home = () => {
-//   const [topStockList, setTopStockList] = useState([[]]);
-//   const [open, setOpen] = useState(false);
-//   const title_array = [
-//     "1일 예측 순위",
-//     "3일 예측 순위",
-//     "5일 예측 순위",
-//     "1주 예측 순위",
-//     "2주 예측 순위",
-//     "3주 예측 순위",
-//     "4주 예측 순위",
-//   ];
-//   const navigate = useNavigate();
-
-//   return (
-//     <Col
-//       style={{
-//         width: 840,
-//         justifyContent: "flex-start",
-//         height: "auto",
-//       }}
-//     >
-//       <ShadowCol
-//         style={{
-//           width: 840,
-//           height: open ? 560 : 195,
-//           padding: 10,
-//           paddingTop: 15,
-//           transition: "all 0.3s ease-in-out",
-//         }}
-//       >
-//         <Row style={{ flex: 1 }}>
-//           <WhiteSpace width={32} />
-//           {topStockList.map((list, index) => {
-//             const title = title_array[index];
-//             return (
-//               <Col
-//                 style={{
-//                   flex: 1,
-//                   alignItems: "flex-start",
-//                   justifyContent: "flex-start",
-//                 }}
-//               >
-//                 <div style={{ color: color.DarkBlue, fontWeight: "bold" }}>
-//                   {title}
-//                 </div>
-//                 <WhiteSpace height={12} />
-//                 {list.slice(0, open ? 20 : 5).map((k, idx) => {
-//                   return (
-//                     <div
-//                       onClick={() => {
-//                         navigate("/enterprise/service/" + k.id);
-//                       }}
-//                       style={{
-//                         height: 24,
-//                         display: "table-cell",
-//                         cursor: "pointer",
-//                         transition: "all 0.3s ease-in-out",
-//                         opacity: open || idx < 5 ? 1 : 0,
-//                       }}
-//                     >
-//                       {k.name}
-//                     </div>
-//                   );
-//                 })}
-//               </Col>
-//             );
-//           })}
-//         </Row>
-//         <a
-//           onClick={() => {
-//             setOpen((prev) => !prev);
-//           }}
-//           style={{
-//             cursor: "pointer",
-//             transform: `rotate(${open ? 180 : 0}deg)`,
-//           }}
-//         >
-//           <img src={Arrow} style={{ width: 9, height: 11 }} />
-//         </a>
-//       </ShadowCol>
-//       <WhiteSpace height={20} />
-//       <Row
-//         height={266}
-//         style={{ padding: 0, margin: 0, justifyContent: "space-between" }}
-//       >
-//         <ShadowCol width={240} height={250}></ShadowCol>
-//         <ShadowCol width={320} height={250}></ShadowCol>
-//         <ShadowCol
-//           width={240}
-//           height={250}
-//           style={{ padding: 24, justifyContent: "flex-start" }}
-//         >
-//           <div
-//             style={{
-//               fontSize: 14,
-//               fontWeight: "bold",
-//               color: color.DarkBlue,
-//               width: "100%",
-//               textAlign: "left",
-//             }}
-//           >
-//             오늘의 추천종목
-//           </div>
-//           <WhiteSpace height={16} />
-//           <Row
-//             height={50}
-//             style={{
-//               backgroundColor: color.BackgroundPurple,
-//               borderRadius: 10,
-//               padding: 10,
-//             }}
-//           >
-//             <Col style={{ flex: 1 }}>
-//               <div
-//                 style={{
-//                   fontSize: 12,
-//                   fontWeight: "bold",
-//                   color: color.DarkBlue,
-//                   width: "100%",
-//                   textAlign: "left",
-//                 }}
-//               >
-//                 LG 에너지 솔루션
-//               </div>
-//               <WhiteSpace height={4} />
-//               <div
-//                 style={{
-//                   fontSize: 7,
-//                   fontWeight: "bold",
-//                   color: color.LightPurple,
-//                   width: "100%",
-//                   textAlign: "left",
-//                 }}
-//               >
-//                 83.2% 확률로 상승
-//               </div>
-//             </Col>
-//             <Row
-//               style={{
-//                 width: 30,
-//                 height: 30,
-//                 borderRadius: 15,
-//                 backgroundColor: color.Purple,
-//                 cursor: "pointer",
-//               }}
-//             >
-//               <img src={RightArrow} style={{ width: 14, height: 12 }} />
-//             </Row>
-//           </Row>
-//           <WhiteSpace height={10} />
-//           <Row
-//             height={50}
-//             style={{
-//               backgroundColor: color.BackgroundPurple,
-//               borderRadius: 10,
-//               padding: 10,
-//             }}
-//           >
-//             <Col style={{ flex: 1 }}>
-//               <div
-//                 style={{
-//                   fontSize: 12,
-//                   fontWeight: "bold",
-//                   color: color.DarkBlue,
-//                   width: "100%",
-//                   textAlign: "left",
-//                 }}
-//               >
-//                 LG 에너지 솔루션
-//               </div>
-//               <WhiteSpace height={4} />
-//               <div
-//                 style={{
-//                   fontSize: 7,
-//                   fontWeight: "bold",
-//                   color: color.LightPurple,
-//                   width: "100%",
-//                   textAlign: "left",
-//                 }}
-//               >
-//                 83.2% 확률로 상승
-//               </div>
-//             </Col>
-//             <Row
-//               style={{
-//                 width: 30,
-//                 height: 30,
-//                 borderRadius: 15,
-//                 backgroundColor: color.Purple,
-//                 cursor: "pointer",
-//               }}
-//             >
-//               <img src={RightArrow} style={{ width: 14, height: 12 }} />
-//             </Row>
-//           </Row>
-//           <WhiteSpace height={20} />
-//           <Row
-//             style={{
-//               height: 32,
-//               borderRadius: 16,
-//               backgroundColor: color.Purple,
-//               fontSize: 10,
-//               color: "white",
-//               fontWeight: "bold",
-//               cursor: "pointer",
-//             }}
-//           >
-//             전체 보기
-//           </Row>
-//         </ShadowCol>
-//       </Row>
-//       <WhiteSpace height={20} />
-//       <ShadowCol width={840} height={300} />
-//     </Col>
-//   );
-// };
-
-// const StockPage = () => {
-//   return (
-//     <Col
-//       style={{
-//         width: 840,
-//         justifyContent: "flex-start",
-//       }}
-//     >
-//       <ShadowCol
-//         style={{
-//           width: 840,
-//           height: 195,
-//           padding: 10,
-//           paddingTop: 15,
-//         }}
-//       >
-//         종목 관련 정보 페이지
-//       </ShadowCol>
-//     </Col>
-//   );
-// };
-// export default EnterprisesService;

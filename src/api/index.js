@@ -47,10 +47,11 @@ export const loginAPI = {
 };
 
 export const getDtData = {
-  async fetchDtData(company_name, modelType) {
+  async fetchDtData(company_name, modelType, currentSelectedDate) {
     let body = JSON.stringify({
       company_name: company_name,
       model: modelType,
+      date: currentSelectedDate,
     });
     let csrf = await instance.get("mobile/get_csrf/");
 

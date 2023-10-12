@@ -18,16 +18,15 @@ function EnterprisesLogin() {
 
   const navigate = useNavigate();
 
-  // const handleKeyDown = (event) => {
-  //   if (event.key === "Enter") {
-  //     if (formInput.company_pass !== "" && formInput.company_usrnm !== "") {
-  //       submitLogin(event);
-  //     }
-  //   }
-  // };
-
   const submitLogin = async (event) => {
     event.preventDefault();
+    if (formInput.company_usrnm === "") {
+      toast("아이디를 입력해주세요.");
+      return;
+    } else if (formInput.company_pass === "") {
+      toast("비밀번호를 입력해주세요.");
+      return;
+    }
     const res = await loginAPI.dtLogin(formInput);
     if (res.status === 200) {
       if (res.data) {
@@ -42,20 +41,13 @@ function EnterprisesLogin() {
       }
     }
   };
-  // useEffect(() => {
-  //   // Add event listeners when the component mounts
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => {
-  //     // Clean up the event listener when the component unmounts
-  //     document.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
+
   return (
     <div className="loginContainer">
       <div className="logoSection">
         {/* Your logo */}
         <div className="enterprises_logo_wrapper">
-          <img src={"/assets/deeptrade_logo.png"} alt="logo" />
+          <img src={"/assets/enterprise_logo.png"} alt="logo" />
         </div>
         {/* <img src="logo.png" alt="Logo" /> */}
       </div>
@@ -67,10 +59,10 @@ function EnterprisesLogin() {
               type="text"
               placeholder="아이디 입력해주세요"
               onChange={(e) => {
-                setFormInput({
-                  ...formInput,
+                setFormInput((prevFormInput) => ({
+                  ...prevFormInput,
                   company_usrnm: e.target.value,
-                });
+                }));
               }}
             />
           </div>
@@ -81,7 +73,10 @@ function EnterprisesLogin() {
               id="pass"
               placeholder="비밀번호 입력해주세요"
               onChange={(e) => {
-                setFormInput({ ...formInput, company_pass: e.target.value });
+                setFormInput((prevFormInput) => ({
+                  ...prevFormInput,
+                  company_pass: e.target.value,
+                }));
               }}
             />
           </div>
