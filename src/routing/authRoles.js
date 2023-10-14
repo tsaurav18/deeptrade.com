@@ -1,6 +1,6 @@
 const authRoles = {
   admin: ["ADMIN"],
-  is_staff: ["Hantoo", "Cresendo", "DTT"],
+  is_staff: ["Hantoo", "Crescendo", "DTT"],
 };
 
 export default authRoles;

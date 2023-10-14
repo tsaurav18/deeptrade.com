@@ -8,7 +8,6 @@ import { loginAPI } from "../../../api";
 import { loginInfo } from "../../../redux/slices/loginSlice";
 
 function EnterprisesLogin() {
-  const user_info_reducer = useSelector((state) => state.loginReducer);
   const [formInput, setFormInput] = useState({
     company_usrnm: "",
     company_pass: "",
@@ -31,7 +30,7 @@ function EnterprisesLogin() {
     if (res.status === 200) {
       if (res.data) {
         dispatch(loginInfo(res.data));
-        toast("로그인되었습니다.");
+        toast("로그인 되었습니다.");
         setFormInput({ company_usrnm: "", company_pass: "" });
         navigate("/enterprise/service");
       }

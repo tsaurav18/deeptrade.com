@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { resetState } from "../../../redux/slices/loginSlice";
 import Modal from "react-modal";
 import "react-calendar/dist/Calendar.css";
-
+import classNames from 'classnames';
 import { AiOutlineCalendar } from "react-icons/ai";
+import { Oval } from 'react-loader-spinner'
 Modal.setAppElement("#root");
 const customStyles = {
   content: {
@@ -29,7 +30,7 @@ const customStyles = {
 };
 function EnterprisesService() {
   const user_info_reducer = useSelector((state) => state.loginReducer);
-
+  const [Loader, setLoader] = useState(false)
   const [value, onChange] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false); // Add state for calendar visibility
 
@@ -41,14 +42,14 @@ function EnterprisesService() {
   const [currentModel, setcurrentModel] = useState(() => {
     if (user_info_reducer.company_name === "Hantoo") {
       return "1w-5";
-    } else if (user_info_reducer.company_name === "Cresendo") {
+    } else if (user_info_reducer.company_name === "Crescendo") {
       return "5";
     } else {
       return "1w";
     }
   });
 
-  console.log("currentModel", currentModel);
+
   const dateObjects = user_info_reducer.date_list.map(
     (dateString) => new Date(dateString)
   );
@@ -73,8 +74,7 @@ function EnterprisesService() {
     navigate("/enterprise", { replace: true });
   };
   const getModelData = async (modelType, currentdate) => {
-    console.log("modelType>>>>", modelType, currentSelectedDate);
-    console.log("currentdate", currentdate);
+    setLoader(true)
     if (currentdate !== undefined) {
       const res = await getDtData.fetchDtData(
         user_info_reducer.company_name,
@@ -85,10 +85,13 @@ function EnterprisesService() {
       if (res.status === 200) {
         setDataList(res.data);
         setSelected(modelType);
-
+        setServerError(false);
+        setLoader(false)
         // console.log("data is feteched", res.data);
       } else {
         setServerError(true);
+        setLoader(false)
+     
         console.log("something went wrong");
       }
     } else {
@@ -101,10 +104,12 @@ function EnterprisesService() {
       if (res.status === 200) {
         setDataList(res.data);
         setSelected(modelType);
-
+        setServerError(false);
+        setLoader(false)
         // console.log("data is feteched", res.data);
       } else {
         setServerError(true);
+        setLoader(false)
         console.log("something went wrong");
       }
     }
@@ -116,7 +121,7 @@ function EnterprisesService() {
       let model_type = "";
       if (user_info_reducer.company_name === "Hantoo") {
         model_type = "1w-5";
-      } else if (user_info_reducer.company_name === "Cresendo") {
+      } else if (user_info_reducer.company_name === "Crescendo") {
         model_type = "5";
       } else {
         model_type = "1w";
@@ -129,14 +134,27 @@ function EnterprisesService() {
       isComponentRender = false;
       setServerError(false);
     };
-  }, [serverError]);
+  }, []);
 
   // console.log("user_info_reducer", user_info_reducer);
 
   function StockTable({ data }) {
     return (
       <div className="enterprises_service_table_responsive">
-        <table className="enterprises_service_table enterprises_service_table-bordered">
+        {Loader? <Oval
+  height={50}
+  width={50}
+  color="#4fa94d"
+  wrapperStyle={{alignItems: "center",
+    justifyContent: "center"}}
+  wrapperClass=""
+  visible={true}
+  ariaLabel='oval-loading'
+  secondaryColor="#4fa94d"
+  strokeWidth={2}
+  strokeWidthSecondary={2}
+
+/>: <table className="enterprises_service_table enterprises_service_table-bordered">
           <thead
             className={
               showCalendar ? "nonsticky_table_header" : "sticky_table_header"
@@ -161,7 +179,8 @@ function EnterprisesService() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table>}
+       
       </div>
     );
   }
@@ -178,6 +197,10 @@ function EnterprisesService() {
   // maxDate.setFullYear(maxDate.getFullYear() + 1); // Adjust the range as needed
 
   const isDateDisabled = (date) => {
+  //   const minDate = new Date(Math.min(...vaildSignalDateList));
+  // const maxDate = new Date(Math.max(...vaildSignalDateList));
+  // // Allow date selection only within the clickable range
+  // return date < minDate || date > maxDate;
     return !vaildSignalDateList.some(
       (d) => d.toDateString() === date.toDateString()
     );
@@ -193,7 +216,7 @@ function EnterprisesService() {
     const formattedDate = `${year}-${month}-${day}`;
     setCurrentSelectedDate(formattedDate);
     setShowCalendar(false);
-    console.log("currentModel", currentModel);
+    
     getModelData(currentModel, formattedDate);
   };
 
@@ -224,22 +247,28 @@ function EnterprisesService() {
                 style={customStyles}
               >
                 <Calendar
+                calendarType="US"
+                locale="ko"
                   defaultActiveStartDate={selectedDate}
                   onClickDay={(date) => handleDateSelection(date)}
                   onChange={onChange}
                   value={value}
                   minDate={minDate}
                   maxDate={maxDate}
-                  tileClassName={({ date }) => {
-                    // Add a custom CSS class to the default selected date
-                    return date.toDateString() === selectedDate.toDateString()
-                      ? "selected-date"
-                      : "";
+      
+                  tileClassName={({ date, view }) => {
+                    const isHovered = view === 'month' || view === 'year'; // Define hoverable views (month/year)
+
+                    return classNames({
+                      'selected-date': date.toDateString() === selectedDate.toDateString(),
+          
+                    });
                   }}
                   tileDisabled={({ date }) => isDateDisabled(date)}
                 />
               </Modal>
             </div>
+        
             <div className="enterprises_outer">
               <div className="enterprises_button-row">
                 {user_info_reducer.company_name === "Hantoo" ? (
@@ -361,7 +390,7 @@ function EnterprisesService() {
                       </button>
                     </div>
                   </div>
-                ) : user_info_reducer.company_name === "Cresendo" ? (
+                ) : user_info_reducer.company_name === "Crescendo" ? (
                   <>
                     <button
                       style={{
@@ -443,7 +472,6 @@ function EnterprisesService() {
                   </>
                 )}
               </div>
-
               {dataList != null ? <StockTable data={dataList} /> : null}
             </div>
           </div>
