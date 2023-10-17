@@ -6,8 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 import "./EnterprisesLogin.css";
 import { loginAPI } from "../../../api";
 import { loginInfo } from "../../../redux/slices/loginSlice";
+import { useTitle } from "../../../routing/DocumentNameChanger";
 
 function EnterprisesLogin() {
+  useTitle("딥트레이드 엔터프라이즈");
   const [formInput, setFormInput] = useState({
     company_usrnm: "",
     company_pass: "",

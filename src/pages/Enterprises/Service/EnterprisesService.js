@@ -10,6 +10,7 @@ import "react-calendar/dist/Calendar.css";
 import classNames from 'classnames';
 import { AiOutlineCalendar } from "react-icons/ai";
 import { Oval } from 'react-loader-spinner'
+import { useTitle } from '../../../routing/DocumentNameChanger';
 Modal.setAppElement("#root");
 const customStyles = {
   content: {
@@ -29,6 +30,7 @@ const customStyles = {
   },
 };
 function EnterprisesService() {
+  useTitle("딥트레이드 엔터프라이즈");
   const user_info_reducer = useSelector((state) => state.loginReducer);
   const [Loader, setLoader] = useState(false)
   const [value, onChange] = useState(new Date());
@@ -48,7 +50,14 @@ function EnterprisesService() {
       return "1w";
     }
   });
-
+  useEffect(() => {
+    document.title = "딥트레이드 엔터프라이즈"
+  
+    return () => {
+      
+    }
+  }, [])
+  
 
   const dateObjects = user_info_reducer.date_list.map(
     (dateString) => new Date(dateString)
