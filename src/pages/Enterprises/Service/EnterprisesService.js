@@ -214,8 +214,8 @@ function EnterprisesService() {
     
     getModelData(currentModel, formattedDate);
   };
-const [windowSize, setWindowSize] = useState({width:0, 
-  height:0})
+const [windowSize, setWindowSize] = useState({width:window.innerWidth, 
+  height:window.innerHeight})
   const handleResize =()=>{
     setWindowSize({width:window.innerWidth, 
     height:window.innerHeight})
@@ -228,7 +228,23 @@ const [windowSize, setWindowSize] = useState({width:0,
       window.addEventListener("resize", handleResize)
     }
   }, [])
-  let customStyles ;
+  let customStyles={
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-76%, -92%)",
+      background: "white", // Set the background color
+      border: "1px solid #ccc", // Add a border
+      borderRadius: "5px", // Add rounded corners
+      padding: "10px", // Add padding
+      maxWidth: "500px", // Set a maximum width
+      width: "454px",
+      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
+    },
+  };
   if(windowSize.width<480){
      customStyles = {
       content: {
