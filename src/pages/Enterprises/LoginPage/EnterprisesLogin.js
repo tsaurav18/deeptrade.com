@@ -7,9 +7,10 @@ import "./EnterprisesLogin.css";
 import { loginAPI } from "../../../api";
 import { loginInfo } from "../../../redux/slices/loginSlice";
 import { useTitle } from "../../../routing/DocumentNameChanger";
-
+import { Oval } from "react-loader-spinner";
 function EnterprisesLogin() {
   useTitle("딥트레이드 엔터프라이즈");
+  const [loader, setLoader] = useState(false);
   const [formInput, setFormInput] = useState({
     company_usrnm: "",
     company_pass: "",
@@ -21,6 +22,7 @@ function EnterprisesLogin() {
 
   const submitLogin = async (event) => {
     event.preventDefault();
+
     if (formInput.company_usrnm === "") {
       toast("아이디를 입력해주세요.");
       return;
@@ -28,6 +30,7 @@ function EnterprisesLogin() {
       toast("비밀번호를 입력해주세요.");
       return;
     }
+    setLoader(true);
     const res = await loginAPI.dtLogin(formInput);
     if (res.status === 200) {
       if (res.data) {
@@ -39,8 +42,11 @@ function EnterprisesLogin() {
     } else {
       if (res.data.msg) {
         toast(res.data.msg);
+        console.log("loader", loader);
+        setLoader(false);
       }
     }
+    setLoader(false);
   };
 
   return (
@@ -87,7 +93,22 @@ function EnterprisesLogin() {
           type="submit"
           onClick={(e) => submitLogin(e)}
         >
-          로그인
+          {loader == true ? (
+            <Oval
+              height={50}
+              width={50}
+              color="#fff"
+              wrapperStyle={{ alignItems: "center", justifyContent: "center" }}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#fff"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            "로그인"
+          )}
         </button>
       </div>
       {/* <div className="infoSection">

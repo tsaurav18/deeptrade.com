@@ -11,25 +11,11 @@ import classNames from 'classnames';
 import { AiOutlineCalendar } from "react-icons/ai";
 import { Oval } from 'react-loader-spinner'
 import { useTitle } from '../../../routing/DocumentNameChanger';
+
 Modal.setAppElement("#root");
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-76%, -92%)",
-    background: "white", // Set the background color
-    border: "1px solid #ccc", // Add a border
-    borderRadius: "5px", // Add rounded corners
-    padding: "10px", // Add padding
-    maxWidth: "500px", // Set a maximum width
-    width: "454px",
-    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
-  },
-};
+
 function EnterprisesService() {
+
   useTitle("딥트레이드 엔터프라이즈");
   const user_info_reducer = useSelector((state) => state.loginReducer);
   const [Loader, setLoader] = useState(false)
@@ -228,11 +214,82 @@ function EnterprisesService() {
     
     getModelData(currentModel, formattedDate);
   };
+const [windowSize, setWindowSize] = useState({width:0, 
+  height:0})
+  const handleResize =()=>{
+    setWindowSize({width:window.innerWidth, 
+    height:window.innerHeight})
+  }
+  // resize event listener
+  useEffect(() => {
+    window.addEventListener("resize", handleResize)
+  
+    return () => {
+      window.addEventListener("resize", handleResize)
+    }
+  }, [])
+  let customStyles ;
+  if(windowSize.width<480){
+     customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -69%)",
+        background: "white", // Set the background color
+        border: "1px solid #ccc", // Add a border
+        borderRadius: "5px", // Add rounded corners
+        padding: "10px", // Add padding
+        maxWidth: "500px", // Set a maximum width
+        width: "356px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
+      },
+    };
+  }else if (windowSize.width<707){
+    customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-65%, -109%)",
+        background: "white", // Set the background color
+        border: "1px solid #ccc", // Add a border
+        borderRadius: "5px", // Add rounded corners
+        padding: "10px", // Add padding
+        maxWidth: "500px", // Set a maximum width
+        width: "390px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
+      }
+    }
+  }
+  else{
+     customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-76%, -92%)",
+        background: "white", // Set the background color
+        border: "1px solid #ccc", // Add a border
+        borderRadius: "5px", // Add rounded corners
+        padding: "10px", // Add padding
+        maxWidth: "500px", // Set a maximum width
+        width: "454px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
+      },
+    };
+  }
 
   return (
     <>
       {user_info_reducer.is_staff ? (
-        <div style={{ backgroundColor: "#F5F4FF", height: "110vh" }}>
+        <div className="enterprise_parent_container" style={{ backgroundColor: "#F5F4FF", height: "110vh" }}>
           <div className="enterprises_service_container">
             <div className="enterprises_service_inner_box">
               <div className="enterprises_service_company_text">
