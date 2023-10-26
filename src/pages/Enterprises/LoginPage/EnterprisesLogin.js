@@ -35,14 +35,18 @@ function EnterprisesLogin() {
     if (res.status === 200) {
       if (res.data) {
         dispatch(loginInfo(res.data));
-        toast("로그인 되었습니다.");
+        // toast("로그인 되었습니다.");
         setFormInput({ company_usrnm: "", company_pass: "" });
         navigate("/enterprise/service");
       }
+    } else if (res.status == 500) {
+      toast("인터넷 장애로 인하여 정보를 못 가져왔습니다. 다시 로그인하세요.");
+
+      setLoader(false);
     } else {
       if (res.data.msg) {
         toast(res.data.msg);
-        console.log("loader", loader);
+
         setLoader(false);
       }
     }

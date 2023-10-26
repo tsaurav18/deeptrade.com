@@ -7,18 +7,17 @@ import { useNavigate } from "react-router-dom";
 import { resetState } from "../../../redux/slices/loginSlice";
 import Modal from "react-modal";
 import "react-calendar/dist/Calendar.css";
-import classNames from 'classnames';
+import classNames from "classnames";
 import { AiOutlineCalendar } from "react-icons/ai";
-import { Oval } from 'react-loader-spinner'
-import { useTitle } from '../../../routing/DocumentNameChanger';
+import { Oval } from "react-loader-spinner";
+import { useTitle } from "../../../routing/DocumentNameChanger";
 
 Modal.setAppElement("#root");
 
 function EnterprisesService() {
-
   useTitle("딥트레이드 엔터프라이즈");
   const user_info_reducer = useSelector((state) => state.loginReducer);
-  const [Loader, setLoader] = useState(false)
+  const [Loader, setLoader] = useState(false);
   const [value, onChange] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false); // Add state for calendar visibility
 
@@ -33,17 +32,14 @@ function EnterprisesService() {
     } else if (user_info_reducer.company_name === "Crescendo") {
       return "5";
     } else {
-      return "1w";
+      return "1w-5";
     }
   });
   useEffect(() => {
-    document.title = "딥트레이드 엔터프라이즈"
-  
-    return () => {
-      
-    }
-  }, [])
-  
+    document.title = "딥트레이드 엔터프라이즈";
+
+    return () => {};
+  }, []);
 
   const dateObjects = user_info_reducer.date_list.map(
     (dateString) => new Date(dateString)
@@ -69,7 +65,7 @@ function EnterprisesService() {
     navigate("/enterprise", { replace: true });
   };
   const getModelData = async (modelType, currentdate) => {
-    setLoader(true)
+    setLoader(true);
     if (currentdate !== undefined) {
       const res = await getDtData.fetchDtData(
         user_info_reducer.company_name,
@@ -81,12 +77,12 @@ function EnterprisesService() {
         setDataList(res.data);
         setSelected(modelType);
         setServerError(false);
-        setLoader(false)
+        setLoader(false);
         // console.log("data is feteched", res.data);
       } else {
         setServerError(true);
-        setLoader(false)
-     
+        setLoader(false);
+
         console.log("something went wrong");
       }
     } else {
@@ -100,11 +96,11 @@ function EnterprisesService() {
         setDataList(res.data);
         setSelected(modelType);
         setServerError(false);
-        setLoader(false)
+        setLoader(false);
         // console.log("data is feteched", res.data);
       } else {
         setServerError(true);
-        setLoader(false)
+        setLoader(false);
         console.log("something went wrong");
       }
     }
@@ -119,7 +115,7 @@ function EnterprisesService() {
       } else if (user_info_reducer.company_name === "Crescendo") {
         model_type = "5";
       } else {
-        model_type = "1w";
+        model_type = "1w-5";
       }
 
       getModelData(model_type);
@@ -136,46 +132,47 @@ function EnterprisesService() {
   function StockTable({ data }) {
     return (
       <div className="enterprises_service_table_responsive">
-        {Loader? <Oval
-  height={50}
-  width={50}
-  color="#4fa94d"
-  wrapperStyle={{alignItems: "center",
-    justifyContent: "center"}}
-  wrapperClass=""
-  visible={true}
-  ariaLabel='oval-loading'
-  secondaryColor="#4fa94d"
-  strokeWidth={2}
-  strokeWidthSecondary={2}
-
-/>: <table className="enterprises_service_table enterprises_service_table-bordered">
-          <thead
-            className={
-              showCalendar ? "nonsticky_table_header" : "sticky_table_header"
-            }
-          >
-            <tr>
-              <th>Stock ID</th>
-              <th>Name</th>
-              <th>Buying Date</th>
-              <th>Selling Date</th>
-              <th>Sector</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((row, index) => (
-              <tr key={index}>
-                <td>{row.stock_id}</td>
-                <td>{row.name}</td>
-                <td>{row.buying_date}</td>
-                <td>{row.selling_date}</td>
-                <td>{row.sector}</td>
+        {Loader ? (
+          <Oval
+            height={50}
+            width={50}
+            color="#4fa94d"
+            wrapperStyle={{ alignItems: "center", justifyContent: "center" }}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#4fa94d"
+            strokeWidth={2}
+            strokeWidthSecondary={2}
+          />
+        ) : (
+          <table className="enterprises_service_table enterprises_service_table-bordered">
+            <thead
+              className={
+                showCalendar ? "nonsticky_table_header" : "sticky_table_header"
+              }
+            >
+              <tr>
+                <th>Stock ID</th>
+                <th>Name</th>
+                <th>Buying Date</th>
+                <th>Selling Date</th>
+                <th>Sector</th>
               </tr>
-            ))}
-          </tbody>
-        </table>}
-       
+            </thead>
+            <tbody>
+              {data.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.stock_id}</td>
+                  <td>{row.name}</td>
+                  <td>{row.buying_date}</td>
+                  <td>{row.selling_date}</td>
+                  <td>{row.sector}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     );
   }
@@ -192,10 +189,10 @@ function EnterprisesService() {
   // maxDate.setFullYear(maxDate.getFullYear() + 1); // Adjust the range as needed
 
   const isDateDisabled = (date) => {
-  //   const minDate = new Date(Math.min(...vaildSignalDateList));
-  // const maxDate = new Date(Math.max(...vaildSignalDateList));
-  // // Allow date selection only within the clickable range
-  // return date < minDate || date > maxDate;
+    //   const minDate = new Date(Math.min(...vaildSignalDateList));
+    // const maxDate = new Date(Math.max(...vaildSignalDateList));
+    // // Allow date selection only within the clickable range
+    // return date < minDate || date > maxDate;
     return !vaildSignalDateList.some(
       (d) => d.toDateString() === date.toDateString()
     );
@@ -211,24 +208,25 @@ function EnterprisesService() {
     const formattedDate = `${year}-${month}-${day}`;
     setCurrentSelectedDate(formattedDate);
     setShowCalendar(false);
-    
+
     getModelData(currentModel, formattedDate);
   };
-const [windowSize, setWindowSize] = useState({width:window.innerWidth, 
-  height:window.innerHeight})
-  const handleResize =()=>{
-    setWindowSize({width:window.innerWidth, 
-    height:window.innerHeight})
-  }
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const handleResize = () => {
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+  };
   // resize event listener
   useEffect(() => {
-    window.addEventListener("resize", handleResize)
-  
+    window.addEventListener("resize", handleResize);
+
     return () => {
-      window.addEventListener("resize", handleResize)
-    }
-  }, [])
-  let customStyles={
+      window.addEventListener("resize", handleResize);
+    };
+  }, []);
+  let customStyles = {
     content: {
       top: "50%",
       left: "50%",
@@ -245,8 +243,8 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
       boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
     },
   };
-  if(windowSize.width<480){
-     customStyles = {
+  if (windowSize.width < 480) {
+    customStyles = {
       content: {
         top: "50%",
         left: "50%",
@@ -263,7 +261,7 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
       },
     };
-  }else if (windowSize.width<707){
+  } else if (windowSize.width < 707) {
     customStyles = {
       content: {
         top: "50%",
@@ -279,11 +277,10 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
         maxWidth: "500px", // Set a maximum width
         width: "390px",
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
-      }
-    }
-  }
-  else{
-     customStyles = {
+      },
+    };
+  } else {
+    customStyles = {
       content: {
         top: "50%",
         left: "50%",
@@ -305,7 +302,10 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
   return (
     <>
       {user_info_reducer.is_staff ? (
-        <div className="enterprise_parent_container" style={{ backgroundColor: "#F5F4FF", height: "110vh" }}>
+        <div
+          className="enterprise_parent_container"
+          style={{ backgroundColor: "#F5F4FF", height: "110vh" }}
+        >
           <div className="enterprises_service_container">
             <div className="enterprises_service_inner_box">
               <div className="enterprises_service_company_text">
@@ -329,28 +329,27 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
                 style={customStyles}
               >
                 <Calendar
-                calendarType="US"
-                locale="ko"
+                  calendarType="US"
+                  locale="ko"
                   defaultActiveStartDate={selectedDate}
                   onClickDay={(date) => handleDateSelection(date)}
                   onChange={onChange}
                   value={value}
                   minDate={minDate}
                   maxDate={maxDate}
-      
                   tileClassName={({ date, view }) => {
-                    const isHovered = view === 'month' || view === 'year'; // Define hoverable views (month/year)
+                    const isHovered = view === "month" || view === "year"; // Define hoverable views (month/year)
 
                     return classNames({
-                      'selected-date': date.toDateString() === selectedDate.toDateString(),
-          
+                      "selected-date":
+                        date.toDateString() === selectedDate.toDateString(),
                     });
                   }}
                   tileDisabled={({ date }) => isDateDisabled(date)}
                 />
               </Modal>
             </div>
-        
+
             <div className="enterprises_outer">
               <div className="enterprises_button-row">
                 {user_info_reducer.company_name === "Hantoo" ? (
@@ -503,54 +502,132 @@ const [windowSize, setWindowSize] = useState({width:window.innerWidth,
                   </>
                 ) : (
                   <>
-                    <button
-                      style={{
-                        backgroundColor:
-                          selected === "1w" ? "#007bff" : "rgb(100 100 100)",
-                      }}
-                      className="enterprises_button"
-                      onClick={() => {
-                        getModelData("1w");
-                      }}
-                    >
-                      1주 Top 20
-                    </button>
-                    <button
-                      style={{
-                        backgroundColor:
-                          selected === "2w" ? "#007bff" : "rgb(100 100 100)",
-                      }}
-                      className="enterprises_button"
-                      onClick={() => {
-                        getModelData("2w");
-                      }}
-                    >
-                      2주 Top 20
-                    </button>
-                    <button
-                      style={{
-                        backgroundColor:
-                          selected === "4w" ? "#007bff" : "rgb(100 100 100)",
-                      }}
-                      className="enterprises_button"
-                      onClick={() => {
-                        getModelData("4w");
-                      }}
-                    >
-                      4주 Top 20
-                    </button>
-                    <button
-                      style={{
-                        backgroundColor:
-                          selected === "8w" ? "#007bff" : "rgb(100 100 100)",
-                      }}
-                      className="enterprises_button"
-                      onClick={() => {
-                        getModelData("8w");
-                      }}
-                    >
-                      8주 Top 20
-                    </button>
+                    <div className="button_container">
+                      <div className="button_row" style={{}}>
+                        <button
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("1w-5");
+                            getModelData("1w-5");
+                          }}
+                          style={{
+                            backgroundColor:
+                              selected === "1w-5"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                        >
+                          1주 Top 5
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "2w-5"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("2w-5");
+                            getModelData("2w-5");
+                          }}
+                        >
+                          2주 Top 5
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "4w-5"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("4w-5");
+                            getModelData("4w-5");
+                          }}
+                        >
+                          4주 Top 5
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "8w-5"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("8w-5");
+                            getModelData("8w-5");
+                          }}
+                        >
+                          8주 Top 5
+                        </button>
+                      </div>
+                      <div className="button_row2">
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "1w"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("1w");
+                            getModelData("1w");
+                          }}
+                        >
+                          1주 Top 20
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "2w"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("2w");
+                            getModelData("2w");
+                          }}
+                        >
+                          2주 Top 20
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "4w"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("4w");
+                            getModelData("4w");
+                          }}
+                        >
+                          4주 Top 20
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                              selected === "8w"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setcurrentModel("8w");
+                            getModelData("8w");
+                          }}
+                        >
+                          8주 Top 20
+                        </button>
+                      </div>
+                    </div>
                   </>
                 )}
               </div>
