@@ -39,9 +39,17 @@ function EnterprisesLogin() {
         setFormInput({ company_usrnm: "", company_pass: "" });
         navigate("/enterprise/service");
       }
-    } else if (res.status == 500) {
-      toast("인터넷 장애로 인하여 정보를 못 가져왔습니다. 다시 로그인하세요.");
-
+    } else if (res.status == 400) {
+      // toast("인터넷 장애로 인하여 정보를 못 가져왔습니다. 다시 로그인하세요.");
+      const res = await loginAPI.dtLogin(formInput);
+      if (res.status === 200) {
+        if (res.data) {
+          dispatch(loginInfo(res.data));
+          // toast("로그인 되었습니다.");
+          setFormInput({ company_usrnm: "", company_pass: "" });
+          navigate("/enterprise/service");
+        }
+      }
       setLoader(false);
     } else {
       if (res.data.msg) {
@@ -63,57 +71,63 @@ function EnterprisesLogin() {
         {/* <img src="logo.png" alt="Logo" /> */}
       </div>
       <div className="formSection">
-        <form>
-          <div className="inputGroup">
-            {/* <label htmlFor="id">ID:</label> */}
-            <input
-              type="text"
-              placeholder="아이디 입력해주세요"
-              onChange={(e) => {
-                setFormInput((prevFormInput) => ({
-                  ...prevFormInput,
-                  company_usrnm: e.target.value,
-                }));
-              }}
-            />
+        <form onSubmit={submitLogin} className="enterprise_form_wrapper">
+          <div className="enterprise_form_input_group">
+            <div className="inputGroup">
+              {/* <label htmlFor="id">ID:</label> */}
+
+              <input
+                type="text"
+                placeholder="아이디 입력해주세요"
+                onChange={(e) => {
+                  setFormInput((prevFormInput) => ({
+                    ...prevFormInput,
+                    company_usrnm: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+            <div className="inputGroup">
+              {/* <label htmlFor="pass">Pass:</label> */}
+              <input
+                type="password"
+                id="pass"
+                placeholder="비밀번호 입력해주세요"
+                onChange={(e) => {
+                  setFormInput((prevFormInput) => ({
+                    ...prevFormInput,
+                    company_pass: e.target.value,
+                  }));
+                }}
+              />
+            </div>
           </div>
-          <div className="inputGroup">
-            {/* <label htmlFor="pass">Pass:</label> */}
-            <input
-              type="password"
-              id="pass"
-              placeholder="비밀번호 입력해주세요"
-              onChange={(e) => {
-                setFormInput((prevFormInput) => ({
-                  ...prevFormInput,
-                  company_pass: e.target.value,
-                }));
-              }}
-            />
-          </div>
+          <button
+            className="enterprise_login_btn"
+            type="submit"
+            onClick={(e) => submitLogin(e)}
+          >
+            {loader == true ? (
+              <Oval
+                height={50}
+                width={50}
+                color="#fff"
+                wrapperStyle={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#fff"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              "로그인"
+            )}
+          </button>
         </form>
-        <button
-          className="enterprise_login_btn"
-          type="submit"
-          onClick={(e) => submitLogin(e)}
-        >
-          {loader == true ? (
-            <Oval
-              height={50}
-              width={50}
-              color="#fff"
-              wrapperStyle={{ alignItems: "center", justifyContent: "center" }}
-              wrapperClass=""
-              visible={true}
-              ariaLabel="oval-loading"
-              secondaryColor="#fff"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          ) : (
-            "로그인"
-          )}
-        </button>
       </div>
       {/* <div className="infoSection">
         <h3>서비스 안내 가이드</h3>

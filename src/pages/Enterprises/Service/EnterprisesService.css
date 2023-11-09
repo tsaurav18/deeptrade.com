@@ -6,20 +6,35 @@ html{
   height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 1152px;
+  width: 1177px;
   margin: 0 auto;
 
 }
 .enterprises_service_container .enterprises_service_inner_box{
   display: flex;
-    width: 1152px;
-    margin: 0 auto;
+
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
+
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text{
+
+  margin: 24px 0px;
+
+}
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text img{
+  width: 230px;
+
+
+}
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right{
+  display: flex;
+  align-items: center;
+}
+
 .enterprises_service_container .enterprises_service_calendar_btn{
-  margin-left: 239px;
+  /* margin-left: 239px; */
   margin-bottom: 30px;
   width: 140px;
   background-color: #ffe1e1;
@@ -39,30 +54,113 @@ html{
 
 }
 
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enterprise_username{
+  font-weight: bold;
 
-
-.enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text{
-  
-  margin: 24px 0px;
-  font-size: 30px;
-  font-weight: 800;
+  padding: 5px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 5px;
+  font-size: 17px;
+ 
 }
 
-.enterprises_service_container .enterprises_service_inner_box .enter_logout_button{
+
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enter_logout_button{
   font-weight: bold;
   cursor: pointer;
-  padding: 10px;
+  padding: 5px;
   background-color: rgb(212, 212, 212);
   border-radius: 5px;
+  font-size: 17px;
  
 }
+
 .enterprises_service_container .enterprises_outer{
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 75vh;
+
+    width: 100%;
+    height: 87vh;
+    justify-content: space-between;
  
 }
+
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container{
+  display: flex;
+  flex-direction: column;
+
+  /* width: 21%; */
+ 
+  align-items: center;
+    
+
+ 
+}
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col{
+  display: flex;
+  flex-direction: column;
+  width: 173px;
+ 
+}
+
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col .enterprises_aside_button{
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 168px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+ 
+}
+
+
+.enterprises_service_container .enterprises_outer .enterprises_aside_right_container{
+ display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  border:1px solid #ffe1e1;
+  padding: 7px 6px;
+
+    width: 929px;
+ 
+}
+.enterprises_service_container .enterprises_outer .enterprises_aside_right_container_othercompany{
+  display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+  
+ 
+     width: 100%;
+  
+ }
+
+.calendar_table_class{
+  /* background-color: red; */
+  width: 914px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .enterprises_service_container .enterprises_outer  .enterprises_button-row .button_container{
   display: flex;
   flex-direction: column;
@@ -83,12 +181,18 @@ html{
   flex-direction: column;
 }
 
-.enterprises_service_container .enterprises_outer  .enterprises_button-row {
+.enterprises_service_container .enterprises_outer  .enterprises_aside_left_container .enterprises_button-row {
   display: flex;
  flex-direction: column;
-  
+  align-items: center;
   
 }
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .enterprises_button-row .button_row2{
+  display: flex;
+   align-items: center;
+  flex-direction: column;
+
+ }
 
 .enterprises_service_container  .enterprises_button {
   padding: 10px 20px; /* Add padding to style buttons */
@@ -105,8 +209,8 @@ html{
 /* Style for the table */
 .enterprises_service_table_responsive {
   overflow-x: auto;
-  width: 80%;
-  
+  /* width: 80%; */
+  width: 100%;
   position: relative; 
   margin-bottom: 50px;
 }
@@ -156,14 +260,56 @@ table td {
 }
 
 @media only screen and (max-width: 480px) and (min-width: 220px) {
-  .enterprise_parent_container{
-    height: 173vh!important
-  }
-  .enterprises_service_container .enterprises_service_inner_box {
- 
+  .enterprises_service_container .enterprises_outer .enterprises_aside_right_container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    border: none;
+    padding: 7px 6px;
+    width: 386px;
+    height: 84vh;
+    align-items: center;
+}
+
+  .enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text img{
+    width: 122px;
+  
+  
+  }
+  .enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enter_logout_button{
+    font-size: 8px;
+  }
+
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enterprise_username{
+
+  font-size: 10px;
+ 
+}
+  .enterprises_service_container .enterprises_service_inner_box .enterprise_pc_version_text{
+    background-color:rgb(212, 212, 212);
+    padding: 5px;
+    border-radius: 4px;
+  
+      align-items: center;
+      text-align: center;
+     
+      font-weight: bold;
+      cursor: pointer;    font-size: 8px;
+      margin-left: 10px;
+  }
+
+  .enterprises_service_container .enterprises_service_inner_box .enterprises_service_company_text{
+    margin: 24px 0px;
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .enterprises_service_container .enterprises_service_inner_box {
+    display: flex;
+
     width: 100%;
+    align-items: center;
+    justify-content: space-around;
   
   }
 
@@ -187,23 +333,55 @@ table td {
     font-size: 17px;
     margin-top: 30px;
 
-    margin-left: 27px;
+    /* margin-left: 27px; */
     }
     .enterprises_service_container .enterprises_outer{
       display: flex;
   
     width: 100%;
-    height: 128vh;
+    height: 147vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
      
     }
+    .enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col .enterprises_aside_button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      width: 153px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      
+
+  }
+  .enterprises_service_container .enterprises_button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 120px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-left: 10px;
+
+}
+  
     .enterprises_service_table_responsive {
       overflow-x: auto;
-      width: 98%;
-  
+      /* width: 362px */
+ 
       
+    }
+
+    
+    .calendar_table_class{
+      width:100%
     }
     .enterprises_service_container .enterprises_outer  .enterprises_button-row .button_container{
       display: flex;
@@ -214,6 +392,16 @@ table td {
       align-items: center;
     }
     .enterprises_service_container .enterprises_outer  .enterprises_button-row {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: space-around;
+
+      align-items: center;
+      
+      
+    }
+    .enterprises_service_container .enterprises_outer .enterprises_aside_left_container  .enterprises_button-row {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -237,6 +425,73 @@ table td {
 
 
 @media only screen and (max-width: 768px) and (min-width: 481px){
+
+  .enterprises_service_container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 664px;
+    margin: 0 auto;
+  }
+  .enterprises_service_container .enterprises_service_inner_box {
+ 
+    display: flex;
+    flex-direction: column;
+    
+  
+  }
+  .enterprises_service_container .enterprises_outer{
+    display: flex;
+
+  width: 100%;
+  height: 75vh;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+   
+  }
+  .enterprises_service_container .enterprises_outer .enterprises_aside_left_container {
+    display: flex;
+    flex-direction: column;
+
+    height: 73vh;
+  }
+
+
+  
+    .enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col {
+      display: flex;
+      flex-direction: column;
+      width: 122px;}
+      .enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col .enterprises_aside_button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        width: 110px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+     
+    }
+    
+    .calendar_table_class {
+      overflow-x: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 480px;
+ }
+  .enterprises_service_container .enterprises_outer .enterprises_aside_right_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ffe1e1;
+    padding: 7px 6px;
+    width: 540px;
+    height: 73vh;
+ 
+  }
   .enterprises_service_container .enterprises_outer  .enterprises_button-row .button_container{
     display: flex;
     flex-direction: row;
@@ -245,6 +500,7 @@ table td {
    
     width: 80%;
   }
+
   .enterprises_service_container .enterprises_outer .enterprises_button-row .button_container .button_row {
     display: flex;
     width: 100%;
@@ -252,6 +508,7 @@ table td {
     margin-bottom: 20px;
     flex-direction: column;
     align-items: center;
+
 }
   .enterprises_service_container .enterprises_outer  .enterprises_button-row {
     display: flex;
@@ -271,26 +528,7 @@ table td {
     align-items: center;
 
    }
-  .enterprises_service_container{
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  /* .enterprises_service_container .enterprises_outer  .enterprises_button-row {
-    display: flex;
-    align-items: baseline;
-   
-    flex-direction: column;
-  } */
-  .enterprises_service_container .enterprises_service_inner_box {
  
-    display: flex;
-    flex-direction: column;
-    margin: 0px 25px;
-    width: 93%;
-  
-  }
 
 
     .enterprises_service_container .enterprises_service_calendar_btn{
@@ -305,9 +543,7 @@ table td {
       display: flex;
       justify-content: center;
       font-size: 17px;
-      margin-top: 30px;
-  
-      margin-left: 27px;
+      
       }
 
     .enterprises_service_container .enterprises_service_calendar_btn .calendar_icon{
@@ -322,7 +558,7 @@ table td {
   .enterprises_service_table_responsive {
     overflow-x: auto;
     /* width: 80%; */
-    
+    width: 100%;
     position: relative; 
     margin-bottom: 50px;
     
@@ -336,7 +572,7 @@ table td {
     justify-content: space-between;
   
   }
-  .enterprises_service_container .enterprises_service_inner_box .enter_logout_button{
+  .enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enter_logout_button{
     font-weight: bold;
     cursor: pointer;
     padding: 10px;
@@ -345,17 +581,17 @@ table td {
     width: 85px;
     margin-bottom: 10px;
   }
+  .enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right .enterprise_username{
+    font-weight: bold;
 
-  .enterprises_service_container .enterprises_outer{
-    display: flex;
-
-  width: 100%;
-  height: 75vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    padding: 10px;
+    border: 1px solid rgb(212, 212, 212);
+    border-radius: 8px;
    
-  }
+    margin-bottom: 10px;
+  }  
+
+
   
    .enterprises_service_table_responsive .enterprises_service_table {
     /* width: 100%; */
@@ -366,14 +602,29 @@ table td {
 
 
 } 
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 1068px)and (min-width: 769px) {
   .enterprises_service_container{
     height: 100vh;
     display: flex;
     flex-direction: column;
-    width: 853px;
+    width: 750px;
     margin: 0 auto;
+  }
+    .enterprises_service_container .enterprises_outer .enterprises_aside_right_container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
   
+      width: 593px;
   }
   .enterprises_service_container .enterprises_outer  .enterprises_button-row {
     display: flex;
@@ -384,20 +635,43 @@ table td {
   /* Style for the table */
  .enterprises_service_table_responsive {
    overflow-x: auto;
-   width: 80%;
-   
+   width: 100%;
    position: relative; 
    margin-bottom: 50px;
    height: 90vh;
  }
  .enterprises_service_container .enterprises_service_inner_box {
  
-  width: 853px;
+  /* width: 853px; */
  
 }
+.enterprises_aside_left_container .aside_button_col{
 
+}
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container {
+  display: flex;
+  flex-direction: column;
+  
+  align-items: center;
+}
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col {
+  display: flex;
+  flex-direction: column;
+ 
+}
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col .enterprises_aside_button {
+  /* padding: 10px 20px; */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 152px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
 .enterprises_service_container .enterprises_service_calendar_btn{
-margin-left: 224px;
+/* margin-left: 224px; */
   margin-bottom: 30px;
   width: 140px;
   background-color: #ffe1e1;
@@ -420,19 +694,19 @@ margin-left: 224px;
  }
 
 
-@media only screen and (max-width: 1224px)and (min-width: 1069px) {
+@media only screen and (max-width: 1188px)and (min-width: 1069px) {
   .enterprises_service_container{
     height: 100vh;
     display: flex;
     flex-direction: column;
-    width: 853px;
-    margin: 0 auto;
+    width: 853px; 
+    margin: 0 auto; 
   
   }
   /* Style for the table */
  .enterprises_service_table_responsive {
    overflow-x: auto;
-   width: 80%;
+   width: 100%;
    
    position: relative; 
    margin-bottom: 50px;
@@ -440,16 +714,26 @@ margin-left: 224px;
  }
  .enterprises_service_container .enterprises_service_inner_box {
  
-  width: 853px;
+  width: 918px;
  
 }
+
+
+.enterprises_service_container .enterprises_outer .enterprises_aside_right_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #ffe1e1;
+  padding: 7px 6px;
+  width: 748px;
  }
- @media only screen and (max-width: 1225px)and (min-width: 1791px) {
+}
+ @media only screen and (max-width: 1189px)and (min-width: 1791px) {
   /* Style for the table */
  .enterprises_service_table_responsive {
    overflow-x: auto;
-   width: 70%;
-   
+   width: 100%;
+      
    position: relative; 
    margin-bottom: 50px;
    height: 90vh;
@@ -459,7 +743,7 @@ margin-left: 224px;
   /* Style for the table */
  .enterprises_service_table_responsive {
   overflow-x: auto;
-
+  width: 100%;
   position: relative;
   margin-bottom: 50px;
   height: 81vh;
@@ -481,3 +765,305 @@ margin-left: 224px;
   color: #fff!important; /* Set the text color for better visibility */
 }
 
+
+
+
+
+.enterprise_parent_container_pc .enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprise_pc_version_text_pc {
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(212, 212, 212);
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+
+
+
+
+
+
+
+
+ .enterprises_service_container_pc{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 1177px;
+  margin: 0 auto;
+
+
+}
+.enterprises_service_container_pc .enterprises_service_inner_box_pc{
+  display: flex;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.enterprises_service_container_pc .enterprises_service_calendar_btn_pc{
+
+  margin-bottom: 30px;
+  width: 140px;
+  background-color: #ffe1e1;
+  padding: 10px;
+  border: 1px solid #ffe1e1;
+  border-radius:5px;
+  font-size: 17px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.enterprises_service_container_pc .enterprises_service_calendar_btn_pc .calendar_icon_pc{
+  
+  display: flex!important;
+  justify-content: center!important;
+  flex-direction: row!important;
+
+}
+
+
+
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_company_text_pc{
+  margin: 24px 0px;
+}
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_inner_box_right_pc{
+  display: flex;
+  align-items: center;
+}
+
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_inner_box_right_pc .enter_logout_button_pc{
+  font-weight: bold;
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(212, 212, 212);
+  border-radius: 5px;
+  font-size: 17px;
+
+ 
+}
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_inner_box_right_pc .enterprise_username_pc{
+  font-weight: bold;
+
+  padding: 10px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 5px;
+  font-size: 17px;
+
+ 
+}
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprise_pc_version_text{
+  background-color:rgb(212, 212, 212);
+  padding: 10px;
+  border-radius: 4px;
+
+    align-items: center;
+    text-align: center;
+   
+    font-weight: bold;
+    cursor: pointer;        font-size: 17px;
+    margin-left: 10px;
+}
+.enterprises_service_container .enterprises_service_inner_box .enterprises_service_inner_box_right_pc .enterprise_username{
+  font-weight: bold;
+
+  padding: 10px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 8px;
+  width: 85px;
+  margin-bottom: 10px;
+}  
+
+.enterprises_service_container_pc .enterprises_outer_pc{
+
+  display: flex;
+  width: 100%;
+  height: 87vh;
+  justify-content: space-between;
+ 
+}
+.enterprises_service_container_pc .enterprises_outer_pc  .enterprises_button-row_pc .button_container_pc{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.enterprises_service_container_pc .enterprises_outer_pc  .enterprises_button-row_pc .button_container_pc .button_row_pc{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+.enterprises_service_container_pc .enterprises_outer_pc  .button_container_pc .button_row2_pc{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+
+.enterprises_service_container_pc .enterprises_outer_pc  .enterprises_aside_left_container_pc .enterprises_button-row_pc .button_row2_pc{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+
+.enterprises_service_container_pc .enterprises_outer_pc  .enterprises_button-row_pc {
+  display: flex;
+ flex-direction: column;
+  
+  
+}
+
+.enterprises_service_container_pc  .enterprises_button_pc {
+  padding: 10px 20px; /* Add padding to style buttons */
+  background-color: #007bff; /* Example background color */
+  color: #fff; /* Example text color */
+  border: none;
+  cursor: pointer;
+  width:  120px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.enterprise_parent_container_pc .enterprises_service_container_pc .enter_logout_button_pc{
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  background-color: rgb(212, 212, 212);
+  border-radius: 5px;
+  font-size: 17px;
+ 
+}
+
+/* Style for the table */
+.enterprises_service_table_responsive_pc {
+  overflow-x: auto;
+
+  position: relative; 
+  margin-bottom: 50px;
+  height: 81vh;
+ 
+}
+
+/* Style for the table header */
+.enterprises_service_table_responsive_pc .enterprises_service_table_pc .nonsticky_table_header_pc {
+
+  top: 0; /* Stick the header to the top of the container */
+  background-color: #fff;
+  z-index: 1; /* Ensure the header is above the content */
+}
+/* Style for the table header */
+.enterprises_service_table_responsive_pc .enterprises_service_table_pc .sticky_table_header_pc {
+  position: sticky;
+  top: 0; /* Stick the header to the top of the container */
+  background-color: #fff;
+  z-index: 1; /* Ensure the header is above the content */
+}
+.enterprises_service_table_responsive_pc .enterprises_service_table_pc {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.enterprises_service_table_responsive_pc .enterprises_service_table_pc .table_head {
+
+  display: contents;
+}
+
+
+.enterprises_service_table_responsive_pc table th,
+table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Add styles for even and odd rows */
+.enterprises_service_table_responsive_pc table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect on rows */
+.enterprises_service_table_responsive_pc table tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+
+
+.enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_inner_box_right_pc .enterprise_username_pc{
+  font-weight: bold;
+
+  padding: 10px;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 8px;
+ 
+
+}  
+
+.enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_left_container_pc{
+  display: flex;
+  flex-direction: column;
+
+  width: 21%;
+ 
+  align-items: center;
+    
+
+ 
+}
+.enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_left_container_pc .aside_button_col_pc{
+  display: flex;
+  flex-direction: column;
+  width: 173px;
+ 
+}
+
+.enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_left_container_pc .aside_button_col_pc .enterprises_aside_button_pc{
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 168px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+ 
+}
+
+.enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_right_container_pc{
+  display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+   border:1px solid #ffe1e1;
+   padding: 7px 6px;
+ 
+     width: 929px;
+  
+ }
+ .enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_right_container_risk_pc{
+ 
+   border:1px solid #ffe1e1;
+   padding: 7px 6px;
+ 
+     width: 929px;
+  
+ }
+ 
+ .enterprises_service_container_pc .enterprises_service_inner_box_pc .enterprises_service_company_text_pc img{
+  width: 230px;
+
+
+}
+
+.enterprises_service_table_responsive_others{
+  overflow-x: auto;
+  /* width: 362px */
+      height: 60vh;
+}
