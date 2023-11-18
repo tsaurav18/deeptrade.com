@@ -41,12 +41,12 @@ function Header(props) {
             News
           </div>
 
-          {/* <div
+          <div
             className="menu_item"
             onClick={() => props.newsletterRef.current.scrollIntoView()}
           >
             Newsletter
-          </div> */}
+          </div>
         </div>
       </div>
       <div>

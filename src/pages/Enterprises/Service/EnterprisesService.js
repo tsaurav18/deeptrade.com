@@ -17,6 +17,7 @@ Modal.setAppElement("#root");
 function EnterprisesService() {
   useTitle("딥트레이드 엔터프라이즈");
   const [serviceButtonFlag, setServiceButtonFlag] = useState('koreainvestment')
+  const [serviceFlagList, setServiceFlagList] = useState([])
   const user_info_reducer = useSelector((state) => state.loginReducer);
   const [Loader, setLoader] = useState(false);
   const [value, onChange] = useState(new Date());
@@ -28,6 +29,7 @@ function EnterprisesService() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("");
+  const [selectedIndices, setSelectedIndices] = useState("");
   const [isPcVersion, setIsPcVersion] = useState(false);
   const [currentModel, setcurrentModel] = useState(() => {
     if (user_info_reducer.company_name === "Hantoo") {
@@ -38,8 +40,8 @@ function EnterprisesService() {
       return "1w-5";
     }
   });
+  const [currentRiskModel, setCurrentRiskModel] = useState("daily");
 
- console.log(user_info_reducer)
   
   useEffect(() => {
     document.title = "딥트레이드 엔터프라이즈";
@@ -70,6 +72,7 @@ function EnterprisesService() {
     dispatch(resetState());
     navigate("/enterprise", { replace: true });
   };
+  //old function
   const getModelData = async (modelType, currentdate) => {
     setLoader(true);
     if (currentdate !== undefined) {
@@ -84,7 +87,7 @@ function EnterprisesService() {
         setSelected(modelType);
         setServerError(false);
         setLoader(false);
-        // console.log("data is feteched", res.data);
+    
       } else {
         setServerError(true);
         setLoader(false);
@@ -103,7 +106,7 @@ function EnterprisesService() {
         setSelected(modelType);
         setServerError(false);
         setLoader(false);
-        // console.log("data is feteched", res.data);
+        console.log("data is feteched", res.data);
       } else {
         setServerError(true);
         setLoader(false);
@@ -112,6 +115,7 @@ function EnterprisesService() {
     }
   };
 
+//old function
   useEffect(() => {
     let isComponentRender = true;
     if (isComponentRender) {
@@ -132,6 +136,47 @@ function EnterprisesService() {
       setServerError(false);
     };
   }, []);
+
+  
+// New Function
+  const getModelDataNew = async (currentdate) => {
+    setLoader(true);
+    const res = await getDtData.fetchDtData(
+      user_info_reducer.company_name,
+      currentdate
+    );
+    if (res.status === 200) {
+      setDataList(res.data);
+      setServiceFlagList(res.service_list)
+      setServerError(false);
+      setLoader(false);
+      // console.log("data is feteched", res.data);
+    } else {
+      setServerError(true);
+      setLoader(false);
+      console.log("something went wrong");
+    }
+    
+  };
+
+
+// Get Model data New Function 
+useEffect(() => {
+  let isComponentRender = true;
+  if (isComponentRender) {
+    getModelDataNew(currentSelectedDate);
+  }
+
+  return () => {
+    isComponentRender = false;
+   
+  };
+}, []);
+
+
+
+
+
 
 //Risk management stock table 
 function RiskManagementStockTable({ data }) {
@@ -338,23 +383,27 @@ function RiskManagementStockTable({ data }) {
     };
   }, []);
 
-const getShannonManagementIndices =async()=>{
+const getShannonManagementIndices =async(modelType)=>{
+  setLoader(true);
   console.log("click")
-  const res = await getDtData.getRiskManagementIndicesData(
+  setSelectedIndices(modelType);
+  const res = await getDtData.getRiskManagementIndicesData(modelType
   );
 
   if (res.status === 200) {
     setRiskManagementDataList(res.data);
+    setSelectedIndices(modelType);
     console.log("data is feteched 1st time", res.data);
 
     setLoader(false);
     // console.log("data is feteched", res.data);
   } else if(res.status===400){
-    const res = await getDtData.getRiskManagementIndicesData(
+    const res = await getDtData.getRiskManagementIndicesData(modelType
       );
     
       if (res.status === 200) {
         setRiskManagementDataList(res.data);
+        setSelectedIndices(modelType);
         console.log("data is feteched 2nd time", res.data);
        
         setLoader(false);
@@ -369,7 +418,8 @@ const getShannonManagementIndices =async()=>{
   useEffect(() => {
     let isComponentRender = true
     if(isComponentRender){
-      getShannonManagementIndices()
+     
+      getShannonManagementIndices(currentRiskModel)
     }
   
     return () => {
@@ -486,360 +536,33 @@ const getShannonManagementIndices =async()=>{
   
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
       {user_info_reducer.is_staff ? (
-        isPcVersion ? (
-      //     <div className="enterprise_parent_container_pc">
-      //       <div className="enterprises_service_container_pc">
-      //         <div className="enterprises_service_inner_box_pc">
-      //           <div className="enterprises_service_company_text_pc">
-      //             DeepTrade Market AI
-      //           </div>
-      //           <div className="enter_logout_button_pc" onClick={onLogout}>
-      //             로그아웃
-      //           </div>
-      //           {windowSize.width <= 480 && (
-      //   <div
-      //     onClick={() => handlePcClick()}
-      //     className="enterprise_pc_version_text_pc"
-      //   >
-      //    <span>{isPcVersion ? "모바일 버전으로 보기" : "PC 버전으로 보기"}</span> 
-      //   </div>
-      // )}
-          
-      //         </div>
-      //         <div className="enterprises_service_calendar_btn_pc">
-      //           <div
-      //             onClick={() => setShowCalendar(!showCalendar)}
-      //             className="calendar_icon_pc"
-      //           >
-      //             <AiOutlineCalendar size={25} />
-      //             {showCalendar ? convertDate() : convertDate()}
-      //           </div>
-      //           <Modal
-      //             isOpen={showCalendar}
-      //             onRequestClose={closeModal}
-      //             style={customStyles}
-      //           >
-      //             <Calendar
-      //               calendarType="US"
-      //               locale="ko"
-      //               defaultActiveStartDate={selectedDate}
-      //               onClickDay={(date) => handleDateSelection(date)}
-      //               onChange={onChange}
-      //               value={value}
-      //               minDate={minDate}
-      //               maxDate={maxDate}
-      //               tileClassName={({ date, view }) => {
-      //                 const isHovered = view === "month" || view === "year"; // Define hoverable views (month/year)
-
-      //                 return classNames({
-      //                   "selected-date":
-      //                     date.toDateString() === selectedDate.toDateString(),
-      //                 });
-      //               }}
-      //               tileDisabled={({ date }) => isDateDisabled(date)}
-      //             />
-      //           </Modal>
-      //         </div>
-
-      //         <div className="enterprises_outer_pc">
-      //           <div className="enterprises_button-row_pc">
-      //             {user_info_reducer.company_name === "Hantoo" ? (
-      //               <div className="button_container_pc">
-      //                 <div className="button_row_pc" style={{}}>
-      //                   <button
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("1w-5");
-      //                       getModelData("1w-5");
-      //                     }}
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "1w-5"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                   >
-      //                     1주 Top 5
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "2w-5"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("2w-5");
-      //                       getModelData("2w-5");
-      //                     }}
-      //                   >
-      //                     2주 Top 5
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "4w-5"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("4w-5");
-      //                       getModelData("4w-5");
-      //                     }}
-      //                   >
-      //                     4주 Top 5
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "8w-5"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("8w-5");
-      //                       getModelData("8w-5");
-      //                     }}
-      //                   >
-      //                     8주 Top 5
-      //                   </button>
-      //                 </div>
-      //                 <div className="button_row2_pc">
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "1w"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("1w");
-      //                       getModelData("1w");
-      //                     }}
-      //                   >
-      //                     1주 Top 20
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "2w"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("2w");
-      //                       getModelData("2w");
-      //                     }}
-      //                   >
-      //                     2주 Top 20
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "4w"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("4w");
-      //                       getModelData("4w");
-      //                     }}
-      //                   >
-      //                     4주 Top 20
-      //                   </button>
-      //                   <button
-      //                     style={{
-      //                       backgroundColor:
-      //                         selected === "8w"
-      //                           ? "#007bff"
-      //                           : "rgb(100 100 100)",
-      //                     }}
-      //                     className="enterprises_button_pc"
-      //                     onClick={() => {
-      //                       setcurrentModel("8w");
-      //                       getModelData("8w");
-      //                     }}
-      //                   >
-      //                     8주 Top 20
-      //                   </button>
-      //                 </div>
-      //               </div>
-      //             ) : user_info_reducer.company_name === "Crescendo" ? (
-      //               <>
-      //                 <button
-      //                   style={{
-      //                     backgroundColor:
-      //                       selected === "5" ? "#007bff" : "rgb(100 100 100)",
-      //                   }}
-      //                   className="enterprises_button_pc"
-      //                   onClick={() => {
-      //                     setcurrentModel("5");
-      //                     getModelData("5");
-      //                   }}
-      //                 >
-      //                   4주 Top 5
-      //                 </button>
-      //                 <button
-      //                   style={{
-      //                     backgroundColor:
-      //                       selected === "20" ? "#007bff" : "rgb(100 100 100)",
-      //                   }}
-      //                   className="enterprises_button_pc"
-      //                   onClick={() => {
-      //                     setcurrentModel("20");
-      //                     getModelData("20");
-      //                   }}
-      //                 >
-      //                   4주 Top 20
-      //                 </button>
-      //               </>
-      //             ) : (
-      //               <>
-      //                 <div className="button_container_pc">
-      //                   <div className="button_row_pc" style={{}}>
-      //                     <button
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("1w-5");
-      //                         getModelData("1w-5");
-      //                       }}
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "1w-5"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                     >
-      //                       1주 Top 5
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "2w-5"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("2w-5");
-      //                         getModelData("2w-5");
-      //                       }}
-      //                     >
-      //                       2주 Top 5
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "4w-5"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("4w-5");
-      //                         getModelData("4w-5");
-      //                       }}
-      //                     >
-      //                       4주 Top 5
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "8w-5"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("8w-5");
-      //                         getModelData("8w-5");
-      //                       }}
-      //                     >
-      //                       8주 Top 5
-      //                     </button>
-      //                   </div>
-      //                   <div className="button_row2_pc">
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "1w"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("1w");
-      //                         getModelData("1w");
-      //                       }}
-      //                     >
-      //                       1주 Top 20
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "2w"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("2w");
-      //                         getModelData("2w");
-      //                       }}
-      //                     >
-      //                       2주 Top 20
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "4w"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("4w");
-      //                         getModelData("4w");
-      //                       }}
-      //                     >
-      //                       4주 Top 20
-      //                     </button>
-      //                     <button
-      //                       style={{
-      //                         backgroundColor:
-      //                           selected === "8w"
-      //                             ? "#007bff"
-      //                             : "rgb(100 100 100)",
-      //                       }}
-      //                       className="enterprises_button_pc"
-      //                       onClick={() => {
-      //                         setcurrentModel("8w");
-      //                         getModelData("8w");
-      //                       }}
-      //                     >
-      //                       8주 Top 20
-      //                     </button>
-      //                   </div>
-      //                 </div>
-      //               </>
-      //             )}
-      //           </div>
-      //           {dataList != null ? <StockTablePc data={dataList} /> : null}
-      //         </div>
-      //       </div>
-
-      //     </div>
-        
-        
+        isPcVersion ? (       
       <div
       className="enterprise_parent_container_pc"
     >
@@ -899,7 +622,7 @@ const getShannonManagementIndices =async()=>{
                     className="enterprises_aside_button_pc"
                     onClick={() => {
                       setAsideButtonState("SHANNON_INDICES");
-                   
+                      getShannonManagementIndices(currentRiskModel)
                     }}
                   >
                  Shannon 지수
@@ -1234,8 +957,41 @@ const getShannonManagementIndices =async()=>{
         </div> <StockTablePc data={dataList} /></div> : null}
         </div>):
         (  <div className="enterprises_aside_right_container_risk_pc">
-      
-          {riskManagementDataList != null ? <RiskManagementStockTable data={riskManagementDataList} /> : null}
+            <div className="enterprises_button-row_pc">
+              <div className="button_container_pc">
+                      <div className="button_row_pc" style={{}}>
+                        <button
+                          className="enterprises_button_pc"
+                          onClick={() => {
+                            setCurrentRiskModel("daily");
+                            getShannonManagementIndices("daily");
+                          }}
+                          style={{
+                            backgroundColor:
+                            selectedIndices === "daily"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                        >
+                        Daily
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                            selectedIndices === "weekly"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button_pc"
+                          onClick={() => {
+                            setCurrentRiskModel("weekly");
+                            getShannonManagementIndices("weekly");
+                          }}
+                        >
+                    Weekly
+                        </button>
+                    </div></div> </div>
+          {riskManagementDataList != null ? <div className="calendar_table_class"><RiskManagementStockTable data={riskManagementDataList} /> </div>: null}
         </div>)}
         
         </div>
@@ -1456,7 +1212,7 @@ const getShannonManagementIndices =async()=>{
         ) : (
         
         
-        
+        // website view
           <div
             className="enterprise_parent_container"
           >
@@ -1484,9 +1240,10 @@ const getShannonManagementIndices =async()=>{
       )}
           </div>
               </div>
-              
+                 
                 {user_info_reducer.company_name ==="DTT"?(  
                    <div className="enterprises_outer">
+                      
                 <div className="enterprises_aside_left_container">
                 <div className="aside_button_col" >
                         <button
@@ -1505,43 +1262,7 @@ const getShannonManagementIndices =async()=>{
                         >
                             Shannon 개별종목
                         </button>
-                        {/* {asideButtonState==="SHANNON_STOCK" &&
-                        <div>
-                             <button
-                          className="enterprises_aside_button"
-                          onClick={() => {
-                            setServiceButtonFlag("Hantoo")
-                            setAsideButtonState("SHANNON_STOCK");
-               
-                          }}
-                          style={{
-                            color:serviceButtonFlag==="Hantoo"?"#fff":"#000",
-                            backgroundColor:
-                              serviceButtonFlag === "Hantoo"
-                                ? "rgb(2 88 179)"
-                                : "rgb(222 222 222)",
-                          }}
-                        >
-                           한국투자증권
-                        </button>
-                        <button
-                          className="enterprises_aside_button"
-                          onClick={() => {
-                            setServiceButtonFlag("Crescendo")
-                            setAsideButtonState("SHANNON_STOCK");
-               
-                          }}
-                          style={{
-                            color:serviceButtonFlag==="Crescendo"?"#fff":"#000",
-                            backgroundColor:
-                            serviceButtonFlag === "Crescendo"
-                                ? "rgb(2 88 179)"
-                                : "rgb(222 222 222)",
-                          }}
-                        >
-                        크레센도
-                        </button>
-                          </div>} */}
+                      
                         <button
                           style={{
                             backgroundColor:
@@ -1557,9 +1278,12 @@ const getShannonManagementIndices =async()=>{
                         >
                        Shannon 지수
                         </button>
+
                 </div>
                 </div>
-                {asideButtonState==="SHANNON_STOCK" ? (  <div className="enterprises_aside_right_container">
+             
+          {asideButtonState==="SHANNON_STOCK" ? (  <div className="enterprises_aside_right_container">
+              
                 <div className="enterprises_button-row">
                   {user_info_reducer.company_name === "Hantoo" ? (
                     <div className="button_container">
@@ -1884,10 +1608,46 @@ const getShannonManagementIndices =async()=>{
                   />
                 </Modal>
               </div> <StockTable data={dataList} /></div> : null}
-              </div>):
+              </div>)
+              
+              :
               (  <div className="enterprises_aside_right_container">
-            
-                {riskManagementDataList != null ? <RiskManagementStockTable data={riskManagementDataList} /> : null}
+              <div className="enterprises_button-row">
+              <div className="button_container">
+                      <div className="button_row" style={{}}>
+                        <button
+                          className="enterprises_button"
+                          onClick={() => {
+                            setCurrentRiskModel("daily");
+                            getShannonManagementIndices("daily");
+                          }}
+                          style={{
+                            backgroundColor:
+                            selectedIndices === "daily"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                        >
+                        Daily
+                        </button>
+                        <button
+                          style={{
+                            backgroundColor:
+                            selectedIndices === "weekly"
+                                ? "#007bff"
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprises_button"
+                          onClick={() => {
+                            setCurrentRiskModel("weekly");
+                            getShannonManagementIndices("weekly");
+                          }}
+                        >
+                    Weekly
+                        </button>
+                    </div></div> </div>
+                {riskManagementDataList != null ? 
+                <div className="calendar_table_class"><RiskManagementStockTable data={riskManagementDataList} /></div> : null}
               </div>)}
               
               </div>

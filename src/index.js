@@ -33,6 +33,7 @@ import {
 import persistedReducers from "./redux/store";
 import { VerifyAuth } from "./routing/VerifyAuth";
 import authRoles from "./routing/authRoles";
+import EnterpriseServiceTest from "./pages/Enterprises/Service/EnterpriseServiceTest";
 
 const store = configureStore({
   reducer: persistedReducers,
@@ -65,13 +66,23 @@ ReactDOM.render(
               exact={true}
               element={<EnterprisesLogin />}
             />
-            <Route
+            {/* <Route
               path="enterprise/service"
               exact={true}
               element={
                 <VerifyAuth
                   authRoles={authRoles}
                   component={EnterprisesService}
+                />
+              }
+            /> */}
+            <Route
+              path="enterprise/service"
+              exact={true}
+              element={
+                <VerifyAuth
+                  authRoles={authRoles}
+                  component={EnterpriseServiceTest}
                 />
               }
             />

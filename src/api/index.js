@@ -66,11 +66,34 @@ export const getDtData = {
         return res;
       });
   },
-  async getRiskManagementIndicesData() {
+  //New api for test
+  async fetchDtDataTest(company_name, currentSelectedDate) {
+    let body = JSON.stringify({
+      company: company_name,
+      date: currentSelectedDate,
+      test: false,
+    });
     let csrf = await instance.get("mobile/get_csrf/");
 
     return instance
-      .post(`dtenter/risk_management_indices/`, {
+      .post(`dtenter/dt_service_test/`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+  async getRiskManagementIndicesData(modelType) {
+    let body = JSON.stringify({
+      type: modelType,
+    });
+    let csrf = await instance.get("mobile/get_csrf/");
+
+    return instance
+      .post(`dtenter/risk_management_indices/`, body, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrf.data["token"],

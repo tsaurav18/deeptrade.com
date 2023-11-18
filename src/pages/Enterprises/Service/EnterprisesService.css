@@ -108,7 +108,7 @@ html{
   color: #fff;
   border: none;
   cursor: pointer;
-  width: 168px;
+  width: 181px;
   margin-bottom: 10px;
   border-radius: 8px;
  
@@ -172,6 +172,7 @@ html{
   justify-content: space-between;
   margin-bottom: 20px;
   flex-direction: column;
+  align-items: center;
 }
 .enterprises_service_container .enterprises_outer  .enterprises_button-row .button_container .button_row2{
   display: flex;
@@ -351,7 +352,7 @@ table td {
       color: #fff;
       border: none;
       cursor: pointer;
-      width: 153px;
+      width: 181px;
       margin-bottom: 10px;
       border-radius: 8px;
       font-size: 13px;
@@ -616,7 +617,7 @@ table td {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    width: 750px;
+    width: 911px;
     margin: 0 auto;
   }
     .enterprises_service_container .enterprises_outer .enterprises_aside_right_container {
@@ -624,7 +625,7 @@ table td {
       flex-direction: row;
       justify-content: space-between;
   
-      width: 593px;
+      width: 723px;
   }
   .enterprises_service_container .enterprises_outer  .enterprises_button-row {
     display: flex;
@@ -706,7 +707,7 @@ table td {
   /* Style for the table */
  .enterprises_service_table_responsive {
    overflow-x: auto;
-   width: 100%;
+   width: 85%;
    
    position: relative; 
    margin-bottom: 50px;
@@ -718,7 +719,17 @@ table td {
  
 }
 
-
+.enterprises_service_container .enterprises_outer .enterprises_aside_left_container .aside_button_col .enterprises_aside_button {
+  /* padding: 10px 20px; */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 152px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
 .enterprises_service_container .enterprises_outer .enterprises_aside_right_container {
   display: flex;
   flex-direction: row;
@@ -738,6 +749,7 @@ table td {
    margin-bottom: 50px;
    height: 90vh;
  }
+
  }
 @media only screen and (max-width: 1792px)and (min-width: 1025px) {
   /* Style for the table */
@@ -748,6 +760,7 @@ table td {
   margin-bottom: 50px;
   height: 81vh;
  }
+
  }
  
 
@@ -1031,7 +1044,7 @@ table td {
   color: #fff;
   border: none;
   cursor: pointer;
-  width: 168px;
+  width: 181px;
   margin-bottom: 10px;
   border-radius: 8px;
  
@@ -1048,7 +1061,8 @@ table td {
   
  }
  .enterprises_service_container_pc .enterprises_outer_pc .enterprises_aside_right_container_risk_pc{
- 
+  flex-direction: row;
+  display: flex;
    border:1px solid #ffe1e1;
    padding: 7px 6px;
  
