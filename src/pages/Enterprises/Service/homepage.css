@@ -1,0 +1,30 @@
+.enterprise_content_right_right_calendar_pc{
+    width: 140px;
+    background-color: #ffe1e1;
+    padding: 10px;
+    border: 1px solid #ffe1e1;
+    border-radius:5px;
+    font-size: 17px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.calendar_icon{
+    display: flex!important;
+  justify-content: center!important;
+  flex-direction: row!important;
+  align-items: center;
+}
+
+/* .enterprise_content_right_right_calendar_pc{
+
+    width: 140px;
+    background-color: #ffe1e1;
+    padding: 10px;
+    border: 1px solid #ffe1e1;
+    border-radius:5px;
+    font-size: 17px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+} */

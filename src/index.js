@@ -66,7 +66,7 @@ ReactDOM.render(
               exact={true}
               element={<EnterprisesLogin />}
             />
-            {/* <Route
+            <Route
               path="enterprise/service"
               exact={true}
               element={
@@ -75,8 +75,8 @@ ReactDOM.render(
                   component={EnterprisesService}
                 />
               }
-            /> */}
-            <Route
+            />
+            {/* <Route
               path="enterprise/service"
               exact={true}
               element={
@@ -85,7 +85,7 @@ ReactDOM.render(
                   component={EnterpriseServiceTest}
                 />
               }
-            />
+            /> */}
           </Routes>
         </Router>
       </React.StrictMode>{" "}

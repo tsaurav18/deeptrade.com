@@ -1,5 +1,4 @@
 import axios from "axios";
-console.log(axios.isCancel("something"));
 
 const productionUrl = "https://xpct.net/api/";
 const localUrl = "http://13.125.37.183:8888/api/";
@@ -45,18 +44,18 @@ export const loginAPI = {
       });
   },
 };
-
 export const getDtData = {
-  async fetchDtData(company_name, modelType, currentSelectedDate) {
+  //get Related news
+
+  async getRelatedNews({ ticker, contains_stock_name }) {
     let body = JSON.stringify({
-      company_name: company_name,
-      model: modelType,
-      date: currentSelectedDate,
+      ticker: ticker,
+      contains_stock_name: contains_stock_name,
     });
     let csrf = await instance.get("mobile/get_csrf/");
 
     return instance
-      .post(`dtenter/dt_service/`, body, {
+      .post(`mobile/related/`, body, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrf.data["token"],
@@ -66,8 +65,7 @@ export const getDtData = {
         return res;
       });
   },
-  //New api for test
-  async fetchDtDataTest(company_name, currentSelectedDate) {
+  async fetchDtData(company_name, currentSelectedDate) {
     let body = JSON.stringify({
       company: company_name,
       date: currentSelectedDate,
@@ -86,14 +84,30 @@ export const getDtData = {
         return res;
       });
   },
-  async getRiskManagementIndicesData(modelType) {
+  async getDTStockInfo(id) {
     let body = JSON.stringify({
-      type: modelType,
+      id,
     });
     let csrf = await instance.get("mobile/get_csrf/");
 
     return instance
-      .post(`dtenter/risk_management_indices/`, body, {
+      .post(`dtenter/get_dt_stock_info/`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+
+  //get the stock price
+
+  async getNewsSummary() {
+    let csrf = await instance.get("mobile/get_csrf/");
+    return instance
+      .get("mobile/get_news_summary/", {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrf.data["token"],
@@ -104,3 +118,62 @@ export const getDtData = {
       });
   },
 };
+
+// export const getDtData = {
+//   async fetchDtData(company_name, modelType, currentSelectedDate) {
+//     let body = JSON.stringify({
+//       company_name: company_name,
+//       model: modelType,
+//       date: currentSelectedDate,
+//     });
+//     let csrf = await instance.get("mobile/get_csrf/");
+
+//     return instance
+//       .post(`dtenter/dt_service/`, body, {
+//         headers: {
+//           "Content-Type": "application/json",
+//           "X-CSRFToken": csrf.data["token"],
+//         },
+//       })
+//       .then((res) => {
+//         return res;
+//       });
+//   },
+//   //New api for test
+//   async fetchDtDataTest(company_name, currentSelectedDate) {
+//     let body = JSON.stringify({
+//       company: company_name,
+//       date: currentSelectedDate,
+//       test: false,
+//     });
+//     let csrf = await instance.get("mobile/get_csrf/");
+
+//     return instance
+//       .post(`dtenter/dt_service_test/`, body, {
+//         headers: {
+//           "Content-Type": "application/json",
+//           "X-CSRFToken": csrf.data["token"],
+//         },
+//       })
+//       .then((res) => {
+//         return res;
+//       });
+//   },
+//   async getRiskManagementIndicesData(modelType) {
+//     let body = JSON.stringify({
+//       type: modelType,
+//     });
+//     let csrf = await instance.get("mobile/get_csrf/");
+
+//     return instance
+//       .post(`dtenter/risk_management_indices/`, body, {
+//         headers: {
+//           "Content-Type": "application/json",
+//           "X-CSRFToken": csrf.data["token"],
+//         },
+//       })
+//       .then((res) => {
+//         return res;
+//       });
+//   },
+
