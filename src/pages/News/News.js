@@ -41,6 +41,25 @@ function News(props) {
           loop={true}
           navigation={true}
         >
+           <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news16.png" alt="news16" />
+              </div>
+              <div className="news_content">
+                <h6>
+                
+딥트레이드테크놀로지스, DB금융투자 대상 국면 예측 솔루션 제공 계약 체결
+                </h6>
+                <p>2023/12</p>
+                <p>
+                딥트레이드테크놀로지스가 DB금융투자 리서치팀에게 국면 예측 솔루션 제공하기로 하였습니다. 딥트레이드테크놀로지스가 개발한 고도의 인공지능으로 거시 경제 국면에 대해 예측하고 예측 결과를 토대로 투자 자산에 대한 배분 결과를 제공합니다. 투자 자산 배분은 ETF 관리 기술이 적용되었으며 이를 통해 고객은 안정성 높은 투자 포트폴리오를 구성할 수 있게 됩니다. <br />
+             
+              
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
           <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
