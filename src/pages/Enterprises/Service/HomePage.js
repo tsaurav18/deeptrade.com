@@ -4,7 +4,7 @@ import Arrow from "../../../assets/icons/arrow.png";
 import RightArrow from "../../../assets/icons/rightArrow.png";
 
 import color from "../../../style/color";
-import { Col, Row, ShadowCol, WhiteSpace } from "../../../style/globalStyled";
+import { Col, Row, ShadowCol, WhiteSpace ,ShadowRow} from "../../../style/globalStyled";
 
 import { Input, Button } from "@mui/material";
 import { getDtData } from "../../../api";
@@ -22,9 +22,10 @@ import classNames from "classnames";
 import { CircularProgress } from "@mui/material";
 import ApexChart from "react-apexcharts";
 import "react-calendar/dist/Calendar.css";
-
+import { useResponsive } from "../../../hooks/useResponsive";
+import useWidth from "../../../hooks/useWidth"
 import { Bar, Line } from "react-chartjs-2";
-
+import moment from "moment";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -217,6 +218,8 @@ const LineChart = ({ DailyData, WeeklyData, activeFlag }) => {
 Modal.setAppElement("#root");
 
 const HomePage = ({ scrollbarHandler }) => {
+  const { responsiveValue } = useResponsive()
+  const width = useWidth()
   useEffect(() => {
     scrollbarHandler(true);
 
@@ -319,6 +322,7 @@ const HomePage = ({ scrollbarHandler }) => {
 
   const [newInfo, setNewInfo] = useState([]);
   const [stockPrice, setStockPrice] = useState([]);
+  const [movingAvgPrice, setMovingAvgPrice] = useState([]);
   const [loading, setLoding] = useState(false);
   const [profitList, setProfitList] = useState([{}, {}, {}, {}]);
   const [name, setName] = useState("주식이름");
@@ -466,12 +470,19 @@ const HomePage = ({ scrollbarHandler }) => {
       const stock_info_dict = data.stock_info_lst;
 
       const temp = price_list.map((v, idx) => {
-        const endPrice = Math.round(mov_avg_lst[idx].price);
+        // const endPrice = Math.round(mov_avg_lst[idx].price);
+        const startPrice = price_list?.[idx - 1]?.price || v.price
         return {
           x: new Date(v.date),
-          y: [v.price, v.high, v.low, endPrice],
+          y: [startPrice, v.high, v.low, v.price],
         };
       });
+      setMovingAvgPrice(mov_avg_lst.map((v) => {
+        return {
+          x: new Date(v.date),
+          y: v.price
+        }
+      }))
       setStockPrice(temp);
       setName(stock_info_dict?.name);
       //profit list
@@ -576,61 +587,94 @@ const HomePage = ({ scrollbarHandler }) => {
     return () => {};
   }, [asideButtonState]);
 
-  const state = {
-    series: [
-      {
-        data: stockPrice,
-      },
-    ],
-    options: {
-      chart: {
-        type: "candlestick",
-        height: 350,
-        toolbar: {
-          show: true,
-        },
-        background: "transparent",
-      },
-      stroke: {
-        curve: "smooth",
-        width: 1,
-      },
-      title: {
-        text: name,
-        align: "left",
-      },
-      xaxis: {
-        type: "datetime",
-        // labels: {
-        //   formatter: function (val) {
-        //     console.log("val", val);
-        //     const dateObject = new Date(val);
+  // const state = {
+  //   series: [
+  //     {
+  //       data: stockPrice,
+  //     },
+  //   ],
+  //   options: {
+  //     chart: {
+  //       type: "candlestick",
+  //       height: 350,
+  //       toolbar: {
+  //         show: true,
+  //       },
+  //       background: "transparent",
+  //     },
+  //     stroke: {
+  //       curve: "smooth",
+  //       width: 1,
+  //     },
+  //     title: {
+  //       text: name,
+  //       align: "left",
+  //     },
+  //     xaxis: {
+  //       type: "datetime",
+        
+  //     },
+  //     yaxis: {
+  //       tooltip: {
+  //         enabled: false,
+  //       },
+  //       labels: {
+  //         formatter: function (val) {
+  //           // console.log(val);
+  //           // with comma
+  //           return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  //           // override the val here
+  //         },
+  //       },
+  //     },
+  //   },
+  // };
+  
+  const options = {
 
-        //     const isoString = dateObject.toISOString();
-
-        //     // // Extract date part
-        //     const formattedDate = isoString.split("T")[0];
-        //     console.log("formattedDate", formattedDate);
-
-        //     return formattedDate;
-        //   },
-        // },
-      },
-      yaxis: {
-        tooltip: {
-          enabled: false,
-        },
-        labels: {
-          formatter: function (val) {
-            // console.log(val);
-            // with comma
-            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            // override the val here
-          },
-        },
-      },
+    title: {
+      text: name,
+      align: 'left'
     },
+    xaxis: {
+      type: 'category',
+      labels: {
+        formatter: function (val) {
+          return moment(val).format('YYYY-MM-DD')
+        }
+      }
+    },
+    yaxis: {
+      tooltip: {
+        enabled: false
+      },
+      labels: {
+        formatter: function (val) {
+          console.log(val);
+          // with comma
+          return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          // override the val here
+        }
+      }
+    }
+  }
+
+  const series = [{
+    name: '캔들차트',
+    type: 'candlestick',
+    data: stockPrice
+  }, {
+    name: '이동평균',
+    type: 'line',
+    data: movingAvgPrice
+  },]
+
+
+  const state = {
+    series,
+    options
   };
+
   const customStyles = isPc
     ? {
         content: {
@@ -685,6 +729,1387 @@ const HomePage = ({ scrollbarHandler }) => {
         },
       };
 
+  // return (
+  //   <Row
+  //     style={{
+  //       height: "auto",
+  //       alignItems: "flex-start",
+  //     }}
+  //   >
+  //     <ShadowCol
+  //       style={{
+  //         width: 160,
+  //         height: 820,
+  //         padding: 20,
+  //         justifyContent: "flex-start",
+  //       }}
+  //     >
+  //       <Row style={{ height: "auto" }}>
+  //         <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
+  //           {data_reducer && data_reducer.shannon_stock == true && (
+  //             <Button
+  //               onClick={() => {
+  //                 setAsideButtonState("SHANNON_STOCK");
+
+  //                 const modelres = initializeModelType();
+
+  //                 setModelType(modelres);
+  //                 const res = initializeSelected();
+
+  //                 setSelected(res);
+  //               }}
+  //               style={{
+  //                 borderRadius: 5,
+  //                 width: "145px",
+  //                 marginBottom: "10px",
+  //                 color: "#FFF",
+  //                 backgroundColor:
+  //                   asideButtonState === "SHANNON_STOCK"
+  //                     ? color.Purple
+  //                     : "rgb(119 119 119)",
+  //               }}
+  //             >
+  //               Shannon 개별종목
+  //             </Button>
+  //           )}
+  //           {data_reducer && data_reducer.shannon_index == true && (
+  //             <Button
+  //               onClick={() => {
+  //                 setAsideButtonState("SHANNON_INDEX");
+  //                 if (data_reducer.Daily != undefined) {
+  //                   setModelType("Daily");
+  //                   setSelected("Daily");
+  //                 } else {
+  //                   if (data_reducer.Weekly != undefined) {
+  //                     setModelType("Weekly");
+  //                     setSelected("Weekly");
+  //                   }
+  //                 }
+  //               }}
+  //               style={{
+  //                 borderRadius: 5,
+  //                 width: "145px",
+  //                 marginBottom: "10px",
+  //                 color: "#FFF",
+  //                 backgroundColor:
+  //                   asideButtonState === "SHANNON_INDEX"
+  //                     ? color.Purple
+  //                     : "rgb(119 119 119)",
+  //               }}
+  //             >
+  //               Shannon 지수
+  //             </Button>
+  //           )}
+  //         </div>
+  //       </Row>
+  //     </ShadowCol>
+  //     <WhiteSpace width={20} />
+  //     <Col
+  //       style={{
+  //         width: 860,
+  //         justifyContent: "flex-start",
+  //         height: "auto",
+  //       }}
+  //     >
+  //       <Row
+  //         style={{
+  //           height: 50,
+  //           justifyContent: "flex-start",
+  //           alignItems: "center",
+  //           // padding: "0px 30px",
+  //           width: "860px",
+  //         }}
+  //       >
+  //         <div
+  //           style={{
+  //             color: "#515050",
+  //             fontSize: 18,
+  //             fontWeight: 500,
+  //             textAlign: "center",
+  //           }}
+  //         >
+  //           {asideButtonState === "SHANNON_STOCK"
+  //             ? "딥트레이드테크놀로지스에서 개발한 주가 예측 모델, Shannon으로 예측하여 전체 주가 방향성을 산출하고 이를 바탕으로한 추천하는 상위 종목들을 보여줍니다."
+  //             : "딥트레이드테크놀로지스에서 개발한 위험 관리 시스템으로 시장 움직임을 예측하여 롱숏 포트폴리오 비중을 산출하여 투자 방향성을 보여줍니다."}
+  //         </div>
+  //       </Row>
+  //       <WhiteSpace width={20} />
+  //       {asideButtonState === "SHANNON_STOCK" && (
+  //         <Row
+  //           style={{
+  //             height: 50,
+  //             justifyContent: "flex-start",
+  //             alignItems: "center",
+  //           }}
+  //         >
+  //           <div className="enterprise_content_right_right_calendar_pc">
+  //             <div
+  //               onClick={() => setShowCalendar(!showCalendar)}
+  //               className="calendar_icon"
+  //             >
+  //               <AiOutlineCalendar size={25} />
+  //               {showCalendar ? convertDate() : convertDate()}
+  //             </div>
+  //             <Modal
+  //               isOpen={showCalendar}
+  //               onRequestClose={closeModal}
+  //               style={customStyles}
+  //             >
+  //               <Calendar
+  //                 calendarType="US"
+  //                 locale="ko"
+  //                 defaultActiveStartDate={selectedDate}
+  //                 onClickDay={(date) => handleDateSelection(date)}
+  //                 onChange={onChange}
+  //                 value={value}
+  //                 minDate={minDate}
+  //                 maxDate={maxDate}
+  //                 tileClassName={({ date, view }) => {
+  //                   const isHovered = view === "month" || view === "year"; // Define hoverable views (month/year)
+
+  //                   return classNames({
+  //                     "selected-date":
+  //                       date.toDateString() === selectedDate.toDateString(),
+  //                   });
+  //                 }}
+  //                 tileDisabled={({ date }) => isDateDisabled(date)}
+  //               />
+  //             </Modal>
+  //           </div>
+  //         </Row>
+  //       )}
+  //       <WhiteSpace height={20} />
+  //       {/* Sub button */}
+  //       <Col
+  //         style={{
+  //           width: 860,
+  //           justifyContent: "flex-start",
+  //           height: "auto",
+  //         }}
+  //       >
+  //         <Row style={{ height: "auto" }}>
+  //           <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
+  //             {asideButtonState === "SHANNON_STOCK"
+  //               ? Object.keys(data_reducer).map((key) => {
+  //                   const value = data_reducer[key];
+
+  //                   if (key === "shannon_top5") {
+  //                     if (value != undefined) {
+  //                       return Object.keys(value).map((innerKey) => {
+  //                         return (
+  //                           <Button
+  //                             key={innerKey} // Add a unique key for each button
+  //                             style={{
+  //                               marginBottom: "10px",
+  //                               marginRight: "10px",
+  //                               color: "#FFF",
+  //                               backgroundColor:
+  //                                 selected === innerKey
+  //                                   ? color.Purple
+  //                                   : "rgb(100 100 100)",
+  //                             }}
+  //                             className="enterprise_content_right_left_button_pc"
+  //                             onClick={() => {
+  //                               setSelected(innerKey);
+  //                               setModelType(key);
+  //                               // Your click handler logic here
+  //                             }}
+  //                           >
+  //                             {innerKey}
+  //                           </Button>
+  //                         );
+  //                       });
+  //                     }
+  //                   }
+  //                   //for top 20
+
+  //                   if (key === "shannon_top20") {
+  //                     if (value != undefined) {
+  //                       return Object.keys(value).map((innerKey) => {
+  //                         return (
+  //                           <Button
+  //                             key={innerKey} // Add a unique key for each button
+  //                             style={{
+  //                               marginBottom: "10px",
+  //                               marginRight: "10px",
+  //                               color: "#FFF",
+  //                               backgroundColor:
+  //                                 selected === innerKey
+  //                                   ? color.Purple
+  //                                   : "rgb(100 100 100)",
+  //                             }}
+  //                             className="enterprise_content_right_left_button_pc"
+  //                             onClick={() => {
+  //                               setSelected(innerKey);
+  //                               setModelType(key);
+  //                               // Your click handler logic here
+  //                             }}
+  //                           >
+  //                             {innerKey}
+  //                           </Button>
+  //                         );
+  //                       });
+  //                     }
+  //                   }
+
+  //                   return null; // Return null for other keys if you don't want to render anything
+  //                 })
+  //               : asideButtonState === "SHANNON_INDEX"
+  //               ? Object.keys(data_reducer).map((key) => {
+  //                   const value = data_reducer[key];
+
+  //                   if (key === "Daily") {
+  //                     if (value != undefined) {
+  //                       return (
+  //                         <Button
+  //                           style={{
+  //                             marginBottom: "10px",
+  //                             marginRight: "10px",
+  //                             color: "#FFF",
+  //                             backgroundColor:
+  //                               selected === key
+  //                                 ? color.Purple
+  //                                 : "rgb(100 100 100)",
+  //                           }}
+  //                           className="enterprise_content_right_left_button_pc"
+  //                           onClick={() => {
+  //                             setSelected(key);
+  //                             setModelType(key);
+  //                           }}
+  //                         >
+  //                           {key}
+  //                         </Button>
+  //                       );
+  //                     }
+  //                   }
+  //                   if (key === "Weekly") {
+  //                     if (key != undefined) {
+  //                       return (
+  //                         <Button
+  //                           style={{
+  //                             marginBottom: "10px",
+  //                             marginRight: "10px",
+  //                             color: "#FFF",
+  //                             backgroundColor:
+  //                               selected === key
+  //                                 ? color.Purple
+  //                                 : "rgb(100 100 100)",
+  //                           }}
+  //                           className="enterprise_content_right_left_button_pc"
+  //                           onClick={() => {
+  //                             setSelected(key);
+  //                             setModelType(key);
+  //                           }}
+  //                         >
+  //                           {key}
+  //                         </Button>
+  //                       );
+  //                     }
+  //                   }
+
+  //                   return null; // Return null for other keys if you don't want to render anything
+  //                 })
+  //               : null}
+  //           </div>
+  //         </Row>
+  //       </Col>
+  //       {/* End of Sub Buttons */}
+  //       <WhiteSpace height={20} />
+
+  //       <ShadowCol
+  //         style={{
+  //           boxSizing: "border-box",
+  //           height: "auto",
+  //           transition: "all 0.3s ease-in-out",
+  //           // overflowY: "scroll",
+  //           borderRadius: 0,
+  //         }}
+  //       >
+  //         <Row
+  //           style={{
+  //             flex: 1,
+  //             alignItems: "flex-start",
+  //             flexDirection: "column",
+
+  //             justifyContent: "flex-start",
+  //           }}
+  //         >
+  //           {selected &&
+  //           tableDataList &&
+  //           asideButtonState === "SHANNON_STOCK" ? (
+  //             <>
+  //               <Row
+  //                 style={{
+  //                   alignItems: "center",
+
+  //                   height: 40,
+  //                   justifyContent: "space-around",
+  //                   borderTopLeftRadius: "10px",
+  //                   borderTopRightRadius: "10px",
+  //                 }}
+  //               >
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Stock ID
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Name
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Buying Date
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Selling Date
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Sector
+  //                 </div>
+  //               </Row>
+  //               <Row
+  //                 style={{
+  //                   flexDirection: "column",
+  //                   height: "auto",
+  //                 }}
+  //               >
+  //                 {loader ? (
+  //                   <Oval
+  //                     height={40}
+  //                     width={40}
+  //                     color="rgb(86, 68, 252)"
+  //                     wrapperStyle={{
+  //                       alignItems: "center",
+  //                       justifyContent: "center",
+  //                       margin: 10,
+  //                     }}
+  //                     wrapperClass=""
+  //                     visible={true}
+  //                     ariaLabel="oval-loading"
+  //                     secondaryColor="rgb(86, 68, 252)"
+  //                     strokeWidth={2}
+  //                     strokeWidthSecondary={2}
+  //                   />
+  //                 ) : (
+  //                   <>
+  //                     {selectedStockId &&
+  //                       tableDataList &&
+  //                       tableDataList
+  //                         .slice(0, open ? tableDataList.length : 5)
+  //                         .map((list, index) => {
+  //                           return (
+  //                             <Row
+  //                               onClick={() => {
+  //                                 setSelectedStockId(list.stock_id);
+  //                               }}
+  //                               style={{
+  //                                 backgroundColor:
+  //                                   selectedStockId === list.stock_id
+  //                                     ? "#f3f3f3"
+  //                                     : "",
+  //                                 height: 50,
+  //                                 justifyContent: "space-around",
+  //                                 alignItems: "center",
+  //                               }}
+  //                             >
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   overflow: "hidden",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.stock_id}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                   overflow: "hidden",
+  //                                 }}
+  //                               >
+  //                                 {list.name}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.buying_date}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.selling_date}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.sector}
+  //                               </div>
+  //                             </Row>
+  //                           );
+  //                         })}
+  //                   </>
+  //                 )}
+  //               </Row>
+  //             </>
+  //           ) : (
+  //             <Col
+  //               style={{
+  //                 flex: 1,
+  //                 alignItems: "flex-start",
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               <Row
+  //                 style={{
+  //                   alignItems: "center",
+
+  //                   height: 40,
+  //                   justifyContent: "space-around",
+  //                   borderTopLeftRadius: "10px",
+  //                   borderTopRightRadius: "10px",
+  //                 }}
+  //               >
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Date
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Long
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Cash
+  //                 </div>
+  //                 <div
+  //                   style={{
+  //                     width: 110,
+  //                     display: "table-cell",
+  //                     fontWeight: 700,
+  //                     transition: "all 0.3s ease-in-out",
+  //                   }}
+  //                 >
+  //                   Short
+  //                 </div>
+  //               </Row>
+  //               <Row
+  //                 style={{
+  //                   flexDirection: "column",
+  //                   height: "auto",
+
+  //                   // overflowY: "scroll",
+  //                 }}
+  //               >
+  //                 {loader ? (
+  //                   <Oval
+  //                     height={50}
+  //                     width={50}
+  //                     color="#4fa94d"
+  //                     wrapperStyle={{
+  //                       alignItems: "center",
+  //                       justifyContent: "center",
+  //                     }}
+  //                     wrapperClass=""
+  //                     visible={true}
+  //                     ariaLabel="oval-loading"
+  //                     secondaryColor="#4fa94d"
+  //                     strokeWidth={2}
+  //                     strokeWidthSecondary={2}
+  //                   />
+  //                 ) : (
+  //                   <>
+  //                     {tableDataList &&
+  //                       tableDataList
+  //                         .slice(0, open ? tableDataList.length : 10)
+  //                         .map((list, index) => {
+  //                           return (
+  //                             <Row
+  //                               style={{
+  //                                 height: 50,
+  //                                 justifyContent: "space-around",
+  //                                 alignItems: "center",
+
+  //                                 // overflowY: "scroll",
+  //                               }}
+  //                             >
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   overflow: "hidden",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.date}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                   overflow: "hidden",
+  //                                 }}
+  //                               >
+  //                                 {list.adj_Long}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.adj_Cash}
+  //                               </div>
+  //                               <div
+  //                                 style={{
+  //                                   width: 110,
+  //                                   height: "auto",
+  //                                   display: "table-cell",
+  //                                   justifyContent: "space-around",
+  //                                   cursor: "pointer",
+  //                                   transition: "all 0.3s ease-in-out",
+  //                                 }}
+  //                               >
+  //                                 {list.adj_Short}
+  //                               </div>
+  //                             </Row>
+  //                           );
+  //                         })}
+  //                   </>
+  //                 )}
+  //               </Row>
+  //             </Col>
+  //           )}
+  //         </Row>
+  //         <a
+  //           onClick={() => {
+  //             setOpen((prev) => !prev);
+  //           }}
+  //           style={{
+  //             cursor: "pointer",
+  //             transform: `rotate(${open ? 180 : 0}deg)`,
+  //             margin: 10,
+  //           }}
+  //         >
+  //           <img src={Arrow} style={{ width: 15, height: 15 }} />
+  //         </a>
+  //       </ShadowCol>
+  //       <WhiteSpace height={20} />
+  //       {/* Stock Page */}
+  //       {/* Chart for shannon index */}
+  //       {asideButtonState === "SHANNON_INDEX" && (
+  //         <>
+  //           <Col
+  //             style={{
+  //               // width: 840,
+  //               justifyContent: "flex-start",
+  //               paddingBottom: 20,
+  //               height: "auto",
+  //             }}
+  //           >
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: "auto",
+  //                 padding: 10,
+  //                 paddingTop: 15,
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               {data_reducer && (
+  //                 <LineChart
+  //                   DailyData={data_reducer.Daily}
+  //                   WeeklyData={data_reducer.Weekly}
+  //                   activeFlag={modelType}
+  //                 />
+  //               )}
+  //             </ShadowCol>
+  //           </Col>
+  //         </>
+  //       )}
+  //       {/* if shannon index is active then show the news summary  */}
+  //       {asideButtonState === "SHANNON_INDEX" && (
+  //         <>
+  //           <Col
+  //             style={{
+  //               // width: 840,
+  //               justifyContent: "flex-start",
+  //               paddingBottom: 20,
+  //               height: "auto",
+  //             }}
+  //           >
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: "auto",
+  //                 padding: 10,
+  //                 paddingTop: 15,
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               <div
+  //                 style={{
+  //                   fontSize: 16,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "center",
+  //                 }}
+  //               >
+  //                 섀넌의 한국 증시 요약
+  //               </div>
+  //               <WhiteSpace height={20} />
+  //               {summaryLoading ? (
+  //                 <CircularProgress />
+  //               ) : marketCapNews?.length == 0 ? (
+  //                 <div
+  //                   style={{
+  //                     fontSize: 15,
+  //                     fontWeight: "bold",
+  //                     color: color.DarkBlue,
+  //                     width: "100%",
+  //                     textAlign: "center",
+  //                   }}
+  //                 >
+  //                   뉴스 데이터를 불러오지 못했습니다.
+  //                 </div>
+  //               ) : (
+  //                 <>
+  //                   <div
+  //                     style={{
+  //                       fontSize: 15,
+  //                       fontWeight: "bold",
+  //                       color: color.LightPurple,
+  //                       width: "100%",
+  //                       textAlign: "left",
+  //                     }}
+  //                   >
+  //                     시가총액 상위 기준
+  //                   </div>
+  //                   <WhiteSpace height={20} />
+  //                   {marketCapNews?.map((item, index) => {
+  //                     if (item.top_summary_flag != 1) {
+  //                       return (
+  //                         <Row
+  //                           key={index}
+  //                           style={{
+  //                             height: "auto",
+  //                             marginBottom: 12,
+  //                             cursor: "pointer",
+  //                             justifyContent: "flex-start",
+  //                           }}
+  //                         >
+  //                           <Col
+  //                             style={{
+  //                               width: 130,
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Col
+  //                               style={{
+  //                                 // width: "auto",
+  //                                 height: "auto",
+  //                                 padding: 10,
+  //                                 borderRadius: 5,
+  //                                 backgroundColor: color.BackgroundPurple,
+  //                                 fontSize:
+  //                                   item.ticker.trim().length > 7 ? 12 : 14,
+  //                               }}
+  //                             >
+  //                               {item.ticker.trim()}
+  //                             </Col>
+  //                           </Col>
+  //                           <Col
+  //                             style={{
+  //                               // width: 120,
+  //                               flexDirection: "column",
+
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                                 fontSize: 15,
+  //                               }}
+  //                             >
+  //                               {item.summary_text.trim()}
+  //                             </Row>
+  //                           </Col>
+  //                         </Row>
+  //                       );
+  //                     }
+  //                   })}
+  //                   <WhiteSpace height={20} />
+  //                   <div
+  //                     style={{
+  //                       width: "100%",
+  //                       border: "0.5px solid #A3A1FF",
+  //                     }}
+  //                   ></div>
+  //                   <WhiteSpace height={20} />
+  //                   <div
+  //                     style={{
+  //                       fontSize: 15,
+  //                       fontWeight: "bold",
+  //                       color: color.LightPurple,
+  //                       width: "100%",
+  //                       textAlign: "left",
+  //                     }}
+  //                   >
+  //                     거래 금액 기준
+  //                   </div>
+  //                   <WhiteSpace height={20} />
+  //                   {tradingVolNews?.map((item, index) => {
+  //                     if (item.top_summary_flag != 1) {
+  //                       return (
+  //                         <Row
+  //                           key={index}
+  //                           style={{
+  //                             height: "auto",
+  //                             marginBottom: 12,
+  //                             cursor: "pointer",
+  //                             justifyContent: "flex-start",
+  //                           }}
+  //                         >
+  //                           <Col
+  //                             style={{
+  //                               width: 130,
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Col
+  //                               style={{
+  //                                 // width: "auto",
+  //                                 height: "auto",
+  //                                 padding: 10,
+  //                                 borderRadius: 5,
+  //                                 backgroundColor: color.BackgroundPurple,
+  //                                 fontSize:
+  //                                   item.ticker.trim().length > 7 ? 12 : 14,
+  //                               }}
+  //                             >
+  //                               {item.ticker.trim()}
+  //                             </Col>
+  //                           </Col>
+  //                           <Col
+  //                             style={{
+  //                               // width: 120,
+  //                               flexDirection: "column",
+
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                                 fontSize: 15,
+  //                               }}
+  //                             >
+  //                               {item.summary_text.trim()}
+  //                             </Row>
+  //                           </Col>
+  //                         </Row>
+  //                       );
+  //                     }
+  //                   })}
+  //                 </>
+  //               )}
+  //             </ShadowCol>
+  //           </Col>
+  //         </>
+  //       )}
+  //       {/* if shannon stock is active then show the stock detail page  */}
+  //       {asideButtonState === "SHANNON_STOCK" && (
+  //         <>
+  //           <Col
+  //             style={{
+  //               // width: 840,
+  //               justifyContent: "flex-start",
+  //               height: "auto",
+  //               paddingBottom: 20,
+  //             }}
+  //           >
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: 325,
+  //                 padding: 10,
+  //                 paddingTop: 15,
+  //               }}
+  //             >
+  //               {stockPriceLoader ? (
+  //                 <Col>
+  //                   <CircularProgress />
+  //                 </Col>
+  //               ) : stockPrice.length > 0 ? (
+  //                 <ApexChart
+  //                   width={800}
+  //                   height={275}
+  //                   options={state.options}
+  //                   series={state.series}
+  //                   type="candlestick"
+  //                 />
+  //               ) : (
+  //                 <div
+  //                   style={{
+  //                     fontSize: 14,
+  //                     fontWeight: "bold",
+  //                     color: color.DarkBlue,
+  //                     width: "100%",
+  //                     textAlign: "center",
+  //                   }}
+  //                 >
+  //                   차트 데이터를 불러오지 못했습니다.
+  //                 </div>
+  //               )}
+  //             </ShadowCol>
+  //             <WhiteSpace height={30} />
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: 120,
+  //                 padding: 15,
+  //                 paddingTop: 15,
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               <div
+  //                 style={{
+  //                   fontSize: 14,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 기간별 수익률
+  //               </div>
+  //               {stockPriceLoader ? (
+  //                 <Col>
+  //                   <CircularProgress />
+  //                 </Col>
+  //               ) : profitList.length > 0 ? (
+  //                 <Row
+  //                   style={{
+  //                     flex: 1,
+  //                     justifyContent: "space-between",
+  //                     paddingLeft: 10,
+  //                     paddingRight: 10,
+  //                   }}
+  //                 >
+  //                   {profitList?.map((v) => {
+  //                     return (
+  //                       <Row
+  //                         width={109}
+  //                         height={47}
+  //                         style={{
+  //                           backgroundColor: color.BackgroundPurple,
+  //                           borderRadius: 10,
+  //                           fontWeight: "bold",
+  //                         }}
+  //                       >
+  //                         <Col
+  //                           width={36}
+  //                           height={36}
+  //                           style={{
+  //                             borderRadius: 18,
+  //                             backgroundColor: color.Purple,
+  //                             color: "white",
+  //                             fontWeight: "bold",
+  //                           }}
+  //                         >
+  //                           {v.title}
+  //                         </Col>
+  //                         <WhiteSpace width={12} />
+  //                         {v.value}%
+  //                       </Row>
+  //                     );
+  //                   })}
+  //                 </Row>
+  //               ) : (
+  //                 <div
+  //                   style={{
+  //                     fontSize: 14,
+  //                     fontWeight: "bold",
+  //                     color: color.DarkBlue,
+  //                     width: "100%",
+  //                     textAlign: "center",
+  //                   }}
+  //                 >
+  //                   데이터를 불러오지 못했습니다.
+  //                 </div>
+  //               )}
+  //             </ShadowCol>
+  //             <WhiteSpace height={30} />
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: "auto",
+  //                 padding: 15,
+  //                 paddingTop: 15,
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               <div
+  //                 style={{
+  //                   fontSize: 14,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 종목 뉴스
+  //               </div>
+  //               <WhiteSpace height={15} />
+  //               {newsLoding ? (
+  //                 <Col
+  //                   style={{
+  //                     width: 840,
+  //                   }}
+  //                 >
+  //                   <CircularProgress />
+  //                 </Col>
+  //               ) : (
+  //                 <Col style={{ flex: 1 }}>
+  //                   {directNewsList?.length > 0 ? (
+  //                     directNewsList?.map((item) => {
+  //                       return (
+  //                         <Row
+  //                           onClick={() => {
+  //                             window.open(item.naver_url);
+  //                           }}
+  //                           key={item.id}
+  //                           style={{
+  //                             height: 40,
+  //                             marginBottom: 12,
+  //                             cursor: "pointer",
+  //                             justifyContent: "flex-start",
+  //                           }}
+  //                         >
+  //                           <Col
+  //                             style={{
+  //                               width: 130,
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Col
+  //                               style={{
+  //                                 // width: "auto",
+  //                                 height: "auto",
+  //                                 padding: 10,
+  //                                 borderRadius: 5,
+  //                                 backgroundColor: color.BackgroundPurple,
+  //                                 fontSize: item.press.length > 6 ? 12 : 16,
+  //                               }}
+  //                             >
+  //                               {item.press}
+  //                             </Col>
+  //                           </Col>
+  //                           <Col
+  //                             style={{
+  //                               // width: 120,
+  //                               flexDirection: "column",
+
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                               }}
+  //                             >
+  //                               {item.headline}
+  //                             </Row>
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                                 fontSize: 12,
+  //                                 color: "rgb(126 126 126)",
+  //                               }}
+  //                             >
+  //                               {new Date(item.timestamp * 1000)
+  //                                 .toISOString()
+  //                                 .substring(0, 10)}
+  //                             </Row>
+  //                           </Col>
+  //                         </Row>
+  //                       );
+  //                     })
+  //                   ) : (
+  //                     <div
+  //                       style={{
+  //                         fontSize: 14,
+  //                         fontWeight: "bold",
+  //                         color: color.DarkBlue,
+  //                         width: "100%",
+  //                         textAlign: "center",
+  //                       }}
+  //                     >
+  //                       데이터를 불러오지 못했습니다.
+  //                     </div>
+  //                   )}
+  //                 </Col>
+  //               )}
+  //             </ShadowCol>
+  //             <WhiteSpace height={30} />
+  //             {/* Related News */}
+  //             <ShadowCol
+  //               style={{
+  //                 // width: 840,
+  //                 height: "auto",
+  //                 padding: 15,
+  //                 paddingTop: 15,
+  //                 justifyContent: "flex-start",
+  //               }}
+  //             >
+  //               <div
+  //                 style={{
+  //                   fontSize: 14,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 종목 관련 뉴스
+  //               </div>
+  //               <WhiteSpace height={15} />
+  //               {relNewsLoding ? (
+  //                 <Col
+  //                   style={{
+  //                     width: 840,
+  //                   }}
+  //                 >
+  //                   <CircularProgress />
+  //                 </Col>
+  //               ) : (
+  //                 <Col style={{ flex: 1 }}>
+  //                   {relatedNewsList?.length > 0 ? (
+  //                     relatedNewsList?.map((item) => {
+  //                       return (
+  //                         <Row
+  //                           onClick={() => {
+  //                             window.open(item.naver_url);
+  //                           }}
+  //                           key={item.id}
+  //                           style={{
+  //                             height: 40,
+  //                             marginBottom: 12,
+  //                             cursor: "pointer",
+  //                             justifyContent: "flex-start",
+  //                           }}
+  //                         >
+  //                           <Col
+  //                             style={{
+  //                               width: 130,
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Col
+  //                               style={{
+  //                                 // width: "auto",
+  //                                 height: "auto",
+  //                                 padding: 10,
+  //                                 borderRadius: 5,
+  //                                 backgroundColor: color.BackgroundPurple,
+  //                                 fontSize: item.press.length > 6 ? 12 : 16,
+  //                               }}
+  //                             >
+  //                               {item.press}
+  //                             </Col>
+  //                           </Col>
+  //                           <Col
+  //                             style={{
+  //                               // width: 120,
+  //                               flexDirection: "column",
+
+  //                               alignItems: "flex-start",
+  //                               marginRight: 10,
+  //                             }}
+  //                           >
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                               }}
+  //                             >
+  //                               {item.headline}
+  //                             </Row>
+  //                             <Row
+  //                               style={{
+  //                                 justifyContent: "flex-start",
+  //                                 fontSize: 12,
+  //                                 color: "rgb(126 126 126)",
+  //                               }}
+  //                             >
+  //                               {new Date(item.timestamp * 1000)
+  //                                 .toISOString()
+  //                                 .substring(0, 10)}
+  //                             </Row>
+  //                           </Col>
+  //                         </Row>
+  //                       );
+  //                     })
+  //                   ) : (
+  //                     <div
+  //                       style={{
+  //                         fontSize: 14,
+  //                         fontWeight: "bold",
+  //                         color: color.DarkBlue,
+  //                         width: "100%",
+  //                         textAlign: "center",
+  //                       }}
+  //                     >
+  //                       데이터를 불러오지 못했습니다.
+  //                     </div>
+  //                   )}
+  //                 </Col>
+  //               )}
+  //             </ShadowCol>
+  //           </Col>
+  //         </>
+  //       )}
+
+  //       {/* <Row
+  //         height={266}
+  //         style={{
+  //           padding: 0,
+  //           margin: 0,
+  //           justifyContent: "space-between",
+  //         }}
+  //       >
+  //         <NewsBlock newInfo={newInfo} />
+  //         <ShadowCol width={320} height={250}></ShadowCol>
+  //         <ShadowCol
+  //           width={240}
+  //           height={250}
+  //           style={{ padding: 24, justifyContent: "flex-start" }}
+  //         >
+  //           <div
+  //             style={{
+  //               fontSize: 14,
+  //               fontWeight: "bold",
+  //               color: color.DarkBlue,
+  //               width: "100%",
+  //               textAlign: "left",
+  //             }}
+  //           >
+  //             오늘의 추천종목
+  //           </div>
+  //           <WhiteSpace height={16} />
+  //           <Row
+  //             height={50}
+  //             style={{
+  //               backgroundColor: color.BackgroundPurple,
+  //               borderRadius: 10,
+  //               padding: 10,
+  //             }}
+  //           >
+  //             <Col style={{ flex: 1 }}>
+  //               <div
+  //                 style={{
+  //                   fontSize: 12,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 LG 에너지 솔루션
+  //               </div>
+  //               <WhiteSpace height={4} />
+  //               <div
+  //                 style={{
+  //                   fontSize: 7,
+  //                   fontWeight: "bold",
+  //                   color: color.LightPurple,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 83.2% 확률로 상승
+  //               </div>
+  //             </Col>
+  //             <Row
+  //               style={{
+  //                 width: 30,
+  //                 height: 30,
+  //                 borderRadius: 15,
+  //                 backgroundColor: color.Purple,
+  //                 cursor: "pointer",
+  //               }}
+  //             >
+  //               <img src={RightArrow} style={{ width: 14, height: 12 }} />
+  //             </Row>
+  //           </Row>
+  //           <WhiteSpace height={10} />
+  //           <Row
+  //             height={50}
+  //             style={{
+  //               backgroundColor: color.BackgroundPurple,
+  //               borderRadius: 10,
+  //               padding: 10,
+  //             }}
+  //           >
+  //             <Col style={{ flex: 1 }}>
+  //               <div
+  //                 style={{
+  //                   fontSize: 12,
+  //                   fontWeight: "bold",
+  //                   color: color.DarkBlue,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 LG 에너지 솔루션
+  //               </div>
+  //               <WhiteSpace height={4} />
+  //               <div
+  //                 style={{
+  //                   fontSize: 7,
+  //                   fontWeight: "bold",
+  //                   color: color.LightPurple,
+  //                   width: "100%",
+  //                   textAlign: "left",
+  //                 }}
+  //               >
+  //                 83.2% 확률로 상승
+  //               </div>
+  //             </Col>
+  //             <Row
+  //               style={{
+  //                 width: 30,
+  //                 height: 30,
+  //                 borderRadius: 15,
+  //                 backgroundColor: color.Purple,
+  //                 cursor: "pointer",
+  //               }}
+  //             >
+  //               <img src={RightArrow} style={{ width: 14, height: 12 }} />
+  //             </Row>
+  //           </Row>
+  //           <WhiteSpace height={20} />
+  //           <Row
+  //             style={{
+  //               height: 32,
+  //               borderRadius: 16,
+  //               backgroundColor: color.Purple,
+  //               fontSize: 10,
+  //               color: "white",
+  //               fontWeight: "bold",
+  //               cursor: "pointer",
+  //             }}
+  //           >
+  //             전체 보기
+  //           </Row>
+  //         </ShadowCol>
+  //       </Row>
+  //       <WhiteSpace height={20} />
+  //       <ShadowCol width={840} height={300} /> */}
+  //     </Col>
+  //     <ToastContainer />
+  //   </Row>
+  // );
+
+
   return (
     <Row
       style={{
@@ -692,16 +2117,92 @@ const HomePage = ({ scrollbarHandler }) => {
         alignItems: "flex-start",
       }}
     >
-      <ShadowCol
+      {responsiveValue(true, false, false) && <>
+        <ShadowCol
+          style={{
+            width: 160,
+            height: 120,
+            padding: 20,
+            justifyContent: "flex-start",
+          }}
+        >
+          <Row style={{ height: "auto" }}>
+            <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
+              {data_reducer && data_reducer.shannon_stock == true && (
+                <Button
+                  onClick={() => {
+                    setAsideButtonState("SHANNON_STOCK");
+
+                    const modelres = initializeModelType();
+
+                    setModelType(modelres);
+                    const res = initializeSelected();
+
+                    setSelected(res);
+                  }}
+                  style={{
+                    borderRadius: 5,
+                    width: "145px",
+                    marginBottom: "10px",
+                    color: "#FFF",
+                    backgroundColor:
+                      asideButtonState === "SHANNON_STOCK"
+                        ? color.Purple
+                        : "rgb(119 119 119)",
+                  }}
+                >
+                  Shannon 개별종목
+                </Button>
+              )}
+              {data_reducer && data_reducer.shannon_index == true && (
+                <Button
+                  onClick={() => {
+                    setAsideButtonState("SHANNON_INDEX");
+                    if (data_reducer.Daily != undefined) {
+                      setModelType("Daily");
+                      setSelected("Daily");
+                    } else {
+                      if (data_reducer.Weekly != undefined) {
+                        setModelType("Weekly");
+                        setSelected("Weekly");
+                      }
+                    }
+                  }}
+                  style={{
+                    borderRadius: 5,
+                    width: "145px",
+                    marginBottom: "10px",
+                    color: "#FFF",
+                    backgroundColor:
+                      asideButtonState === "SHANNON_INDEX"
+                        ? color.Purple
+                        : "rgb(119 119 119)",
+                  }}
+                >
+                  Shannon 지수
+                </Button>
+              )}
+            </div>
+          </Row>
+        </ShadowCol>
+        <WhiteSpace width={20} />
+      </>}
+      <Col
         style={{
-          width: 160,
-          height: 820,
-          padding: 20,
+          maxWidth: 840,
           justifyContent: "flex-start",
+          height: "auto",
         }}
       >
-        <Row style={{ height: "auto" }}>
-          <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
+        {responsiveValue(false, true, true) && <>
+          <ShadowRow
+            style={{
+              width: 320,
+              height: 60,
+              justifyContent: "space-around",
+              alignSelf: "flex-start"
+            }}
+          >
             {data_reducer && data_reducer.shannon_stock == true && (
               <Button
                 onClick={() => {
@@ -717,7 +2218,6 @@ const HomePage = ({ scrollbarHandler }) => {
                 style={{
                   borderRadius: 5,
                   width: "145px",
-                  marginBottom: "10px",
                   color: "#FFF",
                   backgroundColor:
                     asideButtonState === "SHANNON_STOCK"
@@ -745,7 +2245,6 @@ const HomePage = ({ scrollbarHandler }) => {
                 style={{
                   borderRadius: 5,
                   width: "145px",
-                  marginBottom: "10px",
                   color: "#FFF",
                   backgroundColor:
                     asideButtonState === "SHANNON_INDEX"
@@ -756,32 +2255,22 @@ const HomePage = ({ scrollbarHandler }) => {
                 Shannon 지수
               </Button>
             )}
-          </div>
-        </Row>
-      </ShadowCol>
-      <WhiteSpace width={20} />
-      <Col
-        style={{
-          width: 860,
-          justifyContent: "flex-start",
-          height: "auto",
-        }}
-      >
+          </ShadowRow>
+          <WhiteSpace width={20} />
+        </>}
         <Row
           style={{
             height: 50,
             justifyContent: "flex-start",
             alignItems: "center",
-            // padding: "0px 30px",
-            width: "860px",
           }}
         >
           <div
             style={{
               color: "#515050",
-              fontSize: 18,
+              fontSize: responsiveValue(18, 16, 14),
               fontWeight: 500,
-              textAlign: "center",
+              textAlign: "left",
             }}
           >
             {asideButtonState === "SHANNON_STOCK"
@@ -838,135 +2327,135 @@ const HomePage = ({ scrollbarHandler }) => {
         {/* Sub button */}
         <Col
           style={{
-            width: 860,
+            width: "100%",
             justifyContent: "flex-start",
             height: "auto",
           }}
         >
-          <Row style={{ height: "auto" }}>
-            <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
-              {asideButtonState === "SHANNON_STOCK"
+          <Row style={{ height: "auto", fontWeight: "bold", flex: 1, cursor: "pointer", flexWrap: "wrap", justifyContent: "flex-start" }}>
+            {asideButtonState === "SHANNON_STOCK"
+              ? Object.keys(data_reducer).map((key) => {
+                const value = data_reducer[key];
+
+                if (key === "shannon_top5") {
+                  if (value != undefined) {
+                    return Object.keys(value).map((innerKey) => {
+                      return (
+                        <Button
+                          key={innerKey} // Add a unique key for each button
+                          style={{
+                            marginRight: "10px",
+                            marginBottom: 10,
+                            color: "#FFF",
+                            backgroundColor:
+                              selected === innerKey
+                                ? color.Purple
+                                : "rgb(100 100 100)",
+                            fontSize: responsiveValue(16, 14, 12),
+
+                          }}
+                          className="enterprise_content_right_left_button_pc"
+                          onClick={() => {
+                            setSelected(innerKey);
+                            setModelType(key);
+                            // Your click handler logic here
+                          }}
+                        >
+                          {innerKey}
+                        </Button>
+                      );
+                    });
+                  }
+                }
+                //for top 20
+
+                if (key === "shannon_top20") {
+                  if (value != undefined) {
+                    return Object.keys(value).map((innerKey) => {
+                      return (
+                        <Button
+                          key={innerKey} // Add a unique key for each button
+                          style={{
+                            marginRight: "10px",
+                            marginBottom: 10,
+                            color: "#FFF",
+                            backgroundColor:
+                              selected === innerKey
+                                ? color.Purple
+                                : "rgb(100 100 100)",
+                            fontSize: responsiveValue(16, 14, 12),
+                          }}
+                          className="enterprise_content_right_left_button_pc"
+                          onClick={() => {
+                            setSelected(innerKey);
+                            setModelType(key);
+                            // Your click handler logic here
+                          }}
+                        >
+                          {innerKey}
+                        </Button>
+                      );
+                    });
+                  }
+                }
+
+                return null; // Return null for other keys if you don't want to render anything
+              })
+              : asideButtonState === "SHANNON_INDEX"
                 ? Object.keys(data_reducer).map((key) => {
-                    const value = data_reducer[key];
+                  const value = data_reducer[key];
 
-                    if (key === "shannon_top5") {
-                      if (value != undefined) {
-                        return Object.keys(value).map((innerKey) => {
-                          return (
-                            <Button
-                              key={innerKey} // Add a unique key for each button
-                              style={{
-                                marginBottom: "10px",
-                                marginRight: "10px",
-                                color: "#FFF",
-                                backgroundColor:
-                                  selected === innerKey
-                                    ? color.Purple
-                                    : "rgb(100 100 100)",
-                              }}
-                              className="enterprise_content_right_left_button_pc"
-                              onClick={() => {
-                                setSelected(innerKey);
-                                setModelType(key);
-                                // Your click handler logic here
-                              }}
-                            >
-                              {innerKey}
-                            </Button>
-                          );
-                        });
-                      }
+                  if (key === "Daily") {
+                    if (value != undefined) {
+                      return (
+                        <Button
+                          style={{
+                            marginRight: "10px",
+                            color: "#FFF",
+                            backgroundColor:
+                              selected === key
+                                ? color.Purple
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprise_content_right_left_button_pc"
+                          onClick={() => {
+                            setSelected(key);
+                            setModelType(key);
+                          }}
+                        >
+                          {key}
+                        </Button>
+                      );
                     }
-                    //for top 20
-
-                    if (key === "shannon_top20") {
-                      if (value != undefined) {
-                        return Object.keys(value).map((innerKey) => {
-                          return (
-                            <Button
-                              key={innerKey} // Add a unique key for each button
-                              style={{
-                                marginBottom: "10px",
-                                marginRight: "10px",
-                                color: "#FFF",
-                                backgroundColor:
-                                  selected === innerKey
-                                    ? color.Purple
-                                    : "rgb(100 100 100)",
-                              }}
-                              className="enterprise_content_right_left_button_pc"
-                              onClick={() => {
-                                setSelected(innerKey);
-                                setModelType(key);
-                                // Your click handler logic here
-                              }}
-                            >
-                              {innerKey}
-                            </Button>
-                          );
-                        });
-                      }
+                  }
+                  if (key === "Weekly") {
+                    if (key != undefined) {
+                      return (
+                        <Button
+                          style={{
+                            marginRight: "10px",
+                            color: "#FFF",
+                            backgroundColor:
+                              selected === key
+                                ? color.Purple
+                                : "rgb(100 100 100)",
+                          }}
+                          className="enterprise_content_right_left_button_pc"
+                          onClick={() => {
+                            setSelected(key);
+                            setModelType(key);
+                          }}
+                        >
+                          {key}
+                        </Button>
+                      );
                     }
+                  }
 
-                    return null; // Return null for other keys if you don't want to render anything
-                  })
-                : asideButtonState === "SHANNON_INDEX"
-                ? Object.keys(data_reducer).map((key) => {
-                    const value = data_reducer[key];
-
-                    if (key === "Daily") {
-                      if (value != undefined) {
-                        return (
-                          <Button
-                            style={{
-                              marginBottom: "10px",
-                              marginRight: "10px",
-                              color: "#FFF",
-                              backgroundColor:
-                                selected === key
-                                  ? color.Purple
-                                  : "rgb(100 100 100)",
-                            }}
-                            className="enterprise_content_right_left_button_pc"
-                            onClick={() => {
-                              setSelected(key);
-                              setModelType(key);
-                            }}
-                          >
-                            {key}
-                          </Button>
-                        );
-                      }
-                    }
-                    if (key === "Weekly") {
-                      if (key != undefined) {
-                        return (
-                          <Button
-                            style={{
-                              marginBottom: "10px",
-                              marginRight: "10px",
-                              color: "#FFF",
-                              backgroundColor:
-                                selected === key
-                                  ? color.Purple
-                                  : "rgb(100 100 100)",
-                            }}
-                            className="enterprise_content_right_left_button_pc"
-                            onClick={() => {
-                              setSelected(key);
-                              setModelType(key);
-                            }}
-                          >
-                            {key}
-                          </Button>
-                        );
-                      }
-                    }
-
-                    return null; // Return null for other keys if you don't want to render anything
-                  })
+                  return null; // Return null for other keys if you don't want to render anything
+                })
                 : null}
-            </div>
+
           </Row>
         </Col>
         {/* End of Sub Buttons */}
@@ -978,7 +2467,8 @@ const HomePage = ({ scrollbarHandler }) => {
             height: "auto",
             transition: "all 0.3s ease-in-out",
             // overflowY: "scroll",
-            borderRadius: 0,
+            overflow: "hidden",
+            textAlign: "center"
           }}
         >
           <Row
@@ -991,13 +2481,13 @@ const HomePage = ({ scrollbarHandler }) => {
             }}
           >
             {selected &&
-            tableDataList &&
-            asideButtonState === "SHANNON_STOCK" ? (
+              tableDataList &&
+              asideButtonState === "SHANNON_STOCK" ? (
               <>
                 <Row
                   style={{
                     alignItems: "center",
-
+                    fontSize: responsiveValue(16, 14, 12),
                     height: 40,
                     justifyContent: "space-around",
                     borderTopLeftRadius: "10px",
@@ -1098,6 +2588,8 @@ const HomePage = ({ scrollbarHandler }) => {
                                   height: 50,
                                   justifyContent: "space-around",
                                   alignItems: "center",
+                                  fontSize: responsiveValue(16, 14, 12),
+
                                 }}
                               >
                                 <div
@@ -1175,6 +2667,7 @@ const HomePage = ({ scrollbarHandler }) => {
                   flex: 1,
                   alignItems: "flex-start",
                   justifyContent: "flex-start",
+                  fontSize: responsiveValue(16, 14, 12),
                 }}
               >
                 <Row
@@ -1407,7 +2900,7 @@ const HomePage = ({ scrollbarHandler }) => {
                 <WhiteSpace height={20} />
                 {summaryLoading ? (
                   <CircularProgress />
-                ) : marketCapNews?.length == 0 ? (
+                ) : marketCapNews.length == 0 ? (
                   <div
                     style={{
                       fontSize: 15,
@@ -1433,7 +2926,7 @@ const HomePage = ({ scrollbarHandler }) => {
                       시가총액 상위 기준
                     </div>
                     <WhiteSpace height={20} />
-                    {marketCapNews?.map((item, index) => {
+                    {marketCapNews.map((item, index) => {
                       if (item.top_summary_flag != 1) {
                         return (
                           <Row
@@ -1508,7 +3001,7 @@ const HomePage = ({ scrollbarHandler }) => {
                       거래 금액 기준
                     </div>
                     <WhiteSpace height={20} />
-                    {tradingVolNews?.map((item, index) => {
+                    {tradingVolNews.map((item, index) => {
                       if (item.top_summary_flag != 1) {
                         return (
                           <Row
@@ -1594,7 +3087,7 @@ const HomePage = ({ scrollbarHandler }) => {
                   </Col>
                 ) : stockPrice.length > 0 ? (
                   <ApexChart
-                    width={800}
+                    width={Math.min(800, width - 40)}
                     height={275}
                     options={state.options}
                     series={state.series}
@@ -1640,43 +3133,60 @@ const HomePage = ({ scrollbarHandler }) => {
                     <CircularProgress />
                   </Col>
                 ) : profitList.length > 0 ? (
-                  <Row
-                    style={{
-                      flex: 1,
-                      justifyContent: "space-between",
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                    }}
-                  >
-                    {profitList?.map((v) => {
-                      return (
-                        <Row
-                          width={109}
-                          height={47}
-                          style={{
-                            backgroundColor: color.BackgroundPurple,
-                            borderRadius: 10,
-                            fontWeight: "bold",
-                          }}
-                        >
-                          <Col
-                            width={36}
-                            height={36}
-                            style={{
-                              borderRadius: 18,
-                              backgroundColor: color.Purple,
-                              color: "white",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {v.title}
-                          </Col>
-                          <WhiteSpace width={12} />
+                  <Row style={{ flex: 1, justifyContent: "space-between", paddingLeft: 10, paddingRight: 10 }}>
+                    {profitList.map((v) => {
+                      return <Row width={responsiveValue(120, 100, 80)} height={47} style={{
+                        backgroundColor: color.BackgroundPurple,
+                        borderRadius: 10,
+                        fontWeight: responsiveValue("bold", "bold", "normal"),
+                        justifyContent: "flex-start",
+                        fontSize: responsiveValue(16, 12, 10),
+                        padding: 8
+                      }}>
+                        <Col width={responsiveValue(36, 30, 24)} height={responsiveValue(36, 30, 24)} style={{ borderRadius: 18, backgroundColor: color.Purple, color: "white", flexShrink: 0 }}>{v.title}</Col>
+                        <div style={{ flex: 1, textAlign: "center" }}>
                           {v.value}%
-                        </Row>
-                      );
+                        </div>
+                      </Row>
                     })}
                   </Row>
+                  // <Row
+                  //   style={{
+                  //     flex: 1,
+                  //     justifyContent: "space-between",
+                  //     paddingLeft: 10,
+                  //     paddingRight: 10,
+                  //   }}
+                  // >
+                  //   {profitList.map((v) => {
+                  //     return (
+                  //       <Row
+                  //         width={109}
+                  //         height={47}
+                  //         style={{
+                  //           backgroundColor: color.BackgroundPurple,
+                  //           borderRadius: 10,
+                  //           fontWeight: "bold",
+                  //         }}
+                  //       >
+                  //         <Col
+                  //           width={36}
+                  //           height={36}
+                  //           style={{
+                  //             borderRadius: 18,
+                  //             backgroundColor: color.Purple,
+                  //             color: "white",
+                  //             fontWeight: "bold",
+                  //           }}
+                  //         >
+                  //           {v.title}
+                  //         </Col>
+                  //         <WhiteSpace width={12} />
+                  //         {v.value}%
+                  //       </Row>
+                  //     );
+                  //   })}
+                  // </Row>
                 ) : (
                   <div
                     style={{
@@ -1723,7 +3233,7 @@ const HomePage = ({ scrollbarHandler }) => {
                   </Col>
                 ) : (
                   <Col style={{ flex: 1 }}>
-                    {directNewsList?.length > 0 ? (
+                    {directNewsList.length > 0 ? (
                       directNewsList?.map((item) => {
                         return (
                           <Row
@@ -1752,7 +3262,7 @@ const HomePage = ({ scrollbarHandler }) => {
                                   padding: 10,
                                   borderRadius: 5,
                                   backgroundColor: color.BackgroundPurple,
-                                  fontSize: item.press.length > 6 ? 12 : 16,
+                                  fontSize: responsiveValue(16, 14, 12) - (item.press.length > 6 ? 4 : 0),
                                 }}
                               >
                                 {item.press}
@@ -1770,6 +3280,7 @@ const HomePage = ({ scrollbarHandler }) => {
                               <Row
                                 style={{
                                   justifyContent: "flex-start",
+                                  fontSize: responsiveValue(16, 14, 12)
                                 }}
                               >
                                 {item.headline}
@@ -1777,7 +3288,7 @@ const HomePage = ({ scrollbarHandler }) => {
                               <Row
                                 style={{
                                   justifyContent: "flex-start",
-                                  fontSize: 12,
+                                  fontSize: responsiveValue(12, 10, 8),
                                   color: "rgb(126 126 126)",
                                 }}
                               >
@@ -1838,7 +3349,7 @@ const HomePage = ({ scrollbarHandler }) => {
                   </Col>
                 ) : (
                   <Col style={{ flex: 1 }}>
-                    {relatedNewsList?.length > 0 ? (
+                    {relatedNewsList.length > 0 ? (
                       relatedNewsList?.map((item) => {
                         return (
                           <Row
@@ -1867,7 +3378,7 @@ const HomePage = ({ scrollbarHandler }) => {
                                   padding: 10,
                                   borderRadius: 5,
                                   backgroundColor: color.BackgroundPurple,
-                                  fontSize: item.press.length > 6 ? 12 : 16,
+                                  fontSize: responsiveValue(16, 14, 12) - (item.press.length > 6 ? 4 : 0),
                                 }}
                               >
                                 {item.press}
@@ -1885,6 +3396,7 @@ const HomePage = ({ scrollbarHandler }) => {
                               <Row
                                 style={{
                                   justifyContent: "flex-start",
+                                  fontSize: responsiveValue(16, 14, 12)
                                 }}
                               >
                                 {item.headline}
@@ -1892,7 +3404,7 @@ const HomePage = ({ scrollbarHandler }) => {
                               <Row
                                 style={{
                                   justifyContent: "flex-start",
-                                  fontSize: 12,
+                                  fontSize: responsiveValue(12, 10, 8),
                                   color: "rgb(126 126 126)",
                                 }}
                               >
@@ -2064,6 +3576,7 @@ const HomePage = ({ scrollbarHandler }) => {
       <ToastContainer />
     </Row>
   );
+
 };
 
 export default HomePage;

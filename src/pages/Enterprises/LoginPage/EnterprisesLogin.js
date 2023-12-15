@@ -8,7 +8,10 @@ import { loginAPI } from "../../../api";
 import { loginInfo } from "../../../redux/slices/loginSlice";
 import { useTitle } from "../../../routing/DocumentNameChanger";
 import { Oval } from "react-loader-spinner";
+import { useResponsive } from "../../../hooks/useResponsive";
+import { WhiteSpace } from "../../../style/globalStyled";
 function EnterprisesLogin() {
+  const { responsiveValue } = useResponsive()
   useTitle("딥트레이드 엔터프라이즈");
   const [loader, setLoader] = useState(false);
   const [formInput, setFormInput] = useState({
@@ -63,17 +66,17 @@ function EnterprisesLogin() {
 
   return (
     <div className="loginContainer">
-      <div className="logoSection">
+      <div style={{ width: responsiveValue(500, 300, 200) }}>
         {/* Your logo */}
-        <div className="enterprises_logo_wrapper">
-          <img src={"/assets/enterprise_logo.png"} alt="logo" />
+        <div style={{ width: responsiveValue(500, 300, 200) }}>
+          <img src={"/assets/enterprise_logo.png"} alt="logo" style={{ width: responsiveValue(500, 300, 200) }} />
         </div>
         {/* <img src="logo.png" alt="Logo" /> */}
       </div>
-      <div className="formSection">
-        <form onSubmit={submitLogin} className="enterprise_form_wrapper">
-          <div className="enterprise_form_input_group">
-            <div className="inputGroup">
+      <div className="formSection" style={{ width: responsiveValue(600, 300, 200) }}>
+        <form onSubmit={submitLogin} className="enterprise_form_wrapper" style={{ display: "flex", flexDirection: "row", width: "100%" }}>
+          <div className="enterprise_form_input_group" style={{ flex: 1 }}>
+            <div className="inputGroup" style={{ width: "100%" }}>
               {/* <label htmlFor="id">ID:</label> */}
 
               <input
@@ -87,7 +90,7 @@ function EnterprisesLogin() {
                 }}
               />
             </div>
-            <div className="inputGroup">
+            <div className="inputGroup" style={{ width: "100%" }}>
               {/* <label htmlFor="pass">Pass:</label> */}
               <input
                 type="password"
@@ -102,10 +105,12 @@ function EnterprisesLogin() {
               />
             </div>
           </div>
+          <WhiteSpace width={20} />
           <button
             className="enterprise_login_btn"
             type="submit"
             onClick={(e) => submitLogin(e)}
+            style={{ width: responsiveValue(150, 75, 50) }}
           >
             {loader == true ? (
               <Oval
