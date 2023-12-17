@@ -12,7 +12,17 @@ import { resetState } from "../../../redux/slices/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useResponsive } from "../../../hooks/useResponsive";
+import { useTitle } from "../../../routing/DocumentNameChanger";
+import { useMediaQuery } from "react-responsive";
 const EnterprisesService = () => {
+  useTitle("딥트레이드 엔터프라이즈");
+  
+  const isTablet = useMediaQuery({
+    query: "(min-width:481px) and (max-width:1240px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(max-width:481px)",
+  });
   const [activeScrollbar, setActiveScrollbar] = useState(true);
   const user_info_reducer = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
@@ -45,14 +55,32 @@ const EnterprisesService = () => {
           paddingTop: 10,
           paddingLeft: 20,
           paddingRight: 20,
-          justifyContent: "flex-start",
+          justifyContent: responsiveValue("flex-start","space-between","space-between" ),
         }}
       >
         <img
           src={"/assets/enterprise_logo1.png"}
           alt="logo"
-          style={{ height: "60px", width: "232px" }}
+          style={{ height:responsiveValue("60px", "60px", "48px"), width: "232px" }}
         />
+        {isTablet && <Row style={{ height: "auto" , width:responsiveValue(0, 82, 73)}}>
+              <div
+                style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}
+                onClick={onLogout}
+              >
+                로그아웃
+              </div>
+             
+            </Row> }
+        {isMobile && <Row style={{ height: "auto" , width:responsiveValue(0, 0, 73)}}>
+              <div
+                style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}
+                onClick={onLogout}
+              >
+                로그아웃
+              </div>
+             
+            </Row> }
       </Row>
       <WhiteSpace height={25} />
       <Row

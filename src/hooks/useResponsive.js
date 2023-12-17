@@ -6,7 +6,7 @@ export function useResponsive() {
 
     useEffect(() => {
         const mediaQueryTablet = window.matchMedia(
-            "(min-width: 481px) and (max-width: 1240px)"
+            "(min-width: 481px) and (max-width: 1240px)" //1240
         );
         const mediaQueryMobile = window.matchMedia("(max-width: 480px)");
 

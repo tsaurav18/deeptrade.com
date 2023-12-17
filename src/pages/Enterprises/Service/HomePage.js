@@ -2332,7 +2332,7 @@ const HomePage = ({ scrollbarHandler }) => {
             height: "auto",
           }}
         >
-          <Row style={{ height: "auto", fontWeight: "bold", flex: 1, cursor: "pointer", flexWrap: "wrap", justifyContent: "flex-start" }}>
+          <Row style={{ height: "auto", fontWeight: "bold", flex: 1, cursor: "pointer", flexWrap: "wrap", justifyContent: responsiveValue("flex-start", "flex-start", 'center') }}>
             {asideButtonState === "SHANNON_STOCK"
               ? Object.keys(data_reducer).map((key) => {
                 const value = data_reducer[key];
@@ -3133,7 +3133,7 @@ const HomePage = ({ scrollbarHandler }) => {
                     <CircularProgress />
                   </Col>
                 ) : profitList.length > 0 ? (
-                  <Row style={{ flex: 1, justifyContent: "space-between", paddingLeft: 10, paddingRight: 10 }}>
+                  <Row style={{ flex: 1, justifyContent: "space-between", paddingLeft: responsiveValue(10,10, 0), paddingRight:responsiveValue(10,10, 0) }}>
                     {profitList.map((v) => {
                       return <Row width={responsiveValue(120, 100, 80)} height={47} style={{
                         backgroundColor: color.BackgroundPurple,
@@ -3265,7 +3265,7 @@ const HomePage = ({ scrollbarHandler }) => {
                                   fontSize: responsiveValue(16, 14, 12) - (item.press.length > 6 ? 4 : 0),
                                 }}
                               >
-                                {item.press}
+                                {item.press.length>14?item.press.slice(0,14):item.press}
                               </Col>
                             </Col>
                             <Col
@@ -3381,7 +3381,7 @@ const HomePage = ({ scrollbarHandler }) => {
                                   fontSize: responsiveValue(16, 14, 12) - (item.press.length > 6 ? 4 : 0),
                                 }}
                               >
-                                {item.press}
+                                 {item.press.length>14?item.press.slice(0,14):item.press}
                               </Col>
                             </Col>
                             <Col
