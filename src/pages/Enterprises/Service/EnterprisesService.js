@@ -31,7 +31,7 @@ const EnterprisesService = () => {
     <Col
       style={{
         // width: "100vw",
-        height: "115vh",
+        // height: "115vh",
         background:
           "linear-gradient(90deg, #FAFAFF 0.24%, #F2F0FF 99.7%, #F2F0FF 99.7%)",
         overflow: "hidden",
@@ -41,7 +41,7 @@ const EnterprisesService = () => {
         style={{
           width: "100%",
           maxWidth: 1280,
-          height: 75,
+          // height: 75,
           paddingTop: 10,
           paddingLeft: 20,
           paddingRight: 20,
@@ -65,7 +65,7 @@ const EnterprisesService = () => {
         <Col
           style={{
             flex: 1,
-            height: 900,
+            // height: 900,
             overflowY: activeScrollbar ? "scroll" : "hidden",
             justifyContent: "flex-start",
             overflowX: "hidden",
