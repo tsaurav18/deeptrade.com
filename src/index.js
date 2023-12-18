@@ -76,16 +76,7 @@ ReactDOM.render(
                 />
               }
             />
-            {/* <Route
-              path="enterprise/service"
-              exact={true}
-              element={
-                <VerifyAuth
-                  authRoles={authRoles}
-                  component={EnterpriseServiceTest}
-                />
-              }
-            /> */}
+           
           </Routes>
         </Router>
       </React.StrictMode>{" "}

@@ -241,7 +241,7 @@ const HomePage = ({ scrollbarHandler }) => {
   });
 
   const data_reducer = useSelector((state) => state.dataReducer);
-  console.log("data_reducer", data_reducer);
+  // console.log("data_reducer", data_reducer);
   const initializeSelected = () => {
     let result;
 
@@ -1117,7 +1117,7 @@ else{
         ticker: selectedStockId,
         contains_stock_name: 1,
       });
-      console.log("res",res, selectedStockId)
+      // console.log("res",res, selectedStockId)
       if(res.status===200){
         setDirectNewsList(res.data.news_list);
         setNewsLoding(false);
@@ -1696,7 +1696,7 @@ if(res.status===200){
                     }
                   }
 
-                  return null; // Return null for other keys if you don't want to render anything
+                  return null; // Return null for other keys if you don't have to render anything
                 })
               : null}
           </Row>
@@ -3106,7 +3106,7 @@ if(res.status===200){
                             }}
                             key={item.id}
                             style={{
-                              height: 40,
+                              height: "auto",
                               marginBottom: 12,
                               cursor: "pointer",
                               justifyContent: "flex-start",
@@ -3226,7 +3226,7 @@ if(res.status===200){
                             }}
                             key={item.id}
                             style={{
-                              height: 40,
+                              height: "auto",
                               marginBottom: 12,
                               cursor: "pointer",
                               justifyContent: "flex-start",
