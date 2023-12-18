@@ -94,7 +94,7 @@ const EnterprisesService = () => {
           style={{
             flex: 1,
             // height: 900,
-            overflowY: activeScrollbar ? "scroll" : "hidden",
+            overflowY: "hidden",
             justifyContent: "flex-start",
             overflowX: "hidden",
             flexShrink: 0,
@@ -145,7 +145,7 @@ const EnterprisesService = () => {
                 }}
               >
                 <img
-                style={{ height: 70, width: 100 }}
+                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:70, width: 100 }}
                 src={
                   user_info_reducer.company_usrnm=="deeptrade"?"/assets/deeptrade_d_logo.png":user_info_reducer.company_usrnm==="koreainvestment"?'/assets/koreainvestment_logo.png':user_info_reducer.company_usrnm==="crescendo"?"/assets/crescendo_logo.png":"/assets/white_logo.png"
                 }
