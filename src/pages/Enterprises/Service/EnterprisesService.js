@@ -63,7 +63,7 @@ const EnterprisesService = () => {
           alt="logo"
           style={{ height:responsiveValue("60px", "60px", "48px"), width: "232px" }}
         />
-        {isTablet && <Row style={{ height: "auto" , width:responsiveValue(0, 82, 73)}}>
+        {isTablet && <Row style={{ height: "auto" , width:responsiveValue(0, 82, 73), backgroundColor:"#fff", padding:7, borderRadius:5, textAlign:"center"}}>
               <div
                 style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}
                 onClick={onLogout}
@@ -72,7 +72,7 @@ const EnterprisesService = () => {
               </div>
              
             </Row> }
-        {isMobile && <Row style={{ height: "auto" , width:responsiveValue(0, 0, 73)}}>
+        {isMobile && <Row style={{ height: "auto" , width:responsiveValue(0, 0, 73),backgroundColor:"#fff", padding:7, borderRadius:5, textAlign:"center"}}>
               <div
                 style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}
                 onClick={onLogout}

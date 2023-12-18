@@ -1707,8 +1707,9 @@ if(res.status===200){
           }} /> */}
 
           {/* Filtering */}
-        
+          <WhiteSpace height={10} />
         { (asideButtonState ==="SHANNON_STOCK" &&user_info_reducer.company_name==="DTT") && <Col style={{ justifyContent: "flex-end", flexDirection: "row" }}>
+       
             <Row
               onClick={() => {
                 OnFilterToggle();
@@ -1720,15 +1721,17 @@ if(res.status===200){
                 width: 113,
                 cursor: "pointer",
                 fontWeight: "700",
-                marginBottom:10
-                , borderRadius:5
+                 padding:7,
+                borderRadius:5
               }}
             >
               <CiFilter size={20} />
               <span style={{ fontWeight: "700" }}>조건별 선택</span>
             </Row>
+          
           </Col>}
-          {showFilterToggle && (
+          <WhiteSpace height={10} />
+          {(asideButtonState ==="SHANNON_STOCK" && showFilterToggle) && (
             <ShadowCol
               style={{
                 borderRadius: 5,

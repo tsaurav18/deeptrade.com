@@ -66,14 +66,14 @@ function EnterprisesLogin() {
 
   return (
     <div className="loginContainer">
-      <div style={{ width: responsiveValue(500, 300, 200), marginBottom:20 }}>
+      <div style={{ width: responsiveValue(600, 500, 327), marginBottom:20 }}>
         {/* Your logo */}
-        <div style={{ width: responsiveValue(500, 300, 200) }}>
-          <img src={"/assets/enterprise_logo.png"} alt="logo" style={{ width: responsiveValue(500, 300, 200) }} />
+        <div style={{ width: responsiveValue(600, 500, 327) }}>
+          <img src={"/assets/enterprise_logo.png"} alt="logo" style={{ width: responsiveValue(600, 500, 327) }} />
         </div>
         {/* <img src="logo.png" alt="Logo" /> */}
       </div>
-      <div className="formSection" style={{ width: responsiveValue(600, 300, 327) }}>
+      <div className="formSection" style={{ width: responsiveValue(600, 500, 327) }}>
         <form onSubmit={submitLogin} className="enterprise_form_wrapper" style={{ display: "flex", flexDirection: "row", width: "100%" }}>
           <div className="enterprise_form_input_group" style={{ flex: 1 }}>
             <div className="inputGroup" style={{ width: "100%" }}>
@@ -105,12 +105,12 @@ function EnterprisesLogin() {
               />
             </div>
           </div>
-          <WhiteSpace width={20} />
+          <WhiteSpace width={10} />
           <button
             className="enterprise_login_btn"
             type="submit"
             onClick={(e) => submitLogin(e)}
-            style={{ width: responsiveValue(150, 75, 85) }}
+            style={{ width: responsiveValue(150, 95, 85) }}
           >
             {loader == true ? (
               <Oval
