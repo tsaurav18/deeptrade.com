@@ -24,7 +24,7 @@
 }
 
 .menu {
-  padding: 50px 180px;
+  padding: 50px 120px;
   display: flex;
   justify-content: space-between;
   width: 1050px;
@@ -85,7 +85,7 @@
 
 @media only screen and (max-width: 1350px) {
     .menu {
-      padding: 40px 180px;
+      padding: 40px 120px;
     }
     .logo {
         line-height: 100px;
@@ -94,10 +94,10 @@
 
 @media only screen and (max-width: 1100px) {
   .menu {
-    padding: 40px 40px;
+    padding: 40px 5px;
     display: flex;
     justify-content: space-between;
-    width: 750px;
+    width: 772px;
     float: right;
   }
   .logo {

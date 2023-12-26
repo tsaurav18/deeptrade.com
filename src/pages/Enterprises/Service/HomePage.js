@@ -412,6 +412,24 @@ const HomePage = ({ scrollbarHandler }) => {
     setMrktCapCheckBoxStatus(true);
   };
 
+  const convertIntoKoreanSys =(marketCap)=>{
+    // Define the unit values
+    const oak = 100000000;  // 1 억
+    const maan = 10000;      // 1 만
+
+    // Convert market cap into 억
+    let marketCap_ = marketCap / oak;
+    if (marketCap_ < 1) {
+      // Convert market cap into 만 unit
+      let marketCap_ = marketCap_ / maan;
+      return marketCap_.toFixed(0) + ' 만';  // Return in 만 unit format
+  } else {
+      return marketCap_.toFixed(0) + ' 억';  // Return in 억 unit format
+  }
+   
+  }
+
+
 
   //change 억 to number
   const parseKoreanEokNumber = (koreanNumber) => {
@@ -420,7 +438,7 @@ const HomePage = ({ scrollbarHandler }) => {
 
     // Parse the numeric part and multiply by the appropriate factor
     const numericValue = parseInt(koreanNumber) * multiplier;
-    console.log("numericValue", numericValue);
+    // console.log("numericValue", numericValue);
     return numericValue;
   };
 
@@ -988,7 +1006,7 @@ else{
     };
   }, []);
 
-  // console.log("data_reducer", data_reducer);
+  console.log("data_reducer", data_reducer);
   const handleDateSelection = (date) => {
     setSelectedDate(date);
     const _date = new Date(date);
@@ -2379,6 +2397,26 @@ if(res.status===200){
                   >
                     Sector
                   </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    Market Cap.
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    Trading Volume
+                  </div>
                 </Row>
                 <Row
                   style={{
@@ -2487,6 +2525,30 @@ if(res.status===200){
                                   }}
                                 >
                                   {list.sector}
+                                </div>
+                                <div
+                                  style={{
+                                    width: 110,
+                                    height: "auto",
+                                    display: "table-cell",
+                                    justifyContent: "space-around",
+                                    cursor: "pointer",
+                                    transition: "all 0.3s ease-in-out",
+                                  }}
+                                >
+                                  {convertIntoKoreanSys(list.marketCap)}
+                                </div>
+                                <div
+                                  style={{
+                                    width: 110,
+                                    height: "auto",
+                                    display: "table-cell",
+                                    justifyContent: "space-around",
+                                    cursor: "pointer",
+                                    transition: "all 0.3s ease-in-out",
+                                  }}
+                                >
+                                  {list.accTradeVolume}
                                 </div>
                               </Row>
                             );

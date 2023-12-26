@@ -33,6 +33,12 @@ function Header(props) {
           >
             Service
           </div>
+          <div
+            className="menu_item"
+            onClick={() => props.solutionRef.current.scrollIntoView()}
+          >
+            Solution
+          </div>
 
           <div
             className="menu_item"
@@ -81,16 +87,29 @@ function Header(props) {
           </div>
           <div
             className="nav-item"
+            onClick={() => props.xpercentRef.current.scrollIntoView()}
+          >
+            Service
+          </div>
+          <div
+            className="nav-item"
+            onClick={() => props.solutionRef.current.scrollIntoView()}
+          >
+            Solution
+          </div>
+
+          <div
+            className="nav-item"
             onClick={() => props.newsRef.current.scrollIntoView()}
           >
             News
           </div>
-          {/* <div
+          <div
             className="nav-item"
             onClick={() => props.newsletterRef.current.scrollIntoView()}
           >
             Newsletter
-          </div> */}
+          </div>
         </nav>
       </div>
     </div>
