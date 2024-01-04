@@ -110,7 +110,8 @@ function Solution(props) {
                 />
               </div>
               <div className="col-9 xpercent_text">
-              고객 투자 유니버스와 시장 상황에 맞춘 수익률과 안정성을 동시에 추구하는 ETF 포트폴리오를 구성할 수 있습니다. 
+       
+              고객 투자 유니버스와 시장 상황을 동시에 고려하여 높은 수익률과 안정성을 동시에 추구하는 ETF 포트폴리오를 구성할 수 있습니다.
               </div>
             </div>
             <div className="row" style={{ marginTop: 10 ,padding:"0px 10px"}}>
