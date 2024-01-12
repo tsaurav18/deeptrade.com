@@ -1006,7 +1006,7 @@ else{
     };
   }, []);
 
-  console.log("data_reducer", data_reducer);
+  // console.log("data_reducer", data_reducer);
   const handleDateSelection = (date) => {
     setSelectedDate(date);
     const _date = new Date(date);
@@ -1362,15 +1362,21 @@ if(res.status===200){
         <>
           <ShadowCol
             style={{
-              width: 160,
-              height: 120,
-              padding: 20,
-              justifyContent: "flex-start",
+              width: "17vw",
+              // height: 120,
+              height:"auto",
+              padding: 10,
+              justifyContent: "center",
+              alignItems:"center",
+              
             }}
           >
-            <Row style={{ height: "auto"}}>
-              <div style={{ fontWeight: "bold", flex: 1, cursor: "pointer" }}>
-                {data_reducer && data_reducer.shannon_stock == true && (
+            <Row style={{width:"100%",alignItems:"center", justifyContent:"center"}}>
+              <div style={{    justifyContent: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center", fontWeight: "bold", flex: 1, cursor: "pointer" }}>
+                  {data_reducer && data_reducer.shannon_stock == true && (
                   <Button
                     onClick={() => {
                       setAsideButtonState("SHANNON_STOCK");
@@ -1384,7 +1390,7 @@ if(res.status===200){
                     }}
                     style={{
                       borderRadius: 5,
-                      width: "145px",
+                      width: "152px",
                       marginBottom: "10px",
                       color: "#FFF",
                       backgroundColor:
@@ -1736,7 +1742,7 @@ if(res.status===200){
                 alignItems: "center",
                 border: "1px solid #eee",
                 backgroundColor:"#fff",
-                width: 113,
+                width: "auto",
                 cursor: "pointer",
                 fontWeight: "700",
                  padding:7,
@@ -2415,7 +2421,7 @@ if(res.status===200){
                       transition: "all 0.3s ease-in-out",
                     }}
                   >
-                    Trading Volume
+                    Trading Vol.
                   </div>
                 </Row>
                 <Row

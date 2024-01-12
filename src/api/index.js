@@ -45,6 +45,25 @@ export const loginAPI = {
   },
 };
 export const getDtData = {
+  //DB 금융투자 시그널 불러오는 api
+  async getDBInvestData(company_name) {
+    let body = JSON.stringify({
+      company:company_name
+    });
+    let csrf = await instance.get("mobile/get_csrf/");
+
+    return instance
+      .post(`dtenter/db_invest_signal/`, body, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+
   //get Related news
 
   async getRelatedNews({ ticker, contains_stock_name }) {

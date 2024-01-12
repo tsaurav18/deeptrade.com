@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Bell from "../../../assets/icons/bell.png";
 import Logout from "../../../assets/icons/logout.png";
@@ -7,13 +7,17 @@ import color from "../../../style/color";
 import { Col, Row, ShadowCol, WhiteSpace } from "../../../style/globalStyled";
 import "./EnterprisesService.css";
 import HomePage from "./HomePage";
-
+import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
 import { resetState } from "../../../redux/slices/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useResponsive } from "../../../hooks/useResponsive";
 import { useTitle } from "../../../routing/DocumentNameChanger";
 import { useMediaQuery } from "react-responsive";
+import { getDtData } from "../../../api";
+import DbInvestment from "./DbInvest/DbInvestment";
+
 const EnterprisesService = () => {
   useTitle("딥트레이드 엔터프라이즈");
   
@@ -23,7 +27,10 @@ const EnterprisesService = () => {
   const isMobile = useMediaQuery({
     query: "(max-width:481px)",
   });
+  
   const [activeScrollbar, setActiveScrollbar] = useState(true);
+  const [dbSignalData, setDbSignalData] = useState([])
+  const [loader, setLoader] = useState(false);
   const user_info_reducer = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,8 +42,37 @@ const EnterprisesService = () => {
   function scrollbarHandler(value) {
     setActiveScrollbar(value);
   }
+  const getDbInvestmentSignal =async()=>{
+    setLoader(true)
+    try {
+      const res = await getDtData.getDBInvestData(user_info_reducer.company_name)
+      if(res.status===200){
+        console.log(res.data)
+        setDbSignalData(res.data)
+      }else{
+        setDbSignalData([])
+        console.log("res.status",res.status)
+      }
+    } catch (error) {
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
+    }
+    setLoader(false)
+  }
+useEffect(() => {
+  let isComponentRender = true
+  if(isComponentRender===true){
+    getDbInvestmentSignal()
+  }
 
 
+  return () => {
+    isComponentRender = false
+  }
+}, [])
+
+
+
+console.log("user_info_reducer",user_info_reducer)
   return (
     <Col
       style={{
@@ -101,15 +137,26 @@ const EnterprisesService = () => {
             paddingRight: responsiveValue(0, 20, 20),
             paddingLeft: responsiveValue(0, 20, 20),
           }}
-        >
-          <Routes>
-            <Route
-              path="/"
-              exact={true}
-              element={<HomePage scrollbarHandler={scrollbarHandler} />}
-            />
-           
-          </Routes>
+        > 
+        {user_info_reducer.company_name ==="DB"?   <ShadowCol
+            style={{
+              width: responsiveValue(1020, 760, 391),
+              height: "100vh",
+              padding: 20,
+              justifyContent: "flex-start",
+            }}
+          >
+     
+          <DbInvestment/>
+          </ShadowCol>: <Routes>
+          <Route
+            path=""
+            exact={true}
+            element={<HomePage scrollbarHandler={scrollbarHandler} />}
+          />
+         
+        </Routes>}
+         
         </Col>
         {responsiveValue(true, false, false) && <>
           <WhiteSpace width={20} />
@@ -136,7 +183,7 @@ const EnterprisesService = () => {
               />
             </Row>
             <WhiteSpace height={36} />
-            <Col style={{ height: 110, width: 110, position: "relative" }}>
+            <Col style={{ height: 110, position: "relative" }}>
               <Col
                 style={{
                   // backgroundColor: "#7A769B",
@@ -145,7 +192,7 @@ const EnterprisesService = () => {
                 }}
               >
                 <img
-                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:70, width: 100 }}
+                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:104, width: 118 }}
                 src={
                   user_info_reducer.company_usrnm=="deeptrade"?"/assets/deeptrade_d_logo.png":user_info_reducer.company_usrnm==="koreainvestment"?'/assets/koreainvestment_logo.png':user_info_reducer.company_usrnm==="crescendo"?"/assets/crescendo_logo.png":"/assets/white_logo.png"
                 }
@@ -253,6 +300,7 @@ const NewsBlock = ({ newInfo }) => {
       >
         전체 보기
       </Row>
+      <ToastContainer />
     </ShadowCol>
   );
 };

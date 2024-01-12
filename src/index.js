@@ -34,6 +34,10 @@ import persistedReducers from "./redux/store";
 import { VerifyAuth } from "./routing/VerifyAuth";
 import authRoles from "./routing/authRoles";
 import EnterpriseServiceTest from "./pages/Enterprises/Service/EnterpriseServiceTest";
+import StockPortfolio from "./pages/Solution/SubPages/StockPortfolio";
+
+import EMP from "./pages/Solution/SubPages/EMP";
+import RiskManagement from "./pages/Solution/SubPages/RiskManagement";
 
 const store = configureStore({
   reducer: persistedReducers,
@@ -55,6 +59,9 @@ ReactDOM.render(
             <Route path="/" element={<App />} />
             <Route path="eugene" element={<Eugene />} />
             <Route path="spop" element={<Spop />} />
+            <Route path="stockportfolio" element={<StockPortfolio />} />
+            <Route path="emp" element={<EMP />} />
+            <Route path="riskmanagement" element={<RiskManagement />} />
             <Route path="xpct_privacy_policy" element={<PrivacyPolicy />} />
             <Route path="unsub_email" element={<Unsubscribe />} />
             <Route path="xpercent" element={<XpercentApp />} />

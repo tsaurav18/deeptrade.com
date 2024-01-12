@@ -50,7 +50,7 @@ function News(props) {
               <div className="news_content">
                 <h6>
                 
-                딥트레이드테크놀로지스, 강화학습을 이용한 EMP 운용 시스템 특허 출원 완료
+                딥트레이드테크놀로지스, EMP 운용 장치 및 방법 특허 출원 완료 
                 </h6>
                 <p>2023/12</p>
                 <p>
@@ -71,52 +71,66 @@ function News(props) {
                   </button>
               </div>
             </div>:
-            <div className="news_slide" style={{  height:"auto"}}>
+            <div className="news_slide" style={{  height:"610px"}}>
             
               <div className="news_content news_content_patent" style={{paddingTop:20}}>
                 <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
-              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
                 
-                 강화학습을 이용한 EMP 운용 시스템 
+                 EMP 운용 장치 및 방법
                 </span>
                 <span>2023/12</span></div>
-                <p>
+                <p style={{fontSize:"12px"}}>
        
                 강화학습을 이용하여 ETF Managed Portfolio의 자산을 효과적으로 동적 배분하는 기술
               
                 </p>
                 </div>
                 <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
-              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
                 
-               펀드의 가격 움직임 예측 기술
+              가격 상관관계와 콘텐츠의 관련도를 동시에 반영한 주식 종목 관련 뉴스 추천 시스템
+                </span>
+                <span>2023/5</span></div>
+                <p style={{fontSize:"12px"}}>
+       
+                특정 종목에 대하여 가격 움직임의 관련성이 높은 종목과 뉴스 콘텐츠의 관련성이 높은 종목의 뉴스를 요약하고 추천하는 특허 기술
+              
+                </p>
+                </div>
+
+
+                <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+              펀드 추천 장치 및 펀드 추천 방법
                 </span>
                 <span>2023/1</span></div>
-                <p>
+                <p style={{fontSize:"12px"}}>
        다양한 운용 스타일을 보유한 개별 펀드가 경제 상황에 따라 움직이는 패턴을 학습하여 펀드별 가격 방향성을 예측하는 기술
               
                 </p>
                 </div>
 
                 <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
-              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
                 
-                연금 투자를 위한 변동성 최소화 기반 포트폴리오 투자 방법 (특허 등록 완료)
+              연금 투자를 위한 변동성 최소화 기반 포트폴리오 관리 방법 및 장치
                 </span>
                 <span>2023/1</span></div>
-                <p>
+                <p style={{fontSize:"12px"}}>
        
              개별 종목의 상승폭 및 하락폭을 예측하여 변동성을 최소화하고, 이를 통해 안정적인 연금 투자를 하는 기술
               
                 </p>
                 </div>
                 <div style={{border:"1px solid #990000", padding:5,borderRadius:4}}>
-              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
                 
-               임의의 알고리즘 투자에 적용하기 위한 위험 관리 시스템 
+              로보어드바이저를 이용한 위험 관리 장치 및 방법
                 </span>
                 <span>2022/12</span></div>
-                <p>
+                <p style={{fontSize:"12px"}}>
        
             시장의 방향성과 임의의 알고리즘의 성능을 기반으로 투자 비중을 조절하여 샤프 지수와 최대 하락폭을 개선하는 시스템
               

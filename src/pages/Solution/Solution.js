@@ -82,7 +82,14 @@ function Solution(props) {
             />
           </div>
         </div>
-       
+     {/* <div
+                        className="service_button"
+                        onClick={() => {
+                          window.open("/stockportfolio", "_blank");
+                        }}
+                      >
+                        서비스 상세 보기
+                      </div>  */}
         </div>
           <div className="col-12 col-md-4" style={{}}>
           <div
@@ -123,7 +130,14 @@ function Solution(props) {
                 />
               </div>
             </div>
-            
+        {/* <div
+                        className="service_button"
+                        onClick={() => {
+                          window.open("/emp", "_blank");
+                        }}
+                      >
+                        서비스 상세 보기
+                      </div>  */}
           </div>
           <div className="col-12 col-md-4">
           <div
@@ -163,7 +177,14 @@ function Solution(props) {
                 />
               </div>
             </div>
-           
+             {/* <div
+                        className="service_button"
+                        onClick={() => {
+                          window.open("/riskmanagement", "_blank");
+                        }}
+                      >
+                        서비스 상세 보기
+                      </div>  */}
           </div>
         </div>
       </div>
