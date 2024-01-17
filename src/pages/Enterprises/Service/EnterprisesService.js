@@ -187,7 +187,7 @@ useEffect(() => {
                 }}
               >
                 <img
-                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:user_info_reducer.company_usrnm==="dbinvestment"?76:104, width: 118 }}
+                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:user_info_reducer.company_usrnm==="dbinvestment"?51:104, width: 118 }}
                 src={
                   user_info_reducer.company_usrnm=="deeptrade"?"/assets/deeptrade_d_logo.png":user_info_reducer.company_usrnm==="koreainvestment"?'/assets/koreainvestment_logo.png':user_info_reducer.company_usrnm==="crescendo"?"/assets/crescendo_logo.png":user_info_reducer.company_usrnm==="dbinvestment"?"/assets/dte/db_investment_logo.png":"/assets/white_logo.png"
                 }

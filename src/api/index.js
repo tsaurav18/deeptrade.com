@@ -45,7 +45,43 @@ export const loginAPI = {
   },
 };
 export const getDtData = {
+  
+//LIME result
+async getLimeMacroResult(selectedDate) {
+  let body = JSON.stringify({
+    selectedDate:selectedDate,
+  });
+  let csrf = await instance.get("mobile/get_csrf/");
+  return instance
+    .post("dtenter/db_invest_macro/", body, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrf.data["token"],
+      },
+    })
+    .then((res) => {
+      return res;
+    });
+},
 
+
+  //LIME result
+  async getLimeResult(selectedDate) {
+    let body = JSON.stringify({
+      selectedDate:selectedDate,
+    });
+    let csrf = await instance.get("mobile/get_csrf/");
+    return instance
+      .post("dtenter/db_invest_lime/", body, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
   
   async getDBChartData() {
     let csrf = await instance.get("mobile/get_csrf/");
