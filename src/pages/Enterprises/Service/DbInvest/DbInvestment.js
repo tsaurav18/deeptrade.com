@@ -138,7 +138,10 @@ function DbInvestment() {
   const [limeMacroResult, setLimeMacroResult] = useState([])
   const [limeMacroResultLoader, setLimeMacroResultLoader] = useState(false)
   const [dbChartData, setDbChartData] = useState([]);
+
   const [chartDataLoader, setChartDataLoader] = useState(false);
+  const [currentdataLoader, setCurrentdataLoader] = useState(false)
+  const [dbSignalCurrentData, setDbSignalCurrentData] = useState([])
   const [dbSignalData, setDbSignalData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -336,6 +339,39 @@ function DbInvestment() {
     }
   }, [selectedStockDate])
   
+  const getDbInvestmentCurrentSignal = async () => {
+    setCurrentdataLoader(true);
+    
+    try {
+      const currentDate = new Date();
+      const currentYear = String(currentDate.getFullYear())
+      const res = await getDtData.getDBInvestCurrentData(
+        currentYear
+      );
+      if (res.status === 200) {
+        console.log("getDbInvestmentCurrentSignal res.data",res.data)
+ 
+        setDbSignalCurrentData(res.data);
+
+      } else {
+        setDbSignalCurrentData([]);
+        console.log(" getDbInvestmentSignal res.status", res.status);
+      }
+    } catch (error) {
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
+    }
+    setCurrentdataLoader(false);
+  };
+  useEffect(() => {
+    let isComponentRender = true;
+    if (isComponentRender === true) {
+      getDbInvestmentCurrentSignal();
+    }
+    return () => {
+      isComponentRender=false
+    }
+  }, []);
+
 
   return (
     <>
@@ -343,7 +379,7 @@ function DbInvestment() {
 
 justifyContent: "flex-start",
 marginBottom: "10px",
-fontWeight: "700"}}>현재 EMP 비중</Row>
+fontWeight: "700"}}>과거 EMP 비중</Row>
       <ShadowCol
         style={{
           boxSizing: "border-box",
@@ -392,7 +428,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
             style={{
               alignItems: "center",
 
-              height: 40,
+              height: 50,
               justifyContent: "space-around",
               borderTopLeftRadius: "10px",
               borderTopRightRadius: "10px",
@@ -532,6 +568,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                     .map((list, index) => {
                       return (
                         <Row
+                        key={index}
                         onClick={() => {
                           setSelectedStockDate(list.buying_date);
                         }}
@@ -692,9 +729,330 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
       </ShadowCol>
       <WhiteSpace height={25} />
 
+      
+{/* Current data signal */}
+<Row style={{alignItems:"flex-start",fontSize: "20px",
 
+justifyContent: "flex-start",
+marginBottom: "10px",
+fontWeight: "700"}}>현재 EMP 비중</Row>
+      <ShadowCol
+        style={{
+          boxSizing: "border-box",
+          height: "auto",
+          transition: "all 0.3s ease-in-out",
+          // overflowY: "scroll",
+          overflow: "hidden",
+          textAlign: "center",
+          padding: 20,
+        }}
+      >
+  
+        <Col
+          style={{
+            flex: 1,
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            // fontSize: responsiveValue(16, 14, 12),
+            boxSizing: "border-box",
+            height: "auto",
+            transition: "all 0.3s ease-in-out",
+            // overflowY: "scroll",
+            overflow: "hidden",
+            textAlign: "center",
+          }}
+        >
+          <Row
+            style={{
+              alignItems: "center",
 
+              height: 50,
+              justifyContent: "space-around",
+              borderTopLeftRadius: "10px",
+              borderTopRightRadius: "10px",
+            }}
+          >
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              추천시점
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              Cash
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+            전체 주식
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              대형주
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+        ESG
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+             성장
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+             가치
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+            중소형
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+            배당
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              투자 <br />
+              수익률
+            </div>
+          </Row>
+          <Row
+            style={{
+              flexDirection: "column",
+              height: "auto",
 
+              // overflowY: "scroll",
+            }}
+          >
+            {currentdataLoader ? (
+              <Oval
+                height={50}
+                width={50}
+                color="#4fa94d"
+                wrapperStyle={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              <>
+                {dbSignalCurrentData &&
+                dbSignalCurrentData
+                  .map((list, index) => {
+                      return (
+                        <Row
+                        key={index}
+                        onClick={() => {
+                          setSelectedStockDate(list.buying_date);
+                        }}
+                        style={{
+                          backgroundColor:
+                            selectedStockDate === list.buying_date
+                              ? "#f3f3f3"
+                              : "",
+                          height: 50,
+                          justifyContent: "space-around",
+                          alignItems: "center",
+                          fontSize: responsiveValue(16, 14, 12),
+                        }}
+                        >
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              overflow: "hidden",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.buying_date}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {list.cash}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.all_stocks}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.large_cap}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.esg}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.growth}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.value}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.mid_small}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.dividend}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.pv_return}
+                          </div>
+                        </Row>
+                      );
+                    })}
+              </>
+            )}
+          </Row>
+        </Col>
+       
+      </ShadowCol>
+
+      <WhiteSpace height={25} />
 
       {/* section 2  Lime 결과 */}
 
@@ -743,7 +1101,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                <Row  style={{
               alignItems: "center",
 
-              height: 40,
+              height: 70,
               justifyContent: "space-around",
               borderTopLeftRadius: "10px",
               borderTopRightRadius: "10px",
@@ -776,7 +1134,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-              중요 변수 <br/> imp
+              중요 변수 <br/> 점수
             </div>
             {/* <div
               style={{
@@ -911,7 +1269,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               overflow: "hidden",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                          
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -923,7 +1281,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                       
                               transition: "all 0.3s ease-in-out",
                               overflow: "hidden",
                             }}
@@ -936,7 +1294,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+              
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -948,7 +1306,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                   
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -960,7 +1318,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                         
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -972,7 +1330,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                       
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -984,7 +1342,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                  
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -996,7 +1354,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                  
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -1008,7 +1366,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                    
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -1020,7 +1378,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+               
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -1032,7 +1390,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+           
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -1113,7 +1471,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                <Row  style={{
               alignItems: "center",
 
-              height: 40,
+              height: 88,
               justifyContent: "space-around",
               borderTopLeftRadius: "10px",
               borderTopRightRadius: "10px",
@@ -1131,6 +1489,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
             <div
               style={{
                 width: 110,
+
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
@@ -1203,11 +1562,11 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               overflow: "hidden",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                          
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            {list.buying_date}
+                            {list.date}
                           </div>
                           <div
                             style={{
@@ -1215,12 +1574,12 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+           
                               transition: "all 0.3s ease-in-out",
                               overflow: "hidden",
                             }}
                           >
-                            {list.lime_var}
+                            {list.sim_var1}
                           </div>
                           <div
                             style={{
@@ -1228,11 +1587,11 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                       
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            {list.lime_imp}
+                            {list.sim_var1}
                           </div>
                           <div
                             style={{
@@ -1240,11 +1599,11 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+             
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            {list.cash}
+                            {list.avg_var1}
                           </div>
                           <div
                             style={{
@@ -1252,85 +1611,13 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                        
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            {list.all_stocks}
+                            {list.avg_var2}
                           </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.large_cap}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.esg}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.growth}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.value}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.mid_small}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.dividend}
-                          </div>
-
+                        
                         </Row>
                       );
                     })}

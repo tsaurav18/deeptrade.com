@@ -46,7 +46,7 @@ export const loginAPI = {
 };
 export const getDtData = {
   
-//LIME result
+//LIME Macro result
 async getLimeMacroResult(selectedDate) {
   let body = JSON.stringify({
     selectedDate:selectedDate,
@@ -87,6 +87,25 @@ async getLimeMacroResult(selectedDate) {
     let csrf = await instance.get("mobile/get_csrf/");
     return instance
       .post("dtenter/db_invest_cumpv/", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+
+  
+  async getDBInvestCurrentData(currentYear) {
+    let body = JSON.stringify({
+      year: currentYear
+    });
+    let csrf = await instance.get("mobile/get_csrf/");
+
+    return instance
+      .post(`dtenter/db_invest_current_signal/`, body, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRFToken": csrf.data["token"],
