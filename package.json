@@ -33,6 +33,7 @@
     "react-calendar": "^4.6.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^17.0.2",
+    "react-dropdown": "^1.11.0",
     "react-ga": "^3.3.0",
     "react-icons": "^4.11.0",
     "react-loader-spinner": "^5.4.5",
@@ -54,7 +55,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "up": "git add . && git commit -m 'add filtering' && git push origin master"
+    "up": "git add . && git commit -m 'implement dbinvest' && git push origin master"
   },
   "eslintConfig": {
     "extends": [

@@ -45,10 +45,27 @@ export const loginAPI = {
   },
 };
 export const getDtData = {
+
+  
+  async getDBChartData() {
+    let csrf = await instance.get("mobile/get_csrf/");
+    return instance
+      .post("dtenter/db_invest_cumpv/", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrf.data["token"],
+        },
+      })
+      .then((res) => {
+        return res;
+      });
+  },
+
   //DB 금융투자 시그널 불러오는 api
-  async getDBInvestData(company_name) {
+  async getDBInvestData(company_name, currentYear) {
     let body = JSON.stringify({
-      company:company_name
+      company:company_name,
+      year: currentYear
     });
     let csrf = await instance.get("mobile/get_csrf/");
 

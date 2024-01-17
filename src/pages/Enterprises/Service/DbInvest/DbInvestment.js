@@ -4,8 +4,15 @@ import Bell from "../../../../assets/icons/bell.png";
 import Logout from "../../../../assets/icons/logout.png";
 import Setting from "../../../../assets/icons/setting.png";
 import color from "../../../../style/color";
-import { Col, Row, ShadowCol, WhiteSpace } from "../../../../style/globalStyled";
+import {
+  Col,
+  Row,
+  ShadowCol,
+  WhiteSpace,
+} from "../../../../style/globalStyled";
 import "../EnterprisesService.css";
+import "./DbInvestment.css";
+import { CircularProgress } from "@mui/material";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { Oval } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,41 +27,150 @@ import Calendar from "react-calendar";
 import { resetDataState } from "../../../../redux/slices/dataSlice";
 import Modal from "react-modal";
 import classNames from "classnames";
+import Arrow from "../../../../assets/icons/arrow.png";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import { Bar, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import zoomPlugin from "chartjs-plugin-zoom";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  zoomPlugin
+);
+
+const LineChart = ({ data }) => {
+  let chart_data;
+
+  chart_data = {
+    labels: data.dates, // You can use either daily or weekly dates here
+    datasets: [
+      {
+        label: "DEM 적용 기술",
+        data: data.cum_pv,
+        borderColor: "rgb(255, 159, 64)",
+        backgroundColor: "rgba(255, 159, 64, 0.5)",
+        borderWidth: 1,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+      },
+      // {
+      //   label: "Market value",
+      //   data: dailyCashValues,
+      //   borderColor: "rgb(75, 192, 192)",
+      //   backgroundColor: "rgba(75, 192, 192, 0.5)",
+      //   borderWidth: 1,
+      //   fill: false,
+      //   pointLabelFontColor: "rgba(0, 0, 0, 0)",
+      // },
+
+      // Repeat the same structure for weekly data if needed
+    ],
+  };
+
+  const optionsChart = {
+    responsive: true,
+    plugins: {
+      zoom: {
+        pan: {
+          enabled: true,
+          mode: "x",
+        },
+        zoom: {
+          pinch: {
+            enabled: true, // Enable pinch zooming
+          },
+          wheel: {
+            enabled: true, // Enable wheel zooming
+          },
+          mode: "x",
+        },
+      },
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Trading Performance of Models",
+        fontSize: 20,
+      },
+    },
+  };
+
+  return (
+    <div className="chart-container" style={{ width: "100%" }}>
+      {chart_data != undefined && (
+        <Line data={chart_data} options={optionsChart} />
+      )}
+    </div>
+  );
+};
+
 function DbInvestment() {
-    const isPc = useMediaQuery({
-        query: "(min-width:1024px)",
-      });
-      const isTablet = useMediaQuery({
-        query: "(min-width:768px) and (max-width:1023px)",
-      });
-      const isMobile = useMediaQuery({
-        query: "(max-width:767px)",
-      });
-      const { responsiveValue } = useResponsive();
-      const [value, onChange] = useState(new Date());
-    
-    const [dbSignalData, setDbSignalData] = useState([])
-    const [loader, setLoader] = useState(false);
-    const [showCalendar, setShowCalendar] = useState(false);
-    const data_reducer = useSelector((state) => state.dataReducer);
-    const user_info_reducer = useSelector((state) => state.loginReducer);
-    const dateObjects = user_info_reducer.date_list.map(
-      (dateString) => new Date(dateString)
-    );
-    const [vaildSignalDateList, setVaildSignalDateList] = useState(dateObjects);
-    const [selectedDate, setSelectedDate] = useState(
-      vaildSignalDateList.slice(-1)[0]
-    );
-    const convertDate = () => {
-      const date = new Date(selectedDate);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-      const day = String(date.getDate()).padStart(2, "0");
-  
-      const formattedDate = `${year}-${month}-${day}`;
-      return formattedDate;
-    };
-    const [currentSelectedDate, setCurrentSelectedDate] = useState(convertDate());
+  const isPc = useMediaQuery({
+    query: "(min-width:1024px)",
+  });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(max-width:767px)",
+  });
+  const { responsiveValue } = useResponsive();
+
+  const [value, onChange] = useState(new Date());
+  const [limeResultLoader, setLimeResultLoader] = useState(false);
+  const [limeResult, setLimeResult] = useState([]);
+  const [dbChartData, setDbChartData] = useState([]);
+  const [chartDataLoader, setChartDataLoader] = useState(false);
+  const [dbSignalData, setDbSignalData] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const data_reducer = useSelector((state) => state.dataReducer);
+  const user_info_reducer = useSelector((state) => state.loginReducer);
+  const dateObjects = user_info_reducer.date_list.map(
+    (dateString) => new Date(dateString)
+  );
+  const [vaildSignalDateList, setVaildSignalDateList] = useState(dateObjects);
+  const [selectedDate, setSelectedDate] = useState(
+    vaildSignalDateList.slice(-1)[0]
+  );
+  const [currentYear, setCurrentYear] = useState(() => {
+    const currentDate = new Date();
+    const _currentYear = currentDate.getFullYear();
+    return String(_currentYear);
+  });
+  const [open, setOpen] = useState(false);
+  const options = [
+    { value: "2024", label: "최근 1년" },
+    { value: "2023", label: "2023" },
+    { value: "2022", label: "2022" },
+  ];
+
+  const convertDate = () => {
+    const date = new Date(selectedDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
+  };
+  const [currentSelectedDate, setCurrentSelectedDate] = useState(convertDate());
   //Calendar logic
 
   function closeModal() {
@@ -72,275 +188,547 @@ function DbInvestment() {
       (d) => d.toDateString() === date.toDateString()
     );
   };
-    console.log("data_reducer", data_reducer);
-    const handleDateSelection = (date) => {
-      setSelectedDate(date);
-      const _date = new Date(date);
-      const year = _date.getFullYear();
-      const month = String(_date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-      const day = String(_date.getDate()).padStart(2, "0");
-  
-      const formattedDate = `${year}-${month}-${day}`;
-      setCurrentSelectedDate(formattedDate);
-      setShowCalendar(false);
-      resetDataState();
+  // console.log("data_reducer", data_reducer);
+  const handleDateSelection = (date) => {
+    setSelectedDate(date);
+    const _date = new Date(date);
+    const year = _date.getFullYear();
+    const month = String(_date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
+    const day = String(_date.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    setCurrentSelectedDate(formattedDate);
+    setShowCalendar(false);
+    resetDataState();
     //   fetchInfo(formattedDate);
-    };
-    const getDbInvestmentSignal =async()=>{
-        setLoader(true)
-        try {
-          const res = await getDtData.getDBInvestData(user_info_reducer.company_name)
-          if(res.status===200){
-            console.log(res.data)
-            setDbSignalData(res.data)
-          }else{
-            setDbSignalData([])
-            console.log("res.status",res.status)
-          }
-        } catch (error) {
-          toast("서버 접속 에러 관리자에게 문의해주세요.");
-        }
-        setLoader(false)
+  };
+
+  const _onSelect = (event) => {
+    setCurrentYear(event.value);
+  };
+
+
+
+  const getChartData = async () => {
+    setChartDataLoader(true);
+    try {
+      const res = await getDtData.getDBChartData();
+      if (res.status === 200) {
+        console.log("getChartData data", res.data);
+        setDbChartData(res.data);
+      } else {
+        setDbChartData([]);
+        console.log("res.status", res.status);
       }
-    useEffect(() => {
-      let isComponentRender = true
-      if(isComponentRender===true){
-        getDbInvestmentSignal()
+    } catch (error) {
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
+    }
+    setChartDataLoader(false);
+  };
+  useEffect(() => {
+    let isComponentRender = true;
+    if (isComponentRender === true) {
+      getChartData();
+    }
+    return () => {
+      isComponentRender=false
+    }
+  }, []);
+  const [selectedStockDate, setSelectedStockDate] = useState("")
+  const getDbInvestmentSignal = async () => {
+    setLoader(true);
+    try {
+    
+      const res = await getDtData.getDBInvestData(
+        user_info_reducer.company_name,
+        currentYear
+      );
+      if (res.status === 200) {
+        console.log("getDbInvestmentSignal res.data",res.data[0]["buying_date"])
+        const first_row = res.data[0]["buying_date"]
+     
+        setDbSignalData(res.data);
+        setSelectedStockDate(first_row)
+      } else {
+        setDbSignalData([]);
+        console.log(" getDbInvestmentSignal res.status", res.status);
       }
-    }, [])
-  const customStyles = isPc
-  ? {
-      content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-76%, -92%)",
-        background: "white", // Set the background color
-        border: "1px solid #ccc", // Add a border
-        borderRadius: "5px", // Add rounded corners
-        padding: "10px", // Add padding
-        maxWidth: "500px", // Set a maximum width
-        width: "350px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
-      },
+    } catch (error) {
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
-  : isTablet
-  ? {
-      content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-65%, -109%)",
-        background: "white", // Set the background color
-        border: "1px solid #ccc", // Add a border
-        borderRadius: "5px", // Add rounded corners
-        padding: "10px", // Add padding
-        maxWidth: "500px", // Set a maximum width
-        width: "390px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
-      },
+    setLoader(false);
+  };
+  useEffect(() => {
+    let isComponentRender = true;
+    if (isComponentRender === true) {
+      getDbInvestmentSignal();
     }
-  : {
-      content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -69%)",
-        background: "white", // Set the background color
-        border: "1px solid #ccc", // Add a border
-        borderRadius: "5px", // Add rounded corners
-        padding: "10px", // Add padding
-        maxWidth: "500px", // Set a maximum width
-        width: "356px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)", // Add a
-      },
-    };
+    return () => {
+      isComponentRender=false
+    }
+  }, [currentYear]);
+
+
+
+console.log("selectedStockDate", selectedStockDate)
+  const fetchLimeResult = async () => {
+    console.log("lime result triggered selectedStockDate is" ,selectedStockDate)
+    try {
+      setLimeResultLoader(true);
+
+      const res = await getDtData.getLimeResult(selectedStockDate);
+   
+      if (res.status === 200) {
+        console.log("fetchLimeResult data", res.data);
+        setLimeResult(res.data);
+      } else {
+        setLimeResult([]);
+        console.log(" Lime result res.status", res.status);
+      }
+    } catch (error) {
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
+    }
+  };
+
+  useEffect(() => {
+    let isComponentRender = true;
+    if (isComponentRender === true) {
+      fetchLimeResult();
+    }
+  
+    return () => {
+      isComponentRender=false
+    }
+  }, [selectedStockDate])
+  
+
   return (
-    <Row style={{
-        flexDirection:"column",
-        justifyContent: "flex-start",
-        alignItems: "center",
-      }}> 
-<Row
-    style={{
-      height: 50,
-      justifyContent: "flex-start",
-      alignItems: "center",
-      paddingBottom:10
-    }}
-  >
-    <div className="enterprise_content_right_right_calendar_pc">
-      <div
-        onClick={() => setShowCalendar(!showCalendar)}
-        className="calendar_icon"
-      >
-        <AiOutlineCalendar size={25} />
-        {showCalendar ? convertDate() : convertDate()}
-      </div>
-      <Modal
-        isOpen={showCalendar}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
-        <Calendar
-          calendarType="US"
-          locale="ko"
-          defaultActiveStartDate={selectedDate}
-          onClickDay={(date) => handleDateSelection(date)}
-          onChange={onChange}
-          value={value}
-          minDate={minDate}
-          maxDate={maxDate}
-          tileClassName={({ date, view }) => {
-            const isHovered = view === "month" || view === "year"; // Define hoverable views (month/year)
-
-            return classNames({
-              "selected-date":
-                date.toDateString() === selectedDate.toDateString(),
-            });
-          }}
-          tileDisabled={({ date }) => isDateDisabled(date)}
-        />
-      </Modal>
-    </div>
-  </Row>
-
-
-        <Col
+    <>
+      <ShadowCol
         style={{
-          flex: 1,
-          alignItems: "flex-start",
-          justifyContent: "flex-start",
-          fontSize: responsiveValue(16, 14, 12),
+          boxSizing: "border-box",
+          height: "auto",
+          transition: "all 0.3s ease-in-out",
+          // overflowY: "scroll",
+          overflow: "hidden",
+          textAlign: "center",
+          padding: 20,
         }}
       >
         <Row
           style={{
+            height: 50,
+            justifyContent: "flex-start",
             alignItems: "center",
-
-            height: 40,
-            justifyContent: "space-around",
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "10px",
+            paddingBottom: 23,
           }}
         >
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-             Date
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            Cash
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            KODEX <br/> 코스피
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-       KODEX <br/>인버스
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-           KODEX <br/>코스피100
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            KODEX200<br/> 중소형
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            KOSEF<br/>고배당
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            TIGER<br/> 배당성장
-
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            ESG
-          </div>
-          <div
-            style={{
-              width: 110,
-              display: "table-cell",
-              fontWeight: 700,
-              transition: "all 0.3s ease-in-out",
-            }}
-          >
-            투자 <br/>수익률 
+          <div className="enterprise_dbinvestment_dropdown">
+            <Dropdown
+              options={options}
+              onChange={_onSelect}
+              value={options[0].label}
+              placeholder="year"
+            />
           </div>
         </Row>
-        <Row
-          style={{
-            flexDirection: "column",
-            height: "auto",
 
+        <Col
+          style={{
+            flex: 1,
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            // fontSize: responsiveValue(16, 14, 12),
+            boxSizing: "border-box",
+            height: "auto",
+            transition: "all 0.3s ease-in-out",
             // overflowY: "scroll",
+            overflow: "hidden",
+            textAlign: "center",
           }}
         >
-          {loader ? (
+          <Row
+            style={{
+              alignItems: "center",
+
+              height: 40,
+              justifyContent: "space-around",
+              borderTopLeftRadius: "10px",
+              borderTopRightRadius: "10px",
+            }}
+          >
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              Buying <br /> Date
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              Cash
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX <br /> 코스피
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX <br />
+              코스피100
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX200 <br />
+              ESG
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX <br /> Fn성장
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX
+              <br />
+              배당가치
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX200
+              <br /> 중소형
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              KODEX
+              <br /> 고배당
+            </div>
+            <div
+              style={{
+                width: 110,
+                display: "table-cell",
+                fontWeight: 700,
+                transition: "all 0.3s ease-in-out",
+              }}
+            >
+              투자 <br />
+              수익률
+            </div>
+          </Row>
+          <Row
+            style={{
+              flexDirection: "column",
+              height: "auto",
+
+              // overflowY: "scroll",
+            }}
+          >
+            {loader ? (
+              <Oval
+                height={50}
+                width={50}
+                color="#4fa94d"
+                wrapperStyle={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
+            ) : (
+              <>
+                {dbSignalData &&
+                  dbSignalData
+                    .slice(0, open ? dbSignalData.length : 5)
+                    .map((list, index) => {
+                      return (
+                        <Row
+                        onClick={() => {
+                          setSelectedStockDate(list.buying_date);
+                        }}
+                        style={{
+                          backgroundColor:
+                            selectedStockDate === list.buying_date
+                              ? "#f3f3f3"
+                              : "",
+                          height: 50,
+                          justifyContent: "space-around",
+                          alignItems: "center",
+                          fontSize: responsiveValue(16, 14, 12),
+                        }}
+                        >
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              overflow: "hidden",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.buying_date}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {list.cash}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.all_stocks}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.large_cap}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.esg}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.growth}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.value}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.mid_small}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.dividend}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
+                              cursor: "pointer",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.pv_return}
+                          </div>
+                        </Row>
+                      );
+                    })}
+              </>
+            )}
+          </Row>
+        </Col>
+        {dbSignalData.length > 5 && (
+          <a
+            onClick={() => {
+              setOpen((prev) => !prev);
+            }}
+            style={{
+              cursor: "pointer",
+              transform: `rotate(${open ? 180 : 0}deg)`,
+              // margin: 10,
+            }}
+          >
+            <img src={Arrow} style={{ width: 15, height: 15 }} />
+          </a>
+        )}
+      </ShadowCol>
+      <WhiteSpace height={25} />
+
+
+
+
+
+      {/* section 2  Lime 결과 */}
+
+      {(dbSignalData && selectedStockDate )&& (
+        <>
+          <Col
+            style={{
+              // width: 840,
+              justifyContent: "flex-start",
+              height: "auto",
+              paddingBottom: 20,
+            }}
+          >
+            <ShadowCol
+              style={{
+                // width: 840,
+                height: 325,
+                padding: 10,
+                paddingTop: 15,
+              }}
+            >
+              {limeResultLoader ? (
+                <Col>
+                  <CircularProgress />
+                </Col>
+              ) : limeResult.length > 0 ? (
+               <Row>hello lime </Row>
+              ) : (
+                <div
+                  style={{
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    color: color.DarkBlue,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                데이터를 불러오지 못했습니다.
+                </div>
+              )}
+            </ShadowCol>
+            <WhiteSpace height={30} />
+          
+
+            
+           
+          </Col>
+        </>
+      )}
+
+      {/* Section 3 차트 그리기   */}
+      <Col
+        style={{
+          // width: 840,
+          justifyContent: "flex-start",
+          paddingBottom: 20,
+          height: "auto",
+        }}
+      >
+        <ShadowCol
+          style={{
+            // width: 840,
+            height: "auto",
+            padding: 10,
+            paddingTop: 15,
+            justifyContent: "flex-start",
+          }}
+        >
+          {chartDataLoader ? (
             <Oval
               height={50}
               width={50}
@@ -356,152 +744,31 @@ function DbInvestment() {
               strokeWidth={2}
               strokeWidthSecondary={2}
             />
-          ) : (
+          ) : dbChartData ? (
             <>
-              {dbSignalData &&
-                dbSignalData
-                  
-                  .map((list, index) => {
-                    return (
-                      <Row
-                        style={{
-                          height: 50,
-                          justifyContent: "space-around",
-                          alignItems: "center",
-
-                          // overflowY: "scroll",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            overflow: "hidden",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.date}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {list.cash}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.kodex_inbox}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.all_stocks}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.large_cap}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.esg}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.up_growth}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.small_size}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.dividents}
-                        </div>
-                        <div
-                          style={{
-                            width: 110,
-                            height: "auto",
-                            display: "table-cell",
-                            justifyContent: "space-around",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease-in-out",
-                          }}
-                        >
-                          {list.return_value}
-                        </div>
-                      </Row>
-                    );
-                  })}
+              <LineChart data={dbChartData} />
+              <Row>
+                EMP 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교
+                <br />
+              </Row>
             </>
+          ) : (
+            <div
+              style={{
+                fontSize: 14,
+                fontWeight: "bold",
+                color: color.DarkBlue,
+                width: "100%",
+                textAlign: "center",
+              }}
+            >
+              차트 데이터가 없습니다.
+            </div>
           )}
-        </Row>
-      </Col></Row>
-  )
+        </ShadowCol>
+      </Col>
+    </>
+  );
 }
 
-export default DbInvestment
+export default DbInvestment;

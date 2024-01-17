@@ -72,7 +72,7 @@ useEffect(() => {
 
 
 
-console.log("user_info_reducer",user_info_reducer)
+// console.log("user_info_reducer",user_info_reducer)
   return (
     <Col
       style={{
@@ -124,6 +124,7 @@ console.log("user_info_reducer",user_info_reducer)
           width: "100%",
           maxWidth: 1240,
           alignItems: "flex-start",
+          // height:"100vh"
         }}
       >
         <Col
@@ -138,17 +139,11 @@ console.log("user_info_reducer",user_info_reducer)
             paddingLeft: responsiveValue(0, 20, 20),
           }}
         > 
-        {user_info_reducer.company_name ==="DB"?   <ShadowCol
-            style={{
-              width: responsiveValue(1020, 760, 391),
-              height: "100vh",
-              padding: 20,
-              justifyContent: "flex-start",
-            }}
-          >
+
+        {user_info_reducer.company_name ==="DB"?   
      
           <DbInvestment/>
-          </ShadowCol>: <Routes>
+          : <Routes>
           <Route
             path=""
             exact={true}
@@ -163,7 +158,7 @@ console.log("user_info_reducer",user_info_reducer)
           <ShadowCol
             style={{
               width: 190,
-              height: 820,
+              height:user_info_reducer.company_usrnm==="dbinvestment"?"100vh": 820,
               padding: 20,
               justifyContent: "flex-start",
             }}
@@ -192,9 +187,9 @@ console.log("user_info_reducer",user_info_reducer)
                 }}
               >
                 <img
-                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:104, width: 118 }}
+                style={{ height: user_info_reducer.company_usrnm==="crescendo"?44:user_info_reducer.company_usrnm==="dbinvestment"?76:104, width: 118 }}
                 src={
-                  user_info_reducer.company_usrnm=="deeptrade"?"/assets/deeptrade_d_logo.png":user_info_reducer.company_usrnm==="koreainvestment"?'/assets/koreainvestment_logo.png':user_info_reducer.company_usrnm==="crescendo"?"/assets/crescendo_logo.png":"/assets/white_logo.png"
+                  user_info_reducer.company_usrnm=="deeptrade"?"/assets/deeptrade_d_logo.png":user_info_reducer.company_usrnm==="koreainvestment"?'/assets/koreainvestment_logo.png':user_info_reducer.company_usrnm==="crescendo"?"/assets/crescendo_logo.png":user_info_reducer.company_usrnm==="dbinvestment"?"/assets/dte/db_investment_logo.png":"/assets/white_logo.png"
                 }
                 alt="기업로고"
               />
@@ -217,10 +212,10 @@ console.log("user_info_reducer",user_info_reducer)
               {user_info_reducer.company_usrnm == "deeptrade"
                 ? "딥트레이드테크놀로지스"
                 : user_info_reducer.company_usrnm == "koreainvestment"
-                  ? "한국투자증권"
+                  ? "한국투자 신탁운용"
                   : user_info_reducer.company_usrnm == "crescendo"
                     ? "크레센도"
-                    : ""}
+                    : user_info_reducer.company_usrnm==="dbinvestment"?"DB 금융투자":''}
             </div>
             <WhiteSpace height={48} />
             {/* <Row style={{ height: "auto" }}>
