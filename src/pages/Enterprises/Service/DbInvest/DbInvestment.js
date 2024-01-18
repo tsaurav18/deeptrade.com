@@ -69,7 +69,7 @@ const LineChart = ({ data }) => {
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
       },
       {
-        label: "Market value",
+        label: "코스피 누적 수익률",
         data: data.market_cum_pv,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.5)",
@@ -118,6 +118,24 @@ const LineChart = ({ data }) => {
       )}
     </div>
   );
+};
+const tableStyle = {
+  // borderCollapse: 'collapse',
+  width: '100%',
+  // border: '1px solid #ddd', // Add border to the table
+};
+
+const thStyle = {
+  border: '1px solid #ddd', // Add border to the table header cells
+  padding: '8px',
+  textAlign: 'center',
+};
+
+const tdStyle = {
+  // border: '1px solid #ddd', // Add border to the table data cells
+  padding: '8px',
+  textAlign: 'center',
+  borderBottom: 'none',
 };
 
 function DbInvestment() {
@@ -733,7 +751,7 @@ function DbInvestment() {
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            {list.pv_return}
+                            {list.pv_return}%
                           </div>
                         </Row>
                       );
@@ -1189,17 +1207,17 @@ function DbInvestment() {
                     textAlign: "center",
                   }}
                 >
-                   {/* <table>
+                   <table  style={tableStyle}>
       <thead>
-        <tr>
+        <tr >
           <th rowSpan={2}>날짜</th>
           <th rowSpan={2}>중요 변수</th>
-          <th rowSpan={2}>변수 중요도</th>
+          <th  rowSpan={2}>변수 중요도</th>
           <th colSpan={8}>중요 변수 제거 결과</th>
         
          
         </tr>
-        <tr ><th>Cash</th>
+        <tr ><th >Cash</th>
           <th>전체 주식</th>
           <th>대형주</th>
           <th>ESG</th>
@@ -1209,27 +1227,28 @@ function DbInvestment() {
           <th>배당</th></tr>
       </thead>
       <tbody>
-        {limeResult.map((list, index) => {
+        {(limeResult &&
+                      limeResult.length > 0) &&limeResult.map((list, index) => {
           
-        return(  <tr  key={index}>
-          <td>{list.date}</td>
-          <td>{list.lime_var}</td>
-          <td>{list.lime_imp}</td>
-          <td>{list.cash}</td>
-          <td>{list.all_stocks}</td>
-          <td>{list.large_cap}</td>
-          <td> {list.esg}</td>
-          <td> {list.growth}</td>
-          <td>{list.value}</td>
-          <td> {list.mid_small}</td>
-          <td>{list.dividend}</td>
+        return(  <tr key={index}>
+          <td style={tdStyle}>{list.date}</td>
+          <td style={tdStyle}>{list.lime_var}</td>
+          <td style={tdStyle}>{list.lime_imp}</td>
+          <td style={tdStyle}>{list.cash}</td>
+          <td style={tdStyle}>{list.all_stocks}</td>
+          <td style={tdStyle}>{list.large_cap}</td>
+          <td style={tdStyle}>{list.esg}</td>
+          <td style={tdStyle}>{list.growth}</td>
+          <td style={tdStyle}>{list.value}</td>
+          <td style={tdStyle}>{list.mid_small}</td>
+          <td style={tdStyle}>{list.dividend}</td>
         </tr>)
       })}
       
 
       </tbody>
-    </table> */}
-                  <Row
+    </table>
+                  {/* <Row
                     style={{
                       alignItems: "center",
 
@@ -1239,18 +1258,6 @@ function DbInvestment() {
                       borderTopRightRadius: "10px",
                     }}
                   >
-                    
-
-
-
-
-                    
-
-
-
-
-
-
 
                     <div
                       style={{
@@ -1368,8 +1375,6 @@ function DbInvestment() {
                     style={{
                       flexDirection: "column",
                       height: "auto",
-
-                      // overflowY: "scroll",
                     }}
                   >
                     {limeResult &&
@@ -1522,7 +1527,7 @@ function DbInvestment() {
                           </Row>
                         );
                       })}
-                  </Row>
+                  </Row> */}
                 </Col>
               ) : (
                 <div
@@ -1644,7 +1649,7 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      날짜
+                      구간
                     </div>
                     <div
                       style={{
