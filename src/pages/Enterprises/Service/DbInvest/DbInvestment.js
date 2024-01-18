@@ -60,7 +60,7 @@ const LineChart = ({ data }) => {
     labels: data.dates, // You can use either daily or weekly dates here
     datasets: [
       {
-        label: "DeeptradeTechnologies EMP Management 적용 기술",
+        label: "DEM 적용 기술",
         data: data.cum_pv,
         borderColor: "rgb(255, 159, 64)",
         backgroundColor: "rgba(255, 159, 64, 0.5)",
@@ -1199,6 +1199,7 @@ function DbInvestment() {
                       borderTopRightRadius: "10px",
                     }}
                   >
+                    
                     <div
                       style={{
                         width: 110,
@@ -1578,7 +1579,7 @@ function DbInvestment() {
                       alignItems: "center",
 
                       height: 88,
-                      justifyContent: "space-around",
+                      justifyContent: "space-between",
                       borderTopLeftRadius: "10px",
                       borderTopRightRadius: "10px",
                     }}
@@ -1658,9 +1659,9 @@ function DbInvestment() {
                         return (
                           <Row
                             style={{
-                              height: 50,
-                              justifyContent: "space-around",
                               alignItems: "center",
+                              height: "auto",
+                              justifyContent: "space-between",
                               fontSize: responsiveValue(16, 14, 12),
                             }}
                           >
@@ -1670,7 +1671,7 @@ function DbInvestment() {
                                 height: "auto",
                                 overflow: "hidden",
                                 display: "table-cell",
-                                justifyContent: "space-around",
+                                justifyContent: "space-between",
 
                                 transition: "all 0.3s ease-in-out",
                               }}
@@ -1682,7 +1683,7 @@ function DbInvestment() {
                                 width: 110,
                                 height: "auto",
                                 display: "table-cell",
-                                justifyContent: "space-around",
+                                         justifyContent: "space-between",
 
                                 transition: "all 0.3s ease-in-out",
                                 overflow: "hidden",
@@ -1695,7 +1696,7 @@ function DbInvestment() {
                                 width: 110,
                                 height: "auto",
                                 display: "table-cell",
-                                justifyContent: "space-around",
+                                justifyContent: "space-between",
 
                                 transition: "all 0.3s ease-in-out",
                               }}
@@ -1707,7 +1708,7 @@ function DbInvestment() {
                                 width: 110,
                                 height: "auto",
                                 display: "table-cell",
-                                justifyContent: "space-around",
+                                justifyContent: "space-between",
 
                                 transition: "all 0.3s ease-in-out",
                               }}
@@ -1719,7 +1720,7 @@ function DbInvestment() {
                                 width: 110,
                                 height: "auto",
                                 display: "table-cell",
-                                justifyContent: "space-around",
+                                justifyContent: "space-between",
 
                                 transition: "all 0.3s ease-in-out",
                               }}
@@ -1788,8 +1789,15 @@ function DbInvestment() {
           ) : dbChartData ? (
             <>
               <LineChart data={dbChartData} />
-              <Row>
-                EMP 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교
+              <Row >
+             <p  style={{
+                fontSize: 16,
+                fontWeight: "bold",
+       
+                marginTop:"15px",
+                marginBottom:"15px",
+                textAlign: "center",
+              }}> DeeptradeTechnologies EMP Management (DEM) 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교</p>
                 <br />
               </Row>
             </>
