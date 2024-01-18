@@ -60,7 +60,7 @@ const LineChart = ({ data }) => {
     labels: data.dates, // You can use either daily or weekly dates here
     datasets: [
       {
-        label: "DEM 적용 기술",
+        label: "DeeptradeTechnologies EMP Management 적용 기술",
         data: data.cum_pv,
         borderColor: "rgb(255, 159, 64)",
         backgroundColor: "rgba(255, 159, 64, 0.5)",
@@ -249,10 +249,10 @@ function DbInvestment() {
       );
       if (res.status === 200) {
         console.log("getDbInvestmentSignal res.data", res.data);
-        const first_row = res.data[0]["buying_date"];
+        // const first_row = res.data[0]["buying_date"];
 
         setDbSignalData(res.data);
-        setSelectedStockDate(first_row);
+       
       } else {
         setDbSignalData([]);
         console.log(" getDbInvestmentSignal res.status", res.status);
@@ -351,8 +351,11 @@ function DbInvestment() {
       const res = await getDtData.getDBInvestCurrentData(currentYear);
       if (res.status === 200) {
         console.log("getDbInvestmentCurrentSignal res.data", res.data);
+        const first_row = res.data.data[0]["buying_date"];
+   
         setCurrentEMPTextDate(res.data.date);
         setDbSignalCurrentData(res.data.data);
+        setSelectedStockDate(first_row);
       } else {
         setDbSignalCurrentData([]);
         console.log(" getDbInvestmentCurrentSignal res.status", res.status);
@@ -396,23 +399,30 @@ function DbInvestment() {
           // overflowY: "scroll",
           overflow: "hidden",
           textAlign: "center",
-          padding: 20,
+          padding: "15px 10px"
         }}
       >
           <Row
         style={{
           alignItems: "flex-start",
-          fontSize: "18px",
-
-          justifyContent: "flex-start",
+  
+          justifyContent: "space-between",
           marginBottom: "20px",
-          fontWeight: "500",
+         
 
         }}
       >
-        <p style={{fontSize: "18px", fontWeight:"550"}}><span style={{color:"teal"}}>{pastEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
+        <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}><span style={{color:"#990000"}}>{pastEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
+        <div className="enterprise_dbinvestment_dropdown">
+            <Dropdown
+              options={options}
+              onChange={_onSelect}
+              value={options[0].label}
+              placeholder="year"
+            />
+          </div>
       </Row>
-        <Row
+        {/* <Row
           style={{
             height: 50,
             justifyContent: "flex-end",
@@ -428,7 +438,7 @@ function DbInvestment() {
               placeholder="year"
             />
           </div>
-        </Row>
+        </Row> */}
 
         <Col
           style={{
@@ -771,7 +781,7 @@ function DbInvestment() {
           // overflowY: "scroll",
           overflow: "hidden",
           textAlign: "center",
-          padding: 20,
+          padding: "15px 10px"
         }}
       >
          <Row
@@ -784,7 +794,7 @@ function DbInvestment() {
           fontWeight: "500",
         }}
       >
-       <p style={{fontSize: "18px", fontWeight:"550"}}> <span style={{color:"teal"}}> {currentEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
+       <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}> <span style={{color:"#990000"}}> {currentEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
       </Row>
         <Col
           style={{
@@ -1092,8 +1102,8 @@ function DbInvestment() {
 
       {/* section 3  Lime 결과 */}
 
-      {dbSignalData && selectedStockDate && (
-        <>
+   
+     
           <Col
             style={{
               // width: 840,
@@ -1118,12 +1128,17 @@ function DbInvestment() {
            
             <ShadowCol
               style={{
-                // width: 840,
+                boxSizing: "border-box",
                 height: "auto",
-                padding: 10,
-                paddingTop: 15,
+                transition: "all 0.3s ease-in-out",
+                // overflowY: "scroll",
+                overflow: "hidden",
+                textAlign: "center",
+                padding: "15px 10px"
               }}
             >
+              {limeResult &&(
+                <>
                <Row
               style={{
                 alignItems: "flex-start",
@@ -1134,19 +1149,31 @@ function DbInvestment() {
                 fontWeight: "500",
               }}
             >
-             <p style={{fontSize: "18px", fontWeight:"550"}}> 복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
+             <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}>복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
               기술에 LIME을 적용한 결과는 다음과 같습니다. 단, 각 중요 변수는
               딥러닝에 대한 선형 근사시에 중요한 변수이기 때문에 딥러닝이 해당
               변수를 중요하게 고려했다고 직접적으로 중요하다고 해석하는 것에는
               주의가 필요합니다. LIME을 통해 분석된 중요 변수는{" "}
-              <span style={{color:"red"}}>{limeResultVar[0]} </span>,  <span style={{color:"blue"}}>{limeResultVar[1]}</span>이며 각각  <span style={{color:"red"}}>{limeResultImp[0]}</span>
-              , <span style={{color:"blue"}}>{limeResultImp[1]}</span>의 중요도를 가집니다. 아래의 표는 비교를 위한
+              <span style={{color:"#990000"}}>{limeResultVar[0]} </span>,  <span style={{color:"#990000"}}>{limeResultVar[1]}</span>이며 각각  <span style={{color:"#990000"}}>{limeResultImp[0]}</span>
+              , <span style={{color:"#990000"}}>{limeResultImp[1]}</span>의 중요도를 가집니다. 아래의 표는 비교를 위한
               각각의 중요 변수들에 대한 제거 실험입니다.</p>
             </Row>
               {limeResultLoader ? (
-                <Col>
-                  <CircularProgress />
-                </Col>
+                <Oval
+                height={50}
+                width={50}
+                color="#4fa94d"
+                wrapperStyle={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
               ) : limeResult.length > 0 ? (
                 <Col
                   style={{
@@ -1457,13 +1484,15 @@ function DbInvestment() {
                   데이터를 불러오지 못했습니다.
                 </div>
               )}
+              </>)}
             </ShadowCol>
+            </Col>
             <WhiteSpace height={30} />
-          </Col>
-        </>
-      )}
-      {/* section 3  과거  비교  */}
-      {dbSignalData && selectedStockDate && (
+     
+    
+
+      {/* section 4  과거  비교  */}
+    
         <>
           <Col
             style={{
@@ -1488,14 +1517,18 @@ function DbInvestment() {
 
           
             <ShadowCol
-              style={{
-                // width: 840,
+               style={{
+                boxSizing: "border-box",
                 height: "auto",
-                padding: 10,
-                paddingTop: 15,
+                transition: "all 0.3s ease-in-out",
+                // overflowY: "scroll",
+                overflow: "hidden",
+                textAlign: "center",
+                padding: "15px 10px"
               }}
             >
-                <Row
+                {limeMacroResult  && (
+                  <>                <Row
               style={{
                 alignItems: "flex-start",
                 fontSize: "18px",
@@ -1505,14 +1538,26 @@ function DbInvestment() {
                 fontWeight: "500",
               }}
             >
-            <p style={{fontSize: "18px", fontWeight:"550"}}>  거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
-              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"teal"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>였습니다. 또한 지난 6개월 동안 평균적으로
-              중요했던 변수는 <span style={{color:"teal"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
+            <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
+              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>였습니다. 또한 지난 6개월 동안 평균적으로
+              중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
             </Row>
               {limeMacroResultLoader ? (
-                <Col>
-                  <CircularProgress />
-                </Col>
+                <Oval
+                height={50}
+                width={50}
+                color="#4fa94d"
+                wrapperStyle={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+              />
               ) : limeMacroResult.length > 0 ? (
                 <Col
                   style={{
@@ -1557,8 +1602,9 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      유사한 경제 <br />
-                      상황에서 중요했던 변수 1
+                      과거 시점 
+                <br />
+                      중요 변수 1
                     </div>
                     <div
                       style={{
@@ -1568,8 +1614,9 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      유사한 경제 <br />
-                      상황에서 중요했던 변수 2
+                      과거 시점 
+                <br />
+                      중요 변수 2
                     </div>
 
                     <div
@@ -1580,8 +1627,9 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      평균적으로 <br />
-                      중요했던 변수 1
+                      평균 중요
+                  <br />
+                  변수 1
                     </div>
                     <div
                       style={{
@@ -1591,8 +1639,9 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      평균적으로 <br />
-                      중요했던 변수 2
+                      평균 중요
+                       <br />
+                       변수 2
                     </div>
                   </Row>
                   <Row
@@ -1695,11 +1744,13 @@ function DbInvestment() {
                   데이터를 불러오지 못했습니다.
                 </div>
               )}
-            </ShadowCol>
+            </>
+             )}
+               </ShadowCol>
             <WhiteSpace height={30} />
           </Col>
         </>
-      )}
+     
 
       {/* Section 4 차트 그리기   */}
       <Col
@@ -1714,8 +1765,7 @@ function DbInvestment() {
           style={{
             // width: 840,
             height: "auto",
-            padding: 10,
-            paddingTop: 15,
+            padding: 15,
             justifyContent: "flex-start",
           }}
         >
