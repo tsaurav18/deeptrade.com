@@ -68,15 +68,15 @@ const LineChart = ({ data }) => {
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
       },
-      // {
-      //   label: "Market value",
-      //   data: dailyCashValues,
-      //   borderColor: "rgb(75, 192, 192)",
-      //   backgroundColor: "rgba(75, 192, 192, 0.5)",
-      //   borderWidth: 1,
-      //   fill: false,
-      //   pointLabelFontColor: "rgba(0, 0, 0, 0)",
-      // },
+      {
+        label: "Market value",
+        data: data.market_cum_pv,
+        borderColor: "rgb(75, 192, 192)",
+        backgroundColor: "rgba(75, 192, 192, 0.5)",
+        borderWidth: 1,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+      },
 
       // Repeat the same structure for weekly data if needed
     ],
@@ -1189,6 +1189,46 @@ function DbInvestment() {
                     textAlign: "center",
                   }}
                 >
+                   {/* <table>
+      <thead>
+        <tr>
+          <th rowSpan={2}>날짜</th>
+          <th rowSpan={2}>중요 변수</th>
+          <th rowSpan={2}>변수 중요도</th>
+          <th colSpan={8}>중요 변수 제거 결과</th>
+        
+         
+        </tr>
+        <tr ><th>Cash</th>
+          <th>전체 주식</th>
+          <th>대형주</th>
+          <th>ESG</th>
+          <th>성장</th>
+          <th>가치</th>
+          <th>중소형</th>
+          <th>배당</th></tr>
+      </thead>
+      <tbody>
+        {limeResult.map((list, index) => {
+          
+        return(  <tr  key={index}>
+          <td>{list.date}</td>
+          <td>{list.lime_var}</td>
+          <td>{list.lime_imp}</td>
+          <td>{list.cash}</td>
+          <td>{list.all_stocks}</td>
+          <td>{list.large_cap}</td>
+          <td> {list.esg}</td>
+          <td> {list.growth}</td>
+          <td>{list.value}</td>
+          <td> {list.mid_small}</td>
+          <td>{list.dividend}</td>
+        </tr>)
+      })}
+      
+
+      </tbody>
+    </table> */}
                   <Row
                     style={{
                       alignItems: "center",
@@ -1200,6 +1240,18 @@ function DbInvestment() {
                     }}
                   >
                     
+
+
+
+
+                    
+
+
+
+
+
+
+
                     <div
                       style={{
                         width: 110,
