@@ -1227,7 +1227,7 @@ function DbInvestment() {
                         transition: "all 0.3s ease-in-out",
                       }}
                     >
-                      중요 변수 <br /> 점수
+                      변수 중요도
                     </div>
 
                     <div
