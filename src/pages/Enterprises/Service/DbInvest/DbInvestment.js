@@ -130,18 +130,28 @@ function DbInvestment() {
   const isMobile = useMediaQuery({
     query: "(max-width:767px)",
   });
+  const options = [
+    { value: "2024", label: "최근 1년" },
+    { value: "2023", label: "2023" },
+    { value: "2022", label: "2022" },
+  ];
   const { responsiveValue } = useResponsive();
-
+  const [pastEMPTextDate, setPastEMPTextDate] = useState(options[0].label);
+  const [currentEMPTextDate, setCurrentEMPTextDate] = useState("");
+  const [limeResultVar, setLimeResultVar] = useState([]);
+  const [limeResultImp, setLimeResultImp] = useState([]);
+  const [limeMacroAvgVar, setLimeMacroAvgVar] = useState([]);
+  const [limeMacroSimVar, setLimeMacroSimVar] = useState([]);
   const [value, onChange] = useState(new Date());
   const [limeResultLoader, setLimeResultLoader] = useState(false);
   const [limeResult, setLimeResult] = useState([]);
-  const [limeMacroResult, setLimeMacroResult] = useState([])
-  const [limeMacroResultLoader, setLimeMacroResultLoader] = useState(false)
+  const [limeMacroResult, setLimeMacroResult] = useState([]);
+  const [limeMacroResultLoader, setLimeMacroResultLoader] = useState(false);
   const [dbChartData, setDbChartData] = useState([]);
 
   const [chartDataLoader, setChartDataLoader] = useState(false);
-  const [currentdataLoader, setCurrentdataLoader] = useState(false)
-  const [dbSignalCurrentData, setDbSignalCurrentData] = useState([])
+  const [currentdataLoader, setCurrentdataLoader] = useState(false);
+  const [dbSignalCurrentData, setDbSignalCurrentData] = useState([]);
   const [dbSignalData, setDbSignalData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -160,11 +170,6 @@ function DbInvestment() {
     return String(_currentYear);
   });
   const [open, setOpen] = useState(false);
-  const options = [
-    { value: "2024", label: "최근 1년" },
-    { value: "2023", label: "2023" },
-    { value: "2022", label: "2022" },
-  ];
 
   const convertDate = () => {
     const date = new Date(selectedDate);
@@ -193,27 +198,19 @@ function DbInvestment() {
       (d) => d.toDateString() === date.toDateString()
     );
   };
-  // console.log("data_reducer", data_reducer);
-  const handleDateSelection = (date) => {
-    setSelectedDate(date);
-    const _date = new Date(date);
-    const year = _date.getFullYear();
-    const month = String(_date.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-based
-    const day = String(_date.getDate()).padStart(2, "0");
-
-    const formattedDate = `${year}-${month}-${day}`;
-    setCurrentSelectedDate(formattedDate);
-    setShowCalendar(false);
-    resetDataState();
-    //   fetchInfo(formattedDate);
-  };
-
+ 
   const _onSelect = (event) => {
     setCurrentYear(event.value);
+    if(event.label!=options[0].label){
+      let custom_text = String(event.label)+"년"
+      setPastEMPTextDate(custom_text);
+    }else{
+      setPastEMPTextDate(event.label);
+    }
+
   };
 
-
-
+  //Get Chart Date
   const getChartData = async () => {
     setChartDataLoader(true);
     try {
@@ -223,9 +220,10 @@ function DbInvestment() {
         setDbChartData(res.data);
       } else {
         setDbChartData([]);
-        console.log("res.status", res.status);
+        console.log("getChartData res.status", res.status);
       }
     } catch (error) {
+      console.log("getChartData catch error", error);
       toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
     setChartDataLoader(false);
@@ -236,29 +234,31 @@ function DbInvestment() {
       getChartData();
     }
     return () => {
-      isComponentRender=false
-    }
+      isComponentRender = false;
+    };
   }, []);
-  const [selectedStockDate, setSelectedStockDate] = useState("")
+  const [selectedStockDate, setSelectedStockDate] = useState("");
+
+  //Get Past Data Table-1
   const getDbInvestmentSignal = async () => {
     setLoader(true);
     try {
-    
       const res = await getDtData.getDBInvestData(
         user_info_reducer.company_name,
         currentYear
       );
       if (res.status === 200) {
-        console.log("getDbInvestmentSignal res.data",res.data[0]["buying_date"])
-        const first_row = res.data[0]["buying_date"]
-     
+        console.log("getDbInvestmentSignal res.data", res.data);
+        const first_row = res.data[0]["buying_date"];
+
         setDbSignalData(res.data);
-        setSelectedStockDate(first_row)
+        setSelectedStockDate(first_row);
       } else {
         setDbSignalData([]);
         console.log(" getDbInvestmentSignal res.status", res.status);
       }
     } catch (error) {
+      console.log("getDbInvestmentSignal catch error", error);
       toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
     setLoader(false);
@@ -269,28 +269,28 @@ function DbInvestment() {
       getDbInvestmentSignal();
     }
     return () => {
-      isComponentRender=false
-    }
+      isComponentRender = false;
+    };
   }, [currentYear]);
 
-
-
-
+  // Get LIME Result
   const fetchLimeResult = async () => {
-    console.log("lime result triggered selectedStockDate is" ,selectedStockDate)
     try {
       setLimeResultLoader(true);
 
       const res = await getDtData.getLimeResult(selectedStockDate);
-   
+
       if (res.status === 200) {
         console.log("fetchLimeResult data", res.data);
-        setLimeResult(res.data);
+        setLimeResult(res.data.data);
+        setLimeResultVar(res.data.lime_var);
+        setLimeResultImp(res.data.lime_imp);
       } else {
         setLimeResult([]);
         console.log(" Lime result res.status", res.status);
       }
     } catch (error) {
+      console.log("fetchLimeResult catch error", error);
       toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
     setLimeResultLoader(false);
@@ -301,28 +301,30 @@ function DbInvestment() {
     if (isComponentRender === true) {
       fetchLimeResult();
     }
-  
-    return () => {
-      isComponentRender=false
-    }
-  }, [selectedStockDate])
-  
 
+    return () => {
+      isComponentRender = false;
+    };
+  }, [selectedStockDate]);
+
+  //Get past related Macro data
   const fetchLimeMacro = async () => {
-    console.log("fetchLimeMacro result triggered selectedStockDate is" ,selectedStockDate)
     try {
       setLimeMacroResultLoader(true);
 
       const res = await getDtData.getLimeMacroResult(selectedStockDate);
-   
+
       if (res.status === 200) {
-        console.log("fetchLimeResult data", res.data);
-        setLimeMacroResult(res.data);
+        console.log("fetchLimeMacro data", res.data);
+        setLimeMacroResult(res.data.data);
+        setLimeMacroAvgVar(res.data.avg_var);
+        setLimeMacroSimVar(res.data.sim_var);
       } else {
         setLimeMacroResult([]);
-        console.log(" Lime result res.status", res.status);
+        console.log(" Lime Macro result res.status", res.status);
       }
     } catch (error) {
+      console.log("fetchLimeMacro catch error", error);
       toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
     setLimeMacroResultLoader(false);
@@ -333,31 +335,30 @@ function DbInvestment() {
     if (isComponentRender === true) {
       fetchLimeMacro();
     }
-  
+
     return () => {
-      isComponentRender=false
-    }
-  }, [selectedStockDate])
-  
+      isComponentRender = false;
+    };
+  }, [selectedStockDate]);
+
+  // Get current Month data
   const getDbInvestmentCurrentSignal = async () => {
     setCurrentdataLoader(true);
-    
+
     try {
       const currentDate = new Date();
-      const currentYear = String(currentDate.getFullYear())
-      const res = await getDtData.getDBInvestCurrentData(
-        currentYear
-      );
+      const currentYear = String(currentDate.getFullYear());
+      const res = await getDtData.getDBInvestCurrentData(currentYear);
       if (res.status === 200) {
-        console.log("getDbInvestmentCurrentSignal res.data",res.data)
- 
-        setDbSignalCurrentData(res.data);
-
+        console.log("getDbInvestmentCurrentSignal res.data", res.data);
+        setCurrentEMPTextDate(res.data.date);
+        setDbSignalCurrentData(res.data.data);
       } else {
         setDbSignalCurrentData([]);
-        console.log(" getDbInvestmentSignal res.status", res.status);
+        console.log(" getDbInvestmentCurrentSignal res.status", res.status);
       }
     } catch (error) {
+      console.log("getDbInvestmentCurrentSignal catch error", error);
       toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
     setCurrentdataLoader(false);
@@ -368,18 +369,25 @@ function DbInvestment() {
       getDbInvestmentCurrentSignal();
     }
     return () => {
-      isComponentRender=false
-    }
+      isComponentRender = false;
+    };
   }, []);
-
 
   return (
     <>
-        <Row style={{alignItems:"flex-start",fontSize: "20px",
+      <Row
+        style={{
+          alignItems: "flex-start",
+          fontSize: "20px",
 
-justifyContent: "flex-start",
-marginBottom: "10px",
-fontWeight: "700"}}>과거 EMP 비중</Row>
+          justifyContent: "flex-start",
+          marginBottom: "10px",
+          fontWeight: "700",
+        }}
+      >
+        과거 EMP 비중
+      </Row>
+    
       <ShadowCol
         style={{
           boxSizing: "border-box",
@@ -391,11 +399,23 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
           padding: 20,
         }}
       >
-     
+          <Row
+        style={{
+          alignItems: "flex-start",
+          fontSize: "18px",
+
+          justifyContent: "flex-start",
+          marginBottom: "20px",
+          fontWeight: "500",
+
+        }}
+      >
+        <p style={{fontSize: "18px", fontWeight:"550"}}><span style={{color:"teal"}}>{pastEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
+      </Row>
         <Row
           style={{
             height: 50,
-            justifyContent: "flex-start",
+            justifyContent: "flex-end",
             alignItems: "center",
             paddingBottom: 23,
           }}
@@ -462,7 +482,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            전체 주식
+              전체 주식
             </div>
             <div
               style={{
@@ -482,7 +502,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-        ESG
+              ESG
             </div>
             <div
               style={{
@@ -492,7 +512,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-             성장
+              성장
             </div>
             <div
               style={{
@@ -502,7 +522,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-             가치
+              가치
             </div>
             <div
               style={{
@@ -512,7 +532,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            중소형
+              중소형
             </div>
             <div
               style={{
@@ -522,7 +542,7 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            배당
+              배당
             </div>
             <div
               style={{
@@ -568,20 +588,20 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
                     .map((list, index) => {
                       return (
                         <Row
-                        key={index}
-                        onClick={() => {
-                          setSelectedStockDate(list.buying_date);
-                        }}
-                        style={{
-                          backgroundColor:
-                            selectedStockDate === list.buying_date
-                              ? "#f3f3f3"
-                              : "",
-                          height: 50,
-                          justifyContent: "space-around",
-                          alignItems: "center",
-                          fontSize: responsiveValue(16, 14, 12),
-                        }}
+                          key={index}
+                          onClick={() => {
+                            setSelectedStockDate(list.buying_date);
+                          }}
+                          style={{
+                            backgroundColor:
+                              selectedStockDate === list.buying_date
+                                ? "#f3f3f3"
+                                : "",
+                            height: 50,
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            fontSize: responsiveValue(16, 14, 12),
+                          }}
                         >
                           <div
                             style={{
@@ -729,13 +749,20 @@ fontWeight: "700"}}>과거 EMP 비중</Row>
       </ShadowCol>
       <WhiteSpace height={25} />
 
-      
-{/* Current data signal */}
-<Row style={{alignItems:"flex-start",fontSize: "20px",
+      {/* Current data signal */}
+      <Row
+        style={{
+          alignItems: "flex-start",
+          fontSize: "20px",
 
-justifyContent: "flex-start",
-marginBottom: "10px",
-fontWeight: "700"}}>현재 EMP 비중</Row>
+          justifyContent: "flex-start",
+          marginBottom: "10px",
+          fontWeight: "700",
+        }}
+      >
+        현재 EMP 비중
+      </Row>
+     
       <ShadowCol
         style={{
           boxSizing: "border-box",
@@ -747,7 +774,18 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
           padding: 20,
         }}
       >
-  
+         <Row
+        style={{
+          alignItems: "flex-start",
+          fontSize: "18px",
+
+          justifyContent: "flex-start",
+          marginBottom: "20px",
+          fontWeight: "500",
+        }}
+      >
+       <p style={{fontSize: "18px", fontWeight:"550"}}> <span style={{color:"teal"}}> {currentEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
+      </Row>
         <Col
           style={{
             flex: 1,
@@ -800,7 +838,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            전체 주식
+              전체 주식
             </div>
             <div
               style={{
@@ -820,7 +858,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-        ESG
+              ESG
             </div>
             <div
               style={{
@@ -830,7 +868,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-             성장
+              성장
             </div>
             <div
               style={{
@@ -840,7 +878,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-             가치
+              가치
             </div>
             <div
               style={{
@@ -850,7 +888,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            중소형
+              중소형
             </div>
             <div
               style={{
@@ -860,9 +898,9 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 transition: "all 0.3s ease-in-out",
               }}
             >
-            배당
+              배당
             </div>
-            <div
+            {/* <div
               style={{
                 width: 110,
                 display: "table-cell",
@@ -872,7 +910,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
             >
               투자 <br />
               수익률
-            </div>
+            </div> */}
           </Row>
           <Row
             style={{
@@ -901,10 +939,9 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
             ) : (
               <>
                 {dbSignalCurrentData &&
-                dbSignalCurrentData
-                  .map((list, index) => {
-                      return (
-                        <Row
+                  dbSignalCurrentData.map((list, index) => {
+                    return (
+                      <Row
                         key={index}
                         onClick={() => {
                           setSelectedStockDate(list.buying_date);
@@ -919,118 +956,118 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                           alignItems: "center",
                           fontSize: responsiveValue(16, 14, 12),
                         }}
+                      >
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            overflow: "hidden",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
                         >
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              overflow: "hidden",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.buying_date}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {list.cash}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.all_stocks}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.large_cap}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.esg}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.growth}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.value}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.mid_small}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                              cursor: "pointer",
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.dividend}
-                          </div>
-                          <div
+                          {list.buying_date}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {list.cash}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.all_stocks}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.large_cap}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.esg}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.growth}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.value}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.mid_small}
+                        </div>
+                        <div
+                          style={{
+                            width: 110,
+                            height: "auto",
+                            display: "table-cell",
+                            justifyContent: "space-around",
+                            cursor: "pointer",
+                            transition: "all 0.3s ease-in-out",
+                          }}
+                        >
+                          {list.dividend}
+                        </div>
+                        {/* <div
                             style={{
                               width: 110,
                               height: "auto",
@@ -1041,22 +1078,21 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                             }}
                           >
                             {list.pv_return}
-                          </div>
-                        </Row>
-                      );
-                    })}
+                          </div> */}
+                      </Row>
+                    );
+                  })}
               </>
             )}
           </Row>
         </Col>
-       
       </ShadowCol>
 
       <WhiteSpace height={25} />
 
-      {/* section 2  Lime 결과 */}
+      {/* section 3  Lime 결과 */}
 
-      {(dbSignalData && selectedStockDate )&& (
+      {dbSignalData && selectedStockDate && (
         <>
           <Col
             style={{
@@ -1066,11 +1102,20 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
               paddingBottom: 20,
             }}
           >
-            <Row style={{alignItems:"flex-start",fontSize: "20px",
+            <Row
+              style={{
+                alignItems: "flex-start",
+                fontSize: "20px",
 
-    justifyContent: "flex-start",
-    marginBottom: "10px",
-    fontWeight: "700"}}>LIME 적용 결과값</Row>
+                justifyContent: "flex-start",
+                marginBottom: "10px",
+                fontWeight: "700",
+              }}
+            >
+              LIME 적용 결과값
+            </Row>
+
+           
             <ShadowCol
               style={{
                 // width: 840,
@@ -1079,330 +1124,326 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 paddingTop: 15,
               }}
             >
+               <Row
+              style={{
+                alignItems: "flex-start",
+                fontSize: "18px",
+
+                justifyContent: "flex-start",
+                marginBottom: "20px",
+                fontWeight: "500",
+              }}
+            >
+             <p style={{fontSize: "18px", fontWeight:"550"}}> 복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
+              기술에 LIME을 적용한 결과는 다음과 같습니다. 단, 각 중요 변수는
+              딥러닝에 대한 선형 근사시에 중요한 변수이기 때문에 딥러닝이 해당
+              변수를 중요하게 고려했다고 직접적으로 중요하다고 해석하는 것에는
+              주의가 필요합니다. LIME을 통해 분석된 중요 변수는{" "}
+              <span style={{color:"red"}}>{limeResultVar[0]} </span>,  <span style={{color:"blue"}}>{limeResultVar[1]}</span>이며 각각  <span style={{color:"red"}}>{limeResultImp[0]}</span>
+              , <span style={{color:"blue"}}>{limeResultImp[1]}</span>의 중요도를 가집니다. 아래의 표는 비교를 위한
+              각각의 중요 변수들에 대한 제거 실험입니다.</p>
+            </Row>
               {limeResultLoader ? (
                 <Col>
                   <CircularProgress />
                 </Col>
               ) : limeResult.length > 0 ? (
                 <Col
-                style={{
-                  flex: 1,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                  // fontSize: responsiveValue(16, 14, 12),
-                  boxSizing: "border-box",
-                  height: "auto",
-                  transition: "all 0.3s ease-in-out",
-                  // overflowY: "scroll",
-                  overflow: "hidden",
-                  textAlign: "center",
-                }}
-              >
-               <Row  style={{
-              alignItems: "center",
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    // fontSize: responsiveValue(16, 14, 12),
+                    boxSizing: "border-box",
+                    height: "auto",
+                    transition: "all 0.3s ease-in-out",
+                    // overflowY: "scroll",
+                    overflow: "hidden",
+                    textAlign: "center",
+                  }}
+                >
+                  <Row
+                    style={{
+                      alignItems: "center",
 
-              height: 70,
-              justifyContent: "space-around",
-              borderTopLeftRadius: "10px",
-              borderTopRightRadius: "10px",
-            }}>
-               <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             날짜
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              중요 변수
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              중요 변수 <br/> 점수
-            </div>
-            {/* <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
- 중요변수2
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              중요변수2 <br/> imp
-            </div> */}
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             Cash
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-            전체 주식
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              대형주
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-        ESG
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             성장
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             가치
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-            중소형
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-            배당
-            </div>
+                      height: 70,
+                      justifyContent: "space-around",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      날짜
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      중요 변수
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      중요 변수 <br /> 점수
+                    </div>
 
-          
- 
-                
-                
-                 </Row>
-                 <Row
-            style={{
-              flexDirection: "column",
-              height: "auto",
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      Cash
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      전체 주식
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      대형주
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      ESG
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      성장
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      가치
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      중소형
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      배당
+                    </div>
+                  </Row>
+                  <Row
+                    style={{
+                      flexDirection: "column",
+                      height: "auto",
 
-              // overflowY: "scroll",
-            }}
-          >
-       {(limeResult && limeResult.length>0) && limeResult.map((list, index) => {
-                      return (
-                        <Row
-                        
-                        style={{
-                       
-                          height: 50,
-                          justifyContent: "space-around",
-                          alignItems: "center",
-                          fontSize: responsiveValue(16, 14, 12),
-                        }}
-                        >
-                          <div
+                      // overflowY: "scroll",
+                    }}
+                  >
+                    {limeResult &&
+                      limeResult.length > 0 &&
+                      limeResult.map((list, index) => {
+                        return (
+                          <Row
+                            key={index}
                             style={{
-                              width: 110,
-                              height: "auto",
-                              overflow: "hidden",
-                              display: "table-cell",
+                              height: 50,
                               justifyContent: "space-around",
-                          
-                              transition: "all 0.3s ease-in-out",
+                              alignItems: "center",
+                              fontSize: responsiveValue(16, 14, 12),
                             }}
                           >
-                            {list.buying_date}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                       
-                              transition: "all 0.3s ease-in-out",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {list.lime_var}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-              
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.lime_imp}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                   
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.cash}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                         
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.all_stocks}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                       
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.large_cap}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                  
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.esg}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                  
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.growth}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                    
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.value}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-               
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.mid_small}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-           
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.dividend}
-                          </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                overflow: "hidden",
+                                display: "table-cell",
+                                justifyContent: "space-around",
 
-                        </Row>
-                      );
-                    })}
-      
-                        </Row>
-                 </Col>
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.date}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {list.lime_var}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.lime_imp}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.cash}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.all_stocks}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.large_cap}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.esg}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.growth}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.value}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.mid_small}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.dividend}
+                            </div>
+                          </Row>
+                        );
+                      })}
+                  </Row>
+                </Col>
               ) : (
                 <div
                   style={{
@@ -1413,20 +1454,16 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                     textAlign: "center",
                   }}
                 >
-                데이터를 불러오지 못했습니다.
+                  데이터를 불러오지 못했습니다.
                 </div>
               )}
             </ShadowCol>
             <WhiteSpace height={30} />
-          
-
-            
-           
           </Col>
         </>
       )}
-{/* section 3  과거  비교  */}
-{(dbSignalData && selectedStockDate )&& (
+      {/* section 3  과거  비교  */}
+      {dbSignalData && selectedStockDate && (
         <>
           <Col
             style={{
@@ -1436,11 +1473,20 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
               paddingBottom: 20,
             }}
           >
-            <Row style={{alignItems:"flex-start",fontSize: "20px",
+            <Row
+              style={{
+                alignItems: "flex-start",
+                fontSize: "20px",
 
-    justifyContent: "flex-start",
-    marginBottom: "10px",
-    fontWeight: "700"}}>과거의 경제 상황과 현재의 경제 상황 비교</Row>
+                justifyContent: "flex-start",
+                marginBottom: "10px",
+                fontWeight: "700",
+              }}
+            >
+              과거의 경제 상황과 현재의 경제 상황 비교
+            </Row>
+
+          
             <ShadowCol
               style={{
                 // width: 840,
@@ -1449,181 +1495,193 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                 paddingTop: 15,
               }}
             >
+                <Row
+              style={{
+                alignItems: "flex-start",
+                fontSize: "18px",
+
+                justifyContent: "flex-start",
+                marginBottom: "20px",
+                fontWeight: "500",
+              }}
+            >
+            <p style={{fontSize: "18px", fontWeight:"550"}}>  거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
+              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"teal"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>였습니다. 또한 지난 6개월 동안 평균적으로
+              중요했던 변수는 <span style={{color:"teal"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
+            </Row>
               {limeMacroResultLoader ? (
                 <Col>
                   <CircularProgress />
                 </Col>
               ) : limeMacroResult.length > 0 ? (
                 <Col
-                style={{
-                  flex: 1,
-                  alignItems: "flex-start",
-                  justifyContent: "flex-start",
-                  // fontSize: responsiveValue(16, 14, 12),
-                  boxSizing: "border-box",
-                  height: "auto",
-                  transition: "all 0.3s ease-in-out",
-                  // overflowY: "scroll",
-                  overflow: "hidden",
-                  textAlign: "center",
-                }}
-              >
-               <Row  style={{
-              alignItems: "center",
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-start",
+                    justifyContent: "flex-start",
+                    // fontSize: responsiveValue(16, 14, 12),
+                    boxSizing: "border-box",
+                    height: "auto",
+                    transition: "all 0.3s ease-in-out",
+                    // overflowY: "scroll",
+                    overflow: "hidden",
+                    textAlign: "center",
+                  }}
+                >
+                  <Row
+                    style={{
+                      alignItems: "center",
 
-              height: 88,
-              justifyContent: "space-around",
-              borderTopLeftRadius: "10px",
-              borderTopRightRadius: "10px",
-            }}>
-               <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             날짜
-            </div>
-            <div
-              style={{
-                width: 110,
+                      height: 88,
+                      justifyContent: "space-around",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      날짜
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
 
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-              유사한 경제 <br/>상황에서 중요했던 변수 1
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-          유사한 경제 <br/>상황에서 중요했던 변수 2
-            </div>
-           
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-             평균적으로 <br/>중요했던 변수 1
-            </div>
-            <div
-              style={{
-                width: 110,
-                display: "table-cell",
-                fontWeight: 700,
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
-        평균적으로 <br/>중요했던 변수 2
-            </div>
-          
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      유사한 경제 <br />
+                      상황에서 중요했던 변수 1
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      유사한 경제 <br />
+                      상황에서 중요했던 변수 2
+                    </div>
 
-          
- 
-                
-                
-                 </Row>
-                 <Row
-            style={{
-              flexDirection: "column",
-              height: "auto",
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      평균적으로 <br />
+                      중요했던 변수 1
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      평균적으로 <br />
+                      중요했던 변수 2
+                    </div>
+                  </Row>
+                  <Row
+                    style={{
+                      flexDirection: "column",
+                      height: "auto",
 
-              // overflowY: "scroll",
-            }}
-          >
-       {(limeMacroResult && limeMacroResult.length>0) && limeMacroResult.map((list, index) => {
-                      return (
-                        <Row
-                        
-                        style={{
-                       
-                          height: 50,
-                          justifyContent: "space-around",
-                          alignItems: "center",
-                          fontSize: responsiveValue(16, 14, 12),
-                        }}
-                        >
-                          <div
+                      // overflowY: "scroll",
+                    }}
+                  >
+                    {limeMacroResult &&
+                      limeMacroResult.length > 0 &&
+                      limeMacroResult.map((list, index) => {
+                        return (
+                          <Row
                             style={{
-                              width: 110,
-                              height: "auto",
-                              overflow: "hidden",
-                              display: "table-cell",
+                              height: 50,
                               justifyContent: "space-around",
-                          
-                              transition: "all 0.3s ease-in-out",
+                              alignItems: "center",
+                              fontSize: responsiveValue(16, 14, 12),
                             }}
                           >
-                            {list.date}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-           
-                              transition: "all 0.3s ease-in-out",
-                              overflow: "hidden",
-                            }}
-                          >
-                            {list.sim_var1}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                       
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.sim_var1}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-             
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.avg_var1}
-                          </div>
-                          <div
-                            style={{
-                              width: 110,
-                              height: "auto",
-                              display: "table-cell",
-                              justifyContent: "space-around",
-                        
-                              transition: "all 0.3s ease-in-out",
-                            }}
-                          >
-                            {list.avg_var2}
-                          </div>
-                        
-                        </Row>
-                      );
-                    })}
-      
-                        </Row>
-                 </Col>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                overflow: "hidden",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.date}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {list.sim_var1}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.sim_var1}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.avg_var1}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-around",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.avg_var2}
+                            </div>
+                          </Row>
+                        );
+                      })}
+                  </Row>
+                </Col>
               ) : (
                 <div
                   style={{
@@ -1634,30 +1692,14 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
                     textAlign: "center",
                   }}
                 >
-                데이터를 불러오지 못했습니다.
+                  데이터를 불러오지 못했습니다.
                 </div>
               )}
             </ShadowCol>
             <WhiteSpace height={30} />
-          
-
-            
-           
           </Col>
         </>
       )}
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* Section 4 차트 그리기   */}
       <Col
@@ -1716,6 +1758,7 @@ fontWeight: "700"}}>현재 EMP 비중</Row>
           )}
         </ShadowCol>
       </Col>
+      <ToastContainer />
     </>
   );
 }
