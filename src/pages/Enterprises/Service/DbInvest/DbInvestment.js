@@ -60,7 +60,7 @@ const LineChart = ({ data }) => {
     labels: data.dates, // You can use either daily or weekly dates here
     datasets: [
       {
-        label: "DEM 적용 기술",
+        label: "DT-EMP 적용 기술",
         data: data.cum_pv,
         borderColor: "rgb(255, 159, 64)",
         backgroundColor: "rgba(255, 159, 64, 0.5)",
@@ -187,6 +187,7 @@ function DbInvestment() {
     const _currentYear = currentDate.getFullYear();
     return String(_currentYear);
   });
+  console.log("currentYear>>>>>>>>>>>>>",currentYear)
   const [open, setOpen] = useState(false);
 
   const convertDate = () => {
@@ -216,7 +217,8 @@ function DbInvestment() {
       (d) => d.toDateString() === date.toDateString()
     );
   };
- 
+  const [selectedStockDate, setSelectedStockDate] = useState("");
+
   const _onSelect = (event) => {
     setCurrentYear(event.value);
     if(event.label!=options[0].label){
@@ -226,8 +228,42 @@ function DbInvestment() {
       setPastEMPTextDate(event.label);
     }
 
+    // setSelectedStockDate(dbSignalData[0]["buying_date"]);
   };
+// Get current Month data
+const getDbInvestmentCurrentSignal = async () => {
+  setCurrentdataLoader(true);
 
+  try {
+    const currentDate = new Date();
+    const _currentYear = String(currentDate.getFullYear());
+    const res = await getDtData.getDBInvestCurrentData(_currentYear);
+    if (res.status === 200) {
+      console.log("getDbInvestmentCurrentSignal res.data", res.data);
+      const first_row = res.data.data[0]["buying_date"];
+ 
+      setCurrentEMPTextDate(res.data.date);
+      setDbSignalCurrentData(res.data.data);
+      setSelectedStockDate(first_row);
+    } else {
+      setDbSignalCurrentData([]);
+      console.log(" getDbInvestmentCurrentSignal res.status", res.status);
+    }
+  } catch (error) {
+    console.log("getDbInvestmentCurrentSignal catch error", error);
+    toast("서버 접속 에러 관리자에게 문의해주세요.");
+  }
+  setCurrentdataLoader(false);
+};
+useEffect(() => {
+  let isComponentRender = true;
+  if (isComponentRender === true) {
+    getDbInvestmentCurrentSignal();
+  }
+  return () => {
+    isComponentRender = false;
+  };
+}, []);
   //Get Chart Date
   const getChartData = async () => {
     setChartDataLoader(true);
@@ -255,7 +291,6 @@ function DbInvestment() {
       isComponentRender = false;
     };
   }, []);
-  const [selectedStockDate, setSelectedStockDate] = useState("");
 
   //Get Past Data Table-1
   const getDbInvestmentSignal = async () => {
@@ -283,7 +318,7 @@ function DbInvestment() {
   };
   useEffect(() => {
     let isComponentRender = true;
-    if (isComponentRender === true) {
+    if (isComponentRender === true && currentYear!="") {
       getDbInvestmentSignal();
     }
     return () => {
@@ -323,7 +358,7 @@ function DbInvestment() {
     return () => {
       isComponentRender = false;
     };
-  }, [selectedStockDate]);
+  }, [selectedStockDate]); //selectedStockDate
 
   //Get past related Macro data
   const fetchLimeMacro = async () => {
@@ -357,42 +392,9 @@ function DbInvestment() {
     return () => {
       isComponentRender = false;
     };
-  }, [selectedStockDate]);
+  }, [selectedStockDate]);//selectedStockDate
 
-  // Get current Month data
-  const getDbInvestmentCurrentSignal = async () => {
-    setCurrentdataLoader(true);
-
-    try {
-      const currentDate = new Date();
-      const currentYear = String(currentDate.getFullYear());
-      const res = await getDtData.getDBInvestCurrentData(currentYear);
-      if (res.status === 200) {
-        console.log("getDbInvestmentCurrentSignal res.data", res.data);
-        const first_row = res.data.data[0]["buying_date"];
-   
-        setCurrentEMPTextDate(res.data.date);
-        setDbSignalCurrentData(res.data.data);
-        setSelectedStockDate(first_row);
-      } else {
-        setDbSignalCurrentData([]);
-        console.log(" getDbInvestmentCurrentSignal res.status", res.status);
-      }
-    } catch (error) {
-      console.log("getDbInvestmentCurrentSignal catch error", error);
-      toast("서버 접속 에러 관리자에게 문의해주세요.");
-    }
-    setCurrentdataLoader(false);
-  };
-  useEffect(() => {
-    let isComponentRender = true;
-    if (isComponentRender === true) {
-      getDbInvestmentCurrentSignal();
-    }
-    return () => {
-      isComponentRender = false;
-    };
-  }, []);
+  
 
   return (
     <>
@@ -618,13 +620,13 @@ function DbInvestment() {
                         <Row
                           key={index}
                           onClick={() => {
-                            setSelectedStockDate(list.buying_date);
+                            // setSelectedStockDate(list.buying_date);
                           }}
                           style={{
-                            backgroundColor:
-                              selectedStockDate === list.buying_date
-                                ? "#f3f3f3"
-                                : "",
+                            // backgroundColor:
+                            //   selectedStockDate === list.buying_date
+                            //     ? "#f3f3f3"
+                            //     : "",
                             height: 50,
                             justifyContent: "space-around",
                             alignItems: "center",
@@ -638,7 +640,7 @@ function DbInvestment() {
                               overflow: "hidden",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -650,7 +652,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                               overflow: "hidden",
                             }}
@@ -663,7 +665,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -675,7 +677,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -687,7 +689,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -699,7 +701,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -711,7 +713,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -723,7 +725,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -735,7 +737,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -747,7 +749,7 @@ function DbInvestment() {
                               height: "auto",
                               display: "table-cell",
                               justifyContent: "space-around",
-                              cursor: "pointer",
+                              // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                             }}
                           >
@@ -1140,7 +1142,7 @@ function DbInvestment() {
                 fontWeight: "700",
               }}
             >
-              LIME 적용 결과값
+              XAI 적용 결과값
             </Row>
 
            
@@ -1168,10 +1170,10 @@ function DbInvestment() {
               }}
             >
              <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}>복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
-              기술에 LIME을 적용한 결과는 다음과 같습니다. 단, 각 중요 변수는
+              기술에 DT-XAI를 적용한 결과는 다음과 같습니다. 단, 각 중요 변수는
               딥러닝에 대한 선형 근사시에 중요한 변수이기 때문에 딥러닝이 해당
               변수를 중요하게 고려했다고 직접적으로 중요하다고 해석하는 것에는
-              주의가 필요합니다. LIME을 통해 분석된 중요 변수는{" "}
+              주의가 필요합니다. DT-XAI를 통해 분석된 중요 변수는{" "}
               <span style={{color:"#990000"}}>{limeResultVar[0]} </span>,  <span style={{color:"#990000"}}>{limeResultVar[1]}</span>이며 각각  <span style={{color:"#990000"}}>{limeResultImp[0]}</span>
               , <span style={{color:"#990000"}}>{limeResultImp[1]}</span>의 중요도를 가집니다. 아래의 표는 비교를 위한
               각각의 중요 변수들에 대한 제거 실험입니다.</p>
@@ -1210,7 +1212,7 @@ function DbInvestment() {
                    <table  style={tableStyle}>
       <thead>
         <tr >
-          <th rowSpan={2}>날짜</th>
+          <th rowSpan={2}>추천시점</th>
           <th rowSpan={2}>중요 변수</th>
           <th  rowSpan={2}>변수 중요도</th>
           <th colSpan={8}>중요 변수 제거 결과</th>
@@ -1758,7 +1760,7 @@ function DbInvestment() {
                                 transition: "all 0.3s ease-in-out",
                               }}
                             >
-                              {list.sim_var1}
+                              {list.sim_var2}
                             </div>
                             <div
                               style={{
@@ -1854,7 +1856,7 @@ function DbInvestment() {
                 marginTop:"15px",
                 marginBottom:"15px",
                 textAlign: "center",
-              }}> DeeptradeTechnologies EMP Management (DEM) 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교</p>
+              }}> DeeptradeTechnologies EMP Management (DT-EMP) 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교</p>
                 <br />
               </Row>
             </>
