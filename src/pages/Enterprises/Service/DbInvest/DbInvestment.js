@@ -187,7 +187,7 @@ function DbInvestment() {
     const _currentYear = currentDate.getFullYear();
     return String(_currentYear);
   });
-  console.log("currentYear>>>>>>>>>>>>>",currentYear)
+  // console.log("currentYear>>>>>>>>>>>>>",currentYear)
   const [open, setOpen] = useState(false);
 
   const convertDate = () => {
