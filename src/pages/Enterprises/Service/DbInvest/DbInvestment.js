@@ -1622,14 +1622,8 @@ useEffect(() => {
                 fontWeight: "500",
               }}
             >
-<<<<<<< HEAD
             <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {} 기간과 경제상황이 유사했고,
               이 시점에 가장 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span> 입니다.였습니다. </p>
-=======
-            <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
-              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>입니다. 또한 지난 3년 동안 평균적으로
-              중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
->>>>>>> 4216b758f42d23cb234bcb0c859ef2ab8368d409
             </Row>
               {limeMacroResultLoader ? (
                 <Oval
