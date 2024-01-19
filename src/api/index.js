@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const productionUrl = "https://xpct.net/api/";
+const productionUrl = "https://xpercent.io/api/";
 const localUrl = "http://13.125.37.183:8888/api/";
 export const instance = axios.create({
   baseURL: productionUrl,

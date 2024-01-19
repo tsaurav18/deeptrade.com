@@ -67,6 +67,7 @@ const LineChart = ({ data }) => {
         borderWidth: 1,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: 'y'
       },
       {
         label: "코스피 누적 수익률",
@@ -76,8 +77,18 @@ const LineChart = ({ data }) => {
         borderWidth: 1,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: 'y'
       },
-
+      {
+        label: "누적 시장 초과 수익률",
+        data: data.pv_comp,
+        borderColor: "rgba(255, 0, 0, 1)",
+        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        borderWidth: 1,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: 'y1'
+      },
       // Repeat the same structure for weekly data if needed
     ],
   };
@@ -109,6 +120,20 @@ const LineChart = ({ data }) => {
         fontSize: 20,
       },
     },
+    scales: {
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      y1: {
+        type: 'linear',
+        position: 'right',
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+    }
   };
 
   return (
