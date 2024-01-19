@@ -1623,7 +1623,7 @@ useEffect(() => {
               }}
             >
             <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
-              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>였습니다. 또한 지난 3년 동안 평균적으로
+              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>입니다. 또한 지난 3년 동안 평균적으로
               중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
             </Row>
               {limeMacroResultLoader ? (
