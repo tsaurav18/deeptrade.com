@@ -1598,9 +1598,8 @@ useEffect(() => {
                 fontWeight: "500",
               }}
             >
-            <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>거시 경제 데이터를 종합적으로 분석해 보았을 때 현재 경제 흐름과
-              유사한 과거 시점에서 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>였습니다. 또한 지난 6개월 동안 평균적으로
-              중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}</span>입니다.</p>
+            <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {} 기간과 경제상황이 유사했고,
+              이 시점에 가장 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span> 입니다.였습니다. </p>
             </Row>
               {limeMacroResultLoader ? (
                 <Oval
@@ -1704,12 +1703,11 @@ useEffect(() => {
                        변수 2
                     </div>
                   </Row>
+                  
                   <Row
                     style={{
                       flexDirection: "column",
                       height: "auto",
-
-                      // overflowY: "scroll",
                     }}
                   >
                     {limeMacroResult &&
@@ -1761,6 +1759,134 @@ useEffect(() => {
                               }}
                             >
                               {list.sim_var2}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-between",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.avg_var1}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-between",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.avg_var2}
+                            </div>
+                          </Row>
+                        );
+                      })}
+                  </Row>
+
+                  <Row
+                    style={{
+                      alignItems: "flex-start",
+                      fontSize: "18px",
+
+                      justifyContent: "flex-start",
+                      marginTop: "20px",
+                      marginBottom: "20px",
+                      fontWeight: "500",
+                    }}
+                    >
+                    <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}> 또한 지난 3년 동안 평균적으로 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}, {limeMacroAvgVar[2]}</span> 입니다.</p>
+                  </Row>
+
+                  <Row
+                    style={{
+                      alignItems: "center",
+
+                      height: 88,
+                      justifyContent: "space-between",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      구간
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      평균 중요<br />변수 1
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      평균 중요<br />변수 2
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        display: "table-cell",
+                        fontWeight: 700,
+                        transition: "all 0.3s ease-in-out",
+                      }}
+                    >
+                      평균 중요<br />변수 3
+                    </div>
+                  </Row>
+                  
+                  <Row
+                    style={{
+                      flexDirection: "column",
+                      height: "auto",
+
+                      // overflowY: "scroll",
+                    }}
+                  >
+                    {limeMacroResult &&
+                      limeMacroResult.length > 0 &&
+                      limeMacroResult.map((list, index) => {
+                        return (
+                          <Row
+                            style={{
+                              alignItems: "center",
+                              height: "auto",
+                              justifyContent: "space-between",
+                              fontSize: responsiveValue(16, 14, 12),
+                            }}
+                          >
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                overflow: "hidden",
+                                display: "table-cell",
+                                justifyContent: "space-between",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.date}
                             </div>
                             <div
                               style={{
