@@ -26,9 +26,11 @@ export default function SideBar({ visible, show }) {
             to="/portfolio_list"
             style={{
               backgroundColor: "white",
+			  height: 150,
+			  width: 150
             }}
           >
-            <img src={"assets/xpercent_logo.png"} alt="logo" />
+            <img src={"assets/deeptrade_logo2.png"} alt="logo" style={{objectFit: 'contain'}}/>
           </NavLink>
           <div className="links nav-ratb-top">
             <NavLink
