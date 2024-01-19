@@ -54,7 +54,7 @@ export default function PortfolioList() {
     const [product, setProduct] = useState("전체");
     const [type, setType] = useState("전체");
     const [buyDate, setBuyDate] = useState(dayjs().subtract(12, 'months'));
-    const [sellDate, setSellDate] = useState(dayjs());
+    const [sellDate, setSellDate] = useState(dayjs().add(1, 'months'));
     const [data, setData] = useState([]);
 
     const handleChange = (value) => {
