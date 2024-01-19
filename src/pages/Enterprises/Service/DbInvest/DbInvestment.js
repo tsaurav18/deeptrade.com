@@ -37,15 +37,18 @@ import {
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
+  
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
+  BarElement,
   LineElement,
   Title,
   Tooltip,
@@ -62,32 +65,36 @@ const LineChart = ({ data }) => {
       {
         label: "DT-EMP 적용 기술",
         data: data.cum_pv,
-        borderColor: "rgb(255, 159, 64)",
-        backgroundColor: "rgba(255, 159, 64, 0.5)",
-        borderWidth: 1,
+        borderColor: "rgba(255, 0, 0, 1)",
+        backgroundColor:  "rgba(255, 0, 0, 0.5)",
+        borderWidth: 2,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y'
+        yAxisID: 'y',
+            type: 'line',
       },
       {
         label: "코스피 누적 수익률",
         data: data.market_cum_pv,
         borderColor: "rgb(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192, 0.5)",
-        borderWidth: 1,
+        borderWidth: 2,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y'
+        yAxisID: 'y',
+        type: 'line',
       },
       {
         label: "누적 시장 초과 수익률",
         data: data.pv_comp,
-        borderColor: "rgba(255, 0, 0, 1)",
-        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        borderColor:"rgb(255, 159, 64)", 
+        backgroundColor:"rgba(255, 159, 64, 0.5)",
         borderWidth: 1,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y1'
+        yAxisID: 'y1',
+        type: 'bar',
+
       },
       // Repeat the same structure for weekly data if needed
     ],
@@ -140,6 +147,7 @@ const LineChart = ({ data }) => {
     <div className="chart-container" style={{ width: "100%" }}>
       {chart_data != undefined && (
         <Line data={chart_data} options={optionsChart} />
+        
       )}
     </div>
   );
@@ -1623,7 +1631,7 @@ useEffect(() => {
               }}
             >
             <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {} 기간과 경제상황이 유사했고,
-              이 시점에 가장 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span> 입니다.였습니다. </p>
+              이 시점에 가장 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>입니다. </p>
             </Row>
               {limeMacroResultLoader ? (
                 <Oval
@@ -1935,6 +1943,18 @@ useEffect(() => {
                               }}
                             >
                               {list.avg_var2}
+                            </div>
+                            <div
+                              style={{
+                                width: 110,
+                                height: "auto",
+                                display: "table-cell",
+                                justifyContent: "space-between",
+
+                                transition: "all 0.3s ease-in-out",
+                              }}
+                            >
+                              {list.avg_var3}
                             </div>
                           </Row>
                         );
