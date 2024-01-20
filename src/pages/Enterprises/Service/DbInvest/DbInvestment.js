@@ -30,14 +30,26 @@ import classNames from "classnames";
 import Arrow from "../../../../assets/icons/arrow.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+
+
+
+
 import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  BarElement,
   PointElement,
   LineElement,
-  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -46,9 +58,9 @@ import {
 import zoomPlugin from "chartjs-plugin-zoom";
 ChartJS.register(
   CategoryScale,
+  BarElement,
   LinearScale,
   PointElement,
-  BarElement,
   LineElement,
   Title,
   Tooltip,
@@ -146,7 +158,7 @@ const LineChart = ({ data }) => {
   return (
     <div className="chart-container" style={{ width: "100%" }}>
       {chart_data != undefined && (
-        <Line data={chart_data} options={optionsChart} />
+        <Bar data={chart_data} options={optionsChart} />
         
       )}
     </div>
@@ -197,6 +209,7 @@ function DbInvestment() {
   const [limeResultLoader, setLimeResultLoader] = useState(false);
   const [limeResult, setLimeResult] = useState([]);
   const [limeMacroResult, setLimeMacroResult] = useState([]);
+  const [limeMacroResult2, setLimeMacroResult2] = useState([]);
   const [limeMacroResultLoader, setLimeMacroResultLoader] = useState(false);
   const [dbChartData, setDbChartData] = useState([]);
 
@@ -402,11 +415,13 @@ useEffect(() => {
 
       if (res.status === 200) {
         console.log("fetchLimeMacro data", res.data);
-        setLimeMacroResult(res.data.data);
+        setLimeMacroResult([res.data.data[0]]);
+        setLimeMacroResult2([res.data.data[1]]);
         setLimeMacroAvgVar(res.data.avg_var);
         setLimeMacroSimVar(res.data.sim_var);
       } else {
         setLimeMacroResult([]);
+        setLimeMacroResult2([]);
         console.log(" Lime Macro result res.status", res.status);
       }
     } catch (error) {
@@ -1664,6 +1679,91 @@ useEffect(() => {
                     textAlign: "center",
                   }}
                 >
+
+<TableContainer >
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ borderBottom: 0 }}  align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f",}}>구간</TableCell>
+            <TableCell sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>과거 시점 중요 변수 1</TableCell>
+            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>과거 시점 중요 변수 2</TableCell>
+
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {limeMacroResult &&
+                      limeMacroResult.length > 0 &&
+                      limeMacroResult.map((list, index) => (
+            <TableRow
+              key={index}
+              sx={{ '& td, & th': { borderBottom: 0 } }}>
+            
+              <TableCell  align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>
+                {list.date}
+              </TableCell>
+              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.sim_var1}</TableCell>
+              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.sim_var2}</TableCell>
+             
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+
+
+
+
+
+
+
+{/* 
+<table  style={tableStyle}>
+      <thead>
+        <tr >
+          <th style={{textAlign: "left",
+    paddingLeft: "20px"}}>구간</th>
+          <th style={{textAlign: "left",
+    }}> 과거 시점 중요 변수 1</th>
+          <th style={{textAlign: "right",
+    paddingRight: "20px"}}> 과거 시점 중요 변수 2</th>
+        
+        </tr>
+       
+      </thead>
+      <tbody>
+      {limeMacroResult &&
+                      limeMacroResult.length > 0 &&
+                      limeMacroResult.map((list, index) => {
+                        return (
+                          <tr key={index}>
+                          <td style={{textAlign: "left",
+    paddingLeft: "20px",borderBottom:"none"}}>{list.date}</td>
+                          <td style={{textAlign: "left",
+    borderBottom:"none"}}>{list.sim_var1}</td>
+                          <td style={{textAlign: "right",
+     paddingRight: "20px",borderBottom:"none"}}>{list.sim_var2}</td>
+                        </tr>
+                        );
+                      })}
+
+      </tbody>
+</table> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* 
+
                   <Row
                     style={{
                       alignItems: "center",
@@ -1710,30 +1810,7 @@ useEffect(() => {
                       중요 변수 2
                     </div>
 
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      평균 중요
-                  <br />
-                  변수 1
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      평균 중요
-                       <br />
-                       변수 2
-                    </div>
+                   
                   </Row>
                   
                   <Row
@@ -1792,34 +1869,10 @@ useEffect(() => {
                             >
                               {list.sim_var2}
                             </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-between",
-
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.avg_var1}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-between",
-
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.avg_var2}
-                            </div>
-                          </Row>
+                            \                          </Row>
                         );
                       })}
-                  </Row>
+                  </Row> */}
 
                   <Row
                     style={{
@@ -1832,9 +1885,97 @@ useEffect(() => {
                       fontWeight: "500",
                     }}
                     >
-                    <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}> 또한 지난 3년 동안 평균적으로 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}, {limeMacroAvgVar[2]}</span> 입니다.</p>
+                    <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}> 또한 지난 3년 동안 평균적으로 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}, {limeMacroAvgVar[2]}</span>입니다.</p>
                   </Row>
 
+
+
+                  <TableContainer >
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ borderBottom: 0 }}  align="center" style={{fontSize:"15px", fontWeight:"550", color:"#4f4f4f"}}>구간</TableCell>
+            <TableCell sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 1</TableCell>
+            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 2</TableCell>
+            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 3</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {limeMacroResult2 &&
+                      limeMacroResult2.length > 0 &&
+                      limeMacroResult2.map((list, index) => (
+            <TableRow
+              key={index}
+              sx={{ '& td, & th': { borderBottom: 0 } }}>
+            
+              <TableCell  align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f",}}>
+                {list.date}
+              </TableCell>
+              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var1}</TableCell>
+              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var2}</TableCell>
+              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var3}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+{/* 
+<table  style={tableStyle}>
+      <thead>
+        <tr >
+          <th style={{textAlign: "left",
+    paddingLeft: "20px",width: "310px"}}>구간</th>
+          <th style={{textAlign: "left",
+    }}>  평균 중요 변수 1</th>
+          <th style={{textAlign: "center"}}>  평균 중요 변수 2</th>
+          <th style={{textAlign: "right",
+    paddingRight: "20px"}}>  평균 중요 변수 3</th>
+        </tr>
+       
+      </thead>
+      <tbody>
+      {limeMacroResult2 &&
+                      limeMacroResult2.length > 0 &&
+                      limeMacroResult2.map((list, index) => {
+                        return (
+                          <tr key={index}>
+                          <td style={{textAlign: "left",
+    paddingLeft: "20px",borderBottom:"none"}}>{list.date}</td>
+                          <td style={{textAlign: "left",
+    borderBottom:"none"}}>{list.avg_var1}</td>
+                          <td style={{textAlign: "center",borderBottom:"none"}}>{list.avg_var2}</td>
+              <td style={{textAlign: "right",
+     paddingRight: "20px",borderBottom:"none"}}>{list.avg_var3}</td>
+                        </tr>
+                        );
+                      })}
+
+      </tbody>
+</table> */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* 
                   <Row
                     style={{
                       alignItems: "center",
@@ -1895,9 +2036,9 @@ useEffect(() => {
                       // overflowY: "scroll",
                     }}
                   >
-                    {limeMacroResult &&
-                      limeMacroResult.length > 0 &&
-                      limeMacroResult.map((list, index) => {
+                    {limeMacroResult2 &&
+                      limeMacroResult2.length > 0 &&
+                      limeMacroResult2.map((list, index) => {
                         return (
                           <Row
                             style={{
@@ -1959,7 +2100,7 @@ useEffect(() => {
                           </Row>
                         );
                       })}
-                  </Row>
+                  </Row> */}
                 </Col>
               ) : (
                 <div
