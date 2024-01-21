@@ -30,17 +30,13 @@ import classNames from "classnames";
 import Arrow from "../../../../assets/icons/arrow.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
-
-
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 import { Bar, Line } from "react-chartjs-2";
 import {
@@ -53,7 +49,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 ChartJS.register(
@@ -78,12 +73,12 @@ const LineChart = ({ data }) => {
         label: "DT-EMP 적용 기술",
         data: data.cum_pv,
         borderColor: "rgba(255, 0, 0, 1)",
-        backgroundColor:  "rgba(255, 0, 0, 0.5)",
+        backgroundColor: "rgba(255, 0, 0, 0.5)",
         borderWidth: 2,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y',
-            type: 'line',
+        yAxisID: "y",
+        type: "line",
       },
       {
         label: "코스피 누적 수익률",
@@ -93,20 +88,19 @@ const LineChart = ({ data }) => {
         borderWidth: 2,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y',
-        type: 'line',
+        yAxisID: "y",
+        type: "line",
       },
       {
         label: "누적 시장 초과 수익률",
         data: data.pv_comp,
-        borderColor:"rgb(255, 159, 64)", 
-        backgroundColor:"rgba(255, 159, 64, 0.5)",
+        borderColor: "rgb(255, 159, 64)",
+        backgroundColor: "rgba(255, 159, 64, 0.5)",
         borderWidth: 1,
         fill: false,
         pointLabelFontColor: "rgba(0, 0, 0, 0)",
-        yAxisID: 'y1',
-        type: 'bar',
-
+        yAxisID: "y1",
+        type: "bar",
       },
       // Repeat the same structure for weekly data if needed
     ],
@@ -141,46 +135,45 @@ const LineChart = ({ data }) => {
     },
     scales: {
       y: {
-        type: 'linear',
+        type: "linear",
         display: true,
-        position: 'left',
+        position: "left",
       },
       y1: {
-        type: 'linear',
-        position: 'right',
+        type: "linear",
+        position: "right",
         grid: {
           drawOnChartArea: false,
         },
       },
-    }
+    },
   };
 
   return (
     <div className="chart-container" style={{ width: "100%" }}>
       {chart_data != undefined && (
         <Bar data={chart_data} options={optionsChart} />
-        
       )}
     </div>
   );
 };
 const tableStyle = {
   // borderCollapse: 'collapse',
-  width: '100%',
+  width: "100%",
   // border: '1px solid #ddd', // Add border to the table
 };
 
 const thStyle = {
-  border: '1px solid #ddd', // Add border to the table header cells
-  padding: '8px',
-  textAlign: 'center',
+  border: "1px solid #ddd", // Add border to the table header cells
+  padding: "8px",
+  textAlign: "center",
 };
 
 const tdStyle = {
   // border: '1px solid #ddd', // Add border to the table data cells
-  padding: '8px',
-  textAlign: 'center',
-  borderBottom: 'none',
+  padding: "8px",
+  textAlign: "center",
+  borderBottom: "none",
 };
 
 function DbInvestment() {
@@ -267,49 +260,49 @@ function DbInvestment() {
 
   const _onSelect = (event) => {
     setCurrentYear(event.value);
-    if(event.label!=options[0].label){
-      let custom_text = String(event.label)+"년"
+    if (event.label != options[0].label) {
+      let custom_text = String(event.label) + "년";
       setPastEMPTextDate(custom_text);
-    }else{
+    } else {
       setPastEMPTextDate(event.label);
     }
 
     // setSelectedStockDate(dbSignalData[0]["buying_date"]);
   };
-// Get current Month data
-const getDbInvestmentCurrentSignal = async () => {
-  setCurrentdataLoader(true);
+  // Get current Month data
+  const getDbInvestmentCurrentSignal = async () => {
+    setCurrentdataLoader(true);
 
-  try {
-    const currentDate = new Date();
-    const _currentYear = String(currentDate.getFullYear());
-    const res = await getDtData.getDBInvestCurrentData(_currentYear);
-    if (res.status === 200) {
-      console.log("getDbInvestmentCurrentSignal res.data", res.data);
-      const first_row = res.data.data[0]["buying_date"];
- 
-      setCurrentEMPTextDate(res.data.date);
-      setDbSignalCurrentData(res.data.data);
-      setSelectedStockDate(first_row);
-    } else {
-      setDbSignalCurrentData([]);
-      console.log(" getDbInvestmentCurrentSignal res.status", res.status);
+    try {
+      const currentDate = new Date();
+      const _currentYear = String(currentDate.getFullYear());
+      const res = await getDtData.getDBInvestCurrentData(_currentYear);
+      if (res.status === 200) {
+        console.log("getDbInvestmentCurrentSignal res.data", res.data);
+        const first_row = res.data.data[0]["buying_date"];
+
+        setCurrentEMPTextDate(res.data.date);
+        setDbSignalCurrentData(res.data.data);
+        setSelectedStockDate(first_row);
+      } else {
+        setDbSignalCurrentData([]);
+        console.log(" getDbInvestmentCurrentSignal res.status", res.status);
+      }
+    } catch (error) {
+      console.log("getDbInvestmentCurrentSignal catch error", error);
+      toast("서버 접속 에러 관리자에게 문의해주세요.");
     }
-  } catch (error) {
-    console.log("getDbInvestmentCurrentSignal catch error", error);
-    toast("서버 접속 에러 관리자에게 문의해주세요.");
-  }
-  setCurrentdataLoader(false);
-};
-useEffect(() => {
-  let isComponentRender = true;
-  if (isComponentRender === true) {
-    getDbInvestmentCurrentSignal();
-  }
-  return () => {
-    isComponentRender = false;
+    setCurrentdataLoader(false);
   };
-}, []);
+  useEffect(() => {
+    let isComponentRender = true;
+    if (isComponentRender === true) {
+      getDbInvestmentCurrentSignal();
+    }
+    return () => {
+      isComponentRender = false;
+    };
+  }, []);
   //Get Chart Date
   const getChartData = async () => {
     setChartDataLoader(true);
@@ -351,7 +344,6 @@ useEffect(() => {
         // const first_row = res.data[0]["buying_date"];
 
         setDbSignalData(res.data);
-       
       } else {
         setDbSignalData([]);
         console.log(" getDbInvestmentSignal res.status", res.status);
@@ -364,7 +356,7 @@ useEffect(() => {
   };
   useEffect(() => {
     let isComponentRender = true;
-    if (isComponentRender === true && currentYear!="") {
+    if (isComponentRender === true && currentYear != "") {
       getDbInvestmentSignal();
     }
     return () => {
@@ -440,14 +432,12 @@ useEffect(() => {
     return () => {
       isComponentRender = false;
     };
-  }, [selectedStockDate]);//selectedStockDate
-
-  
+  }, [selectedStockDate]); //selectedStockDate
 
   return (
     <>
-    {/* Current data signal */}
-    <Row
+      {/* Current data signal */}
+      <Row
         style={{
           alignItems: "flex-start",
           fontSize: "20px",
@@ -459,7 +449,7 @@ useEffect(() => {
       >
         현재 EMP 비중
       </Row>
-     
+
       <ShadowCol
         style={{
           boxSizing: "border-box",
@@ -468,21 +458,25 @@ useEffect(() => {
           // overflowY: "scroll",
           overflow: "hidden",
           textAlign: "center",
-          padding: "15px 10px"
+          padding: "15px 10px",
         }}
       >
-         <Row
-        style={{
-          alignItems: "flex-start",
-          fontSize: "18px",
+        <Row
+          style={{
+            alignItems: "flex-start",
+            fontSize: "18px",
 
-          justifyContent: "flex-start",
-          marginBottom: "20px",
-          fontWeight: "500",
-        }}
-      >
-       <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}> <span style={{color:"#990000"}}> {currentEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
-      </Row>
+            justifyContent: "flex-start",
+            marginBottom: "20px",
+            fontWeight: "500",
+          }}
+        >
+          <p style={{ fontSize: "18px", fontWeight: "550", textAlign: "left" }}>
+            {" "}
+            <span style={{ color: "#990000" }}> {currentEMPTextDate}</span>에
+            대한 투자 비중 예측 정보를 표시합니다.
+          </p>
+        </Row>
         <Col
           style={{
             flex: 1,
@@ -798,7 +792,7 @@ useEffect(() => {
       >
         과거 EMP 비중
       </Row>
-    
+
       <ShadowCol
         style={{
           boxSizing: "border-box",
@@ -807,21 +801,22 @@ useEffect(() => {
           // overflowY: "scroll",
           overflow: "hidden",
           textAlign: "center",
-          padding: "15px 10px"
+          padding: "15px 10px",
         }}
       >
-          <Row
-        style={{
-          alignItems: "flex-start",
-  
-          justifyContent: "space-between",
-          marginBottom: "20px",
-         
+        <Row
+          style={{
+            alignItems: "flex-start",
 
-        }}
-      >
-        <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}><span style={{color:"#990000"}}>{pastEMPTextDate}</span>에 대한 투자 비중 예측 정보를 표시합니다.</p>
-        <div className="enterprise_dbinvestment_dropdown">
+            justifyContent: "space-between",
+            marginBottom: "20px",
+          }}
+        >
+          <p style={{ fontSize: "18px", fontWeight: "550", textAlign: "left" }}>
+            <span style={{ color: "#990000" }}>{pastEMPTextDate}</span>에 대한
+            투자 비중 예측 정보를 표시합니다.
+          </p>
+          <div className="enterprise_dbinvestment_dropdown">
             <Dropdown
               options={options}
               onChange={_onSelect}
@@ -829,7 +824,7 @@ useEffect(() => {
               placeholder="year"
             />
           </div>
-      </Row>
+        </Row>
         {/* <Row
           style={{
             height: 50,
@@ -1169,78 +1164,88 @@ useEffect(() => {
 
       {/* section 3  Lime 결과 */}
 
-   
-     
-          <Col
-            style={{
-              // width: 840,
-              justifyContent: "flex-start",
-              height: "auto",
-              paddingBottom: 20,
-            }}
-          >
-            <Row
-              style={{
-                alignItems: "flex-start",
-                fontSize: "20px",
+      <Col
+        style={{
+          // width: 840,
+          justifyContent: "flex-start",
+          height: "auto",
+          paddingBottom: 20,
+        }}
+      >
+        <Row
+          style={{
+            alignItems: "flex-start",
+            fontSize: "20px",
 
-                justifyContent: "flex-start",
-                marginBottom: "10px",
-                fontWeight: "700",
-              }}
-            >
-              XAI 적용 결과값
-            </Row>
+            justifyContent: "flex-start",
+            marginBottom: "10px",
+            fontWeight: "700",
+          }}
+        >
+          XAI 적용 결과값
+        </Row>
 
-           
-            <ShadowCol
-              style={{
-                boxSizing: "border-box",
-                height: "auto",
-                transition: "all 0.3s ease-in-out",
-                // overflowY: "scroll",
-                overflow: "hidden",
-                textAlign: "center",
-                padding: "15px 10px"
-              }}
-            >
-              {limeResult &&(
-                <>
-               <Row
-              style={{
-                alignItems: "flex-start",
-                fontSize: "18px",
+        <ShadowCol
+          style={{
+            boxSizing: "border-box",
+            height: "auto",
+            transition: "all 0.3s ease-in-out",
+            // overflowY: "scroll",
+            overflow: "hidden",
+            textAlign: "center",
+            padding: "15px 10px",
+          }}
+        >
+          {limeResult && (
+            <>
+              <Row
+                style={{
+                  alignItems: "flex-start",
+                  fontSize: "18px",
 
-                justifyContent: "flex-start",
-                marginBottom: "20px",
-                fontWeight: "500",
-              }}
-            >
-             <p style={{fontSize: "18px", fontWeight:"550",textAlign: "left"}}>복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
-              기술에 DT-XAI를 적용한 결과는 다음과 같습니다. 단, 각 중요 변수는
-              딥러닝에 대한 선형 근사시에 중요한 변수이기 때문에 딥러닝이 해당
-              변수를 중요하게 고려했다고 직접적으로 중요하다고 해석하는 것에는
-              주의가 필요합니다. DT-XAI를 통해 분석된 중요 변수는{" "}
-              <span style={{color:"#990000"}}>{limeResultVar[0]} </span>,  <span style={{color:"#990000"}}>{limeResultVar[1]}</span>이며 각각  <span style={{color:"#990000"}}>{limeResultImp[0]}</span>
-              , <span style={{color:"#990000"}}>{limeResultImp[1]}</span>의 중요도를 가집니다. 아래의 표는 비교를 위한
-              각각의 중요 변수들에 대한 제거 실험입니다.</p>
-            </Row>
+                  justifyContent: "flex-start",
+                  marginBottom: "20px",
+                  fontWeight: "500",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "550",
+                    textAlign: "left",
+                  }}
+                >
+                  복잡한 딥러닝 모델을 해석하여 의사결정 근거를 도출하기 위해 본
+                  기술에 DT-XAI를 적용한 결과는 다음과 같습니다. 단, 각 중요
+                  변수는 딥러닝에 대한 선형 근사시에 중요한 변수이기 때문에
+                  딥러닝이 해당 변수를 중요하게 고려했다고 직접적으로 중요하다고
+                  해석하는 것에는 주의가 필요합니다. DT-XAI를 통해 분석된 중요
+                  변수는{" "}
+                  <span style={{ color: "#990000" }}>{limeResultVar[0]} </span>,{" "}
+                  <span style={{ color: "#990000" }}>{limeResultVar[1]}</span>
+                  이며 각각{" "}
+                  <span style={{ color: "#990000" }}>{limeResultImp[0]}</span>,{" "}
+                  <span style={{ color: "#990000" }}>{limeResultImp[1]}</span>의
+                  중요도를 가집니다. 아래의 표는 비교를 위한 각각의 중요
+                  변수들에 대한 제거 실험입니다.
+                </p>
+              </Row>
               {limeResultLoader ? (
                 <Oval
-                height={50}
-                width={50}
-                color="#4fa94d"
-                wrapperStyle={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#4fa94d"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-              />
+                  height={50}
+                  width={50}
+                  color="#4fa94d"
+                  wrapperStyle={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  wrapperClass=""
+                  visible={true}
+                  ariaLabel="oval-loading"
+                  secondaryColor="#4fa94d"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
               ) : limeResult.length > 0 ? (
                 <Col
                   style={{
@@ -1256,47 +1261,127 @@ useEffect(() => {
                     textAlign: "center",
                   }}
                 >
-                   <table  style={tableStyle}>
-      <thead>
-        <tr >
-          <th rowSpan={2}>추천시점</th>
-          <th rowSpan={2}>중요 변수</th>
-          <th  rowSpan={2}>변수 중요도</th>
-          <th colSpan={8}>중요 변수 제거 결과</th>
-        
-         
-        </tr>
-        <tr ><th >Cash</th>
-          <th>전체 주식</th>
-          <th>대형주</th>
-          <th>ESG</th>
-          <th>성장</th>
-          <th>가치</th>
-          <th>중소형</th>
-          <th>배당</th></tr>
-      </thead>
-      <tbody>
-        {(limeResult &&
-                      limeResult.length > 0) &&limeResult.map((list, index) => {
-          
-        return(  <tr key={index}>
-          <td style={tdStyle}>{list.date}</td>
-          <td style={tdStyle}>{list.lime_var}</td>
-          <td style={tdStyle}>{list.lime_imp}</td>
-          <td style={tdStyle}>{list.cash}</td>
-          <td style={tdStyle}>{list.all_stocks}</td>
-          <td style={tdStyle}>{list.large_cap}</td>
-          <td style={tdStyle}>{list.esg}</td>
-          <td style={tdStyle}>{list.growth}</td>
-          <td style={tdStyle}>{list.value}</td>
-          <td style={tdStyle}>{list.mid_small}</td>
-          <td style={tdStyle}>{list.dividend}</td>
-        </tr>)
-      })}
-      
+                  <table style={tableStyle}>
+                    <thead>
+                      <tr>
+                        <th rowSpan={2}>추천시점</th>
+                        <th rowSpan={2}>중요 변수</th>
+                        <th rowSpan={2}>변수 중요도</th>
+                        <th colSpan={8}>중요 변수 제거 결과</th>
+                      </tr>
+                      <tr>
+                        <th>Cash</th>
+                        <th>전체 주식</th>
+                        <th>대형주</th>
+                        <th>ESG</th>
+                        <th>성장</th>
+                        <th>가치</th>
+                        <th>중소형</th>
+                        <th>배당</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {limeResult &&
+                        limeResult.length > 0 &&
+                        limeResult.map((list, index) => {
+                          return (
+                            <tr key={index}>
+                              <td style={tdStyle}>{list.date}</td>
+                              <td style={tdStyle}>{list.lime_var}</td>
+                              <td style={tdStyle}>{list.lime_imp}</td>
+                              <td style={tdStyle}>{list.cash}</td>
+                              <td style={tdStyle}>{list.all_stocks}</td>
+                              <td style={tdStyle}>{list.large_cap}</td>
+                              <td style={tdStyle}>{list.esg}</td>
+                              <td style={tdStyle}>{list.growth}</td>
+                              <td style={tdStyle}>{list.value}</td>
+                              <td style={tdStyle}>{list.mid_small}</td>
+                              <td style={tdStyle}>{list.dividend}</td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
 
-      </tbody>
-    </table>
+                <Row style={{
+                  alignItems: "flex-start",
+                  fontSize: "18px",
+                  marginTop:"30px",
+                  justifyContent: "flex-start",
+                  marginBottom: "10px",
+                  fontWeight: "500",
+                }}> <p
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "550",
+                  textAlign: "left",
+                }}
+              >최근 중요 변수 변화는 다음과 같습니다.</p></Row>
+                  <table style={tableStyle}>
+                    <thead>
+                      <tr>
+                        <th rowSpan={2}>추천시점</th>
+                        <th colSpan={5}>상위 중요 변수</th>
+                        <th colSpan={5}>상위 변수 중요도</th>
+                    
+                      </tr>
+                      <tr>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th>4</th>
+                        <th>5</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                              <td style={tdStyle}>{"2024-01-19"}</td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                              <td style={tdStyle}></td>
+                            </tr>
+
+                            <tr>
+                              <td style={tdStyle}>{"2023-12-19"}</td>
+                              <td style={tdStyle}>NASDAQ</td>
+                              <td style={tdStyle}>USDKRW</td>
+                              <td style={tdStyle}>S&P500</td>
+                              <td style={tdStyle}>DOW JONES</td>
+                              <td style={tdStyle}>KOSPI</td>
+                              <td style={tdStyle}>121</td>
+                              <td style={tdStyle}>119</td>
+                              <td style={tdStyle}>117</td>
+                              <td style={tdStyle}>114</td>
+                              <td style={tdStyle}>107</td>
+                            </tr>
+
+                            <tr>
+                            <td style={tdStyle}>{"2023-11-20"}</td>
+                              <td style={tdStyle}>NASDAQ</td>
+                              <td style={tdStyle}>S&P500</td>
+                              <td style={tdStyle}>USDKRW</td>
+                              <td style={tdStyle}>DOW JONES</td>
+                              <td style={tdStyle}>KOSPI</td>
+                              <td style={tdStyle}>123</td>
+                              <td style={tdStyle}>122</td>
+                              <td style={tdStyle}>121</td>
+                              <td style={tdStyle}>116</td>
+                              <td style={tdStyle}>108</td>
+                            </tr>
+                      </tbody>
+                      </table>
                   {/* <Row
                     style={{
                       alignItems: "center",
@@ -1578,6 +1663,7 @@ useEffect(() => {
                       })}
                   </Row> */}
                 </Col>
+
               ) : (
                 <div
                   style={{
@@ -1591,133 +1677,178 @@ useEffect(() => {
                   데이터를 불러오지 못했습니다.
                 </div>
               )}
-              </>)}
-            </ShadowCol>
-            </Col>
-            <WhiteSpace height={30} />
-     
-    
+            </>
+          )}
+        </ShadowCol>
+      </Col>
+      <WhiteSpace height={30} />
 
       {/* section 4  과거  비교  */}
-    
-        <>
-          <Col
+
+      <>
+        <Col
+          style={{
+            // width: 840,
+            justifyContent: "flex-start",
+            height: "auto",
+            paddingBottom: 20,
+          }}
+        >
+          <Row
             style={{
-              // width: 840,
+              alignItems: "flex-start",
+              fontSize: "20px",
+
               justifyContent: "flex-start",
-              height: "auto",
-              paddingBottom: 20,
+              marginBottom: "10px",
+              fontWeight: "700",
             }}
           >
-            <Row
-              style={{
-                alignItems: "flex-start",
-                fontSize: "20px",
+            과거의 경제 상황과 현재의 경제 상황 비교
+          </Row>
 
-                justifyContent: "flex-start",
-                marginBottom: "10px",
-                fontWeight: "700",
-              }}
-            >
-              과거의 경제 상황과 현재의 경제 상황 비교
-            </Row>
-
-          
-            <ShadowCol
-               style={{
-                boxSizing: "border-box",
-                height: "auto",
-                transition: "all 0.3s ease-in-out",
-                // overflowY: "scroll",
-                overflow: "hidden",
-                textAlign: "center",
-                padding: "15px 10px"
-              }}
-            >
-                {limeMacroResult  && (
-                  <>                <Row
-              style={{
-                alignItems: "flex-start",
-                fontSize: "18px",
-
-                justifyContent: "flex-start",
-                marginBottom: "20px",
-                fontWeight: "500",
-              }}
-            >
-            <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}>최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {} 기간과 경제상황이 유사했고,
-              이 시점에 가장 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroSimVar[0]}, {limeMacroSimVar[1]}</span>입니다. </p>
-            </Row>
-              {limeMacroResultLoader ? (
-                <Oval
-                height={50}
-                width={50}
-                color="#4fa94d"
-                wrapperStyle={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#4fa94d"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-              />
-              ) : limeMacroResult.length > 0 ? (
-                <Col
+          <ShadowCol
+            style={{
+              boxSizing: "border-box",
+              height: "auto",
+              transition: "all 0.3s ease-in-out",
+              // overflowY: "scroll",
+              overflow: "hidden",
+              textAlign: "center",
+              padding: "15px 10px",
+            }}
+          >
+            {limeMacroResult && (
+              <>
+                {" "}
+                <Row
                   style={{
-                    flex: 1,
                     alignItems: "flex-start",
+                    fontSize: "18px",
+
                     justifyContent: "flex-start",
-                    // fontSize: responsiveValue(16, 14, 12),
-                    boxSizing: "border-box",
-                    height: "auto",
-                    transition: "all 0.3s ease-in-out",
-                    // overflowY: "scroll",
-                    overflow: "hidden",
-                    textAlign: "center",
+                    marginBottom: "20px",
+                    fontWeight: "500",
                   }}
                 >
+                  <p
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "550",
+                      textAlign: "left",
+                    }}
+                  >
+                    최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {}{" "}
+                    기간과 경제상황이 유사했고, 이 시점에 가장 중요했던 변수는{" "}
+                    <span style={{ color: "#990000" }}>
+                      {limeMacroSimVar[0]}, {limeMacroSimVar[1]}
+                    </span>
+                    입니다.{" "}
+                  </p>
+                </Row>
+                {limeMacroResultLoader ? (
+                  <Oval
+                    height={50}
+                    width={50}
+                    color="#4fa94d"
+                    wrapperStyle={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                ) : limeMacroResult.length > 0 ? (
+                  <Col
+                    style={{
+                      flex: 1,
+                      alignItems: "flex-start",
+                      justifyContent: "flex-start",
+                      // fontSize: responsiveValue(16, 14, 12),
+                      boxSizing: "border-box",
+                      height: "auto",
+                      transition: "all 0.3s ease-in-out",
+                      // overflowY: "scroll",
+                      overflow: "hidden",
+                      textAlign: "center",
+                    }}
+                  >
+                    <TableContainer>
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              구간
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              과거 시점 중요 변수 1
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              과거 시점 중요 변수 2
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {limeMacroResult &&
+                            limeMacroResult.length > 0 &&
+                            limeMacroResult.map((list, index) => (
+                              <TableRow
+                                key={index}
+                                sx={{ "& td, & th": { borderBottom: 0 } }}
+                              >
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.date}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.sim_var1}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.sim_var2}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
 
-<TableContainer >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ borderBottom: 0 }}  align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f",}}>구간</TableCell>
-            <TableCell sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>과거 시점 중요 변수 1</TableCell>
-            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>과거 시점 중요 변수 2</TableCell>
-
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {limeMacroResult &&
-                      limeMacroResult.length > 0 &&
-                      limeMacroResult.map((list, index) => (
-            <TableRow
-              key={index}
-              sx={{ '& td, & th': { borderBottom: 0 } }}>
-            
-              <TableCell  align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>
-                {list.date}
-              </TableCell>
-              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.sim_var1}</TableCell>
-              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.sim_var2}</TableCell>
-             
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
-
-
-
-
-
-
-
-{/* 
+                    {/* 
 <table  style={tableStyle}>
       <thead>
         <tr >
@@ -1750,19 +1881,7 @@ useEffect(() => {
       </tbody>
 </table> */}
 
-
-
-
-
-
-
-
-
-
-
-
-
-{/* 
+                    {/* 
 
                   <Row
                     style={{
@@ -1874,53 +1993,123 @@ useEffect(() => {
                       })}
                   </Row> */}
 
-                  <Row
-                    style={{
-                      alignItems: "flex-start",
-                      fontSize: "18px",
+                    <Row
+                      style={{
+                        alignItems: "flex-start",
+                        fontSize: "18px",
 
-                      justifyContent: "flex-start",
-                      marginTop: "20px",
-                      marginBottom: "20px",
-                      fontWeight: "500",
-                    }}
+                        justifyContent: "flex-start",
+                        marginTop: "20px",
+                        marginBottom: "20px",
+                        fontWeight: "500",
+                      }}
                     >
-                    <p style={{fontSize: "18px", fontWeight:"550",    textAlign: "left"}}> 또한 지난 3년 동안 평균적으로 중요했던 변수는 <span style={{color:"#990000"}}>{limeMacroAvgVar[0]}, {limeMacroAvgVar[1]}, {limeMacroAvgVar[2]}</span>입니다.</p>
-                  </Row>
+                      <p
+                        style={{
+                          fontSize: "18px",
+                          fontWeight: "550",
+                          textAlign: "left",
+                        }}
+                      >
+                        {" "}
+                        또한 지난 3년 동안 평균적으로 중요했던 변수는{" "}
+                        <span style={{ color: "#990000" }}>
+                          {limeMacroAvgVar[0]}, {limeMacroAvgVar[1]},{" "}
+                          {limeMacroAvgVar[2]}
+                        </span>
+                        입니다.
+                      </p>
+                    </Row>
 
+                    <TableContainer>
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              구간
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              평균 중요 변수 1
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              평균 중요 변수 2
+                            </TableCell>
+                            <TableCell
+                              sx={{ borderBottom: 0 }}
+                              align="center"
+                              style={{
+                                fontSize: "1rem",
+                                fontWeight: "550",
+                                color: "#4f4f4f",
+                              }}
+                            >
+                              평균 중요 변수 3
+                            </TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {limeMacroResult2 &&
+                            limeMacroResult2.length > 0 &&
+                            limeMacroResult2.map((list, index) => (
+                              <TableRow
+                                key={index}
+                                sx={{ "& td, & th": { borderBottom: 0 } }}
+                              >
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.date}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.avg_var1}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.avg_var2}
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                >
+                                  {list.avg_var3}
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
 
-
-                  <TableContainer >
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ borderBottom: 0 }}  align="center" style={{fontSize:"15px", fontWeight:"550", color:"#4f4f4f"}}>구간</TableCell>
-            <TableCell sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 1</TableCell>
-            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 2</TableCell>
-            <TableCell  sx={{ borderBottom: 0 }} align="center" style={{fontSize:"15px", fontWeight:"550",color:"#4f4f4f"}}>평균 중요 변수 3</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {limeMacroResult2 &&
-                      limeMacroResult2.length > 0 &&
-                      limeMacroResult2.map((list, index) => (
-            <TableRow
-              key={index}
-              sx={{ '& td, & th': { borderBottom: 0 } }}>
-            
-              <TableCell  align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f",}}>
-                {list.date}
-              </TableCell>
-              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var1}</TableCell>
-              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var2}</TableCell>
-              <TableCell align="center" style={{fontSize: responsiveValue(16, 14, 12),color:"#4f4f4f"}}>{list.avg_var3}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-
-{/* 
+                    {/* 
 <table  style={tableStyle}>
       <thead>
         <tr >
@@ -1954,28 +2143,7 @@ useEffect(() => {
       </tbody>
 </table> */}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* 
+                    {/* 
                   <Row
                     style={{
                       alignItems: "center",
@@ -2101,27 +2269,26 @@ useEffect(() => {
                         );
                       })}
                   </Row> */}
-                </Col>
-              ) : (
-                <div
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    color: color.DarkBlue,
-                    width: "100%",
-                    textAlign: "center",
-                  }}
-                >
-                  데이터를 불러오지 못했습니다.
-                </div>
-              )}
-            </>
-             )}
-               </ShadowCol>
-            <WhiteSpace height={30} />
-          </Col>
-        </>
-     
+                  </Col>
+                ) : (
+                  <div
+                    style={{
+                      fontSize: 14,
+                      fontWeight: "bold",
+                      color: color.DarkBlue,
+                      width: "100%",
+                      textAlign: "center",
+                    }}
+                  >
+                    데이터를 불러오지 못했습니다.
+                  </div>
+                )}
+              </>
+            )}
+          </ShadowCol>
+          <WhiteSpace height={30} />
+        </Col>
+      </>
 
       {/* Section 4 차트 그리기   */}
       <Col
@@ -2159,15 +2326,21 @@ useEffect(() => {
           ) : dbChartData ? (
             <>
               <LineChart data={dbChartData} />
-              <Row >
-             <p  style={{
-                fontSize: 16,
-                fontWeight: "bold",
-       
-                marginTop:"15px",
-                marginBottom:"15px",
-                textAlign: "center",
-              }}> DeeptradeTechnologies EMP Management (DT-EMP) 기술의 월단위 성능과 시장 지표 (전체 ETF 평균) 비교</p>
+              <Row>
+                <p
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+
+                    marginTop: "15px",
+                    marginBottom: "15px",
+                    textAlign: "center",
+                  }}
+                >
+                  {" "}
+                  DeeptradeTechnologies EMP Management (DT-EMP) 기술의 월단위
+                  성능과 시장 지표 (전체 ETF 평균) 비교
+                </p>
                 <br />
               </Row>
             </>
