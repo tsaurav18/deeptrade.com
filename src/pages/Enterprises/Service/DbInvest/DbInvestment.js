@@ -171,9 +171,9 @@ const LineChart = ({ data ,isMobile}) => {
   };
 
   return (
-    <div className="chart-container" style={{ width: "100%" , height:isMobile?"400px":"100%"}}>
+    <div className="chart-container" style={{ width: "100%" , height:isMobile?"400px":""}}>
       {chart_data != undefined && (
-        <Bar data={chart_data} options={optionsChart} height={isMobile?"400px":"100%"}/>
+        <Bar data={chart_data} options={optionsChart} height={isMobile?"400px":""}/>
       )}
     </div>
   );
