@@ -134,14 +134,35 @@ const LineChart = ({ data }) => {
       },
     },
     scales: {
-      y: {
-        type: "linear",
-        display: true,
-        position: "left",
-      },
+      // y: {
+      //   // type: "linear",
+      //   display: true,
+      //   position: "left",
+      //   ticks:{
+      //     stepSize:1,
+      //     display: false, 
+      //     beginAtZero: false,
+          
+      //   },
+      // },
+      // yAxes: {
+      //   type: "linear",
+      //   // display: true,
+      //   position: "left",
+      //   ticks:{
+      //     // stepSize:1,
+      //     display: true, 
+      //     beginAtZero: false,
+      //   },
+      // },
+      
       y1: {
         type: "linear",
         position: "right",
+        ticks:{
+          stepSize:5,
+         
+        },
         grid: {
           drawOnChartArea: false,
         },
@@ -1341,16 +1362,16 @@ function DbInvestment() {
                     <tbody>
                     <tr>
                               <td style={tdStyle}>{"2024-01-19"}</td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
-                              <td style={tdStyle}></td>
+                              <td style={tdStyle}>NASDAQ</td>
+                              <td style={tdStyle}>S&P500 </td>
+                              <td style={tdStyle}>USDKRW</td>
+                              <td style={tdStyle}>DOW JONES</td>
+                              <td style={tdStyle}>KOSPI</td>
+                              <td style={tdStyle}>119</td>
+                              <td style={tdStyle}>111</td>
+                              <td style={tdStyle}>110</td>
+                              <td style={tdStyle}>108</td>
+                              <td style={tdStyle}>103</td>
                             </tr>
 
                             <tr>
