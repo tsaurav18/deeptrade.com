@@ -4,3 +4,13 @@
     /* margin-top: 30px; */
     
 }
+
+.dt_dropdown{
+ 
+    width: 102px!important;
+/*      height: 41px;
+    box-sizing: border-box;*/
+    font-size: 15px!important; 
+
+    padding: 8px 26px 7px 10px!important;
+}

@@ -63,7 +63,7 @@ ChartJS.register(
   zoomPlugin
 );
 
-const LineChart = ({ data }) => {
+const LineChart = ({ data ,isMobile}) => {
   let chart_data;
 
   chart_data = {
@@ -171,9 +171,9 @@ const LineChart = ({ data }) => {
   };
 
   return (
-    <div className="chart-container" style={{ width: "100%" }}>
+    <div className="chart-container" style={{ width: "100%" , height:isMobile?"400px":"100%"}}>
       {chart_data != undefined && (
-        <Bar data={chart_data} options={optionsChart} />
+        <Bar data={chart_data} options={optionsChart} height={isMobile?"400px":"100%"}/>
       )}
     </div>
   );
@@ -190,14 +190,10 @@ const thStyle = {
   textAlign: "center",
 };
 
-const tdStyle = {
-  // border: '1px solid #ddd', // Add border to the table data cells
-  padding: "8px",
-  textAlign: "center",
-  borderBottom: "none",
-};
+
 
 function DbInvestment() {
+
   const isPc = useMediaQuery({
     query: "(min-width:1024px)",
   });
@@ -205,7 +201,7 @@ function DbInvestment() {
     query: "(min-width:768px) and (max-width:1023px)",
   });
   const isMobile = useMediaQuery({
-    query: "(max-width:767px)",
+    query: "(max-width:467px)",
   });
   const options = [
     { value: "2024", label: "최근 1년" },
@@ -213,6 +209,14 @@ function DbInvestment() {
     { value: "2022", label: "2022" },
   ];
   const { responsiveValue } = useResponsive();
+  const tdStyle = {
+    // border: '1px solid #ddd', // Add border to the table data cells
+    padding: "8px",
+    textAlign: "center",
+    borderBottom: "none",
+    fontSize:responsiveValue(18, 15, 10)
+  
+  };
   const [pastEMPTextDate, setPastEMPTextDate] = useState(options[0].label);
   const [currentEMPTextDate, setCurrentEMPTextDate] = useState("");
   const [limeResultVar, setLimeResultVar] = useState([]);
@@ -461,7 +465,8 @@ function DbInvestment() {
       <Row
         style={{
           alignItems: "flex-start",
-          fontSize: "20px",
+          fontSize: responsiveValue(20, 18, 15),
+          
 
           justifyContent: "flex-start",
           marginBottom: "10px",
@@ -485,14 +490,14 @@ function DbInvestment() {
         <Row
           style={{
             alignItems: "flex-start",
-            fontSize: "18px",
+            fontSize: responsiveValue(18, 16, 14),
 
             justifyContent: "flex-start",
             marginBottom: "20px",
             fontWeight: "500",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "550", textAlign: "left" }}>
+          <p style={{ fontSize: responsiveValue(18, 16, 14), fontWeight: "550", textAlign: "left" }}>
             {" "}
             <span style={{ color: "#990000" }}> {currentEMPTextDate}</span>에
             대한 투자 비중 예측 정보를 표시합니다.
@@ -528,6 +533,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               추천시점
@@ -538,6 +544,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               Cash
@@ -548,6 +555,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               전체 주식
@@ -558,6 +566,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               대형주
@@ -568,6 +577,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               ESG
@@ -578,6 +588,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               성장
@@ -588,6 +599,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               가치
@@ -598,6 +610,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               중소형
@@ -608,6 +621,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               배당
@@ -678,6 +692,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.buying_date}
@@ -691,6 +706,7 @@ function DbInvestment() {
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
                             overflow: "hidden",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.cash}
@@ -703,6 +719,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.all_stocks}
@@ -715,6 +732,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.large_cap}
@@ -727,6 +745,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.esg}
@@ -739,6 +758,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.growth}
@@ -751,6 +771,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.value}
@@ -763,6 +784,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.mid_small}
@@ -775,6 +797,7 @@ function DbInvestment() {
                             justifyContent: "space-around",
                             cursor: "pointer",
                             transition: "all 0.3s ease-in-out",
+                            fontSize:responsiveValue(18, 15, 10)
                           }}
                         >
                           {list.dividend}
@@ -804,7 +827,7 @@ function DbInvestment() {
       <Row
         style={{
           alignItems: "flex-start",
-          fontSize: "20px",
+          fontSize: responsiveValue(20, 18, 15),
 
           justifyContent: "flex-start",
           marginBottom: "10px",
@@ -833,12 +856,13 @@ function DbInvestment() {
             marginBottom: "20px",
           }}
         >
-          <p style={{ fontSize: "18px", fontWeight: "550", textAlign: "left" }}>
+          <p style={{  fontSize: responsiveValue(18, 16, 14), fontWeight: "550", textAlign: "left" }}>
             <span style={{ color: "#990000" }}>{pastEMPTextDate}</span>에 대한
             투자 비중 예측 정보를 표시합니다.
           </p>
-          <div className="enterprise_dbinvestment_dropdown">
+          <div className="enterprise_dbinvestment_dropdown" >
             <Dropdown
+              controlClassName="dt_dropdown"
               options={options}
               onChange={_onSelect}
               value={options[0].label}
@@ -846,23 +870,7 @@ function DbInvestment() {
             />
           </div>
         </Row>
-        {/* <Row
-          style={{
-            height: 50,
-            justifyContent: "flex-end",
-            alignItems: "center",
-            paddingBottom: 23,
-          }}
-        >
-          <div className="enterprise_dbinvestment_dropdown">
-            <Dropdown
-              options={options}
-              onChange={_onSelect}
-              value={options[0].label}
-              placeholder="year"
-            />
-          </div>
-        </Row> */}
+     
 
         <Col
           style={{
@@ -894,6 +902,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               추천시점
@@ -904,6 +913,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               Cash
@@ -914,6 +924,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               전체 주식
@@ -924,6 +935,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               대형주
@@ -934,6 +946,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               ESG
@@ -944,6 +957,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               성장
@@ -954,6 +968,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               가치
@@ -964,6 +979,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               중소형
@@ -974,6 +990,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               배당
@@ -984,6 +1001,7 @@ function DbInvestment() {
                 display: "table-cell",
                 fontWeight: 700,
                 transition: "all 0.3s ease-in-out",
+                fontSize:responsiveValue(18, 15, 10)
               }}
             >
               투자 <br />
@@ -1046,6 +1064,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.buying_date}
@@ -1059,6 +1078,7 @@ function DbInvestment() {
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
                               overflow: "hidden",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.cash}
@@ -1071,6 +1091,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.all_stocks}
@@ -1083,6 +1104,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.large_cap}
@@ -1095,6 +1117,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.esg}
@@ -1107,6 +1130,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.growth}
@@ -1119,6 +1143,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.value}
@@ -1131,6 +1156,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.mid_small}
@@ -1143,6 +1169,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.dividend}
@@ -1155,6 +1182,7 @@ function DbInvestment() {
                               justifyContent: "space-around",
                               // cursor: "pointer",
                               transition: "all 0.3s ease-in-out",
+                              fontSize:responsiveValue(18, 15, 10)
                             }}
                           >
                             {list.pv_return}%
@@ -1196,7 +1224,7 @@ function DbInvestment() {
         <Row
           style={{
             alignItems: "flex-start",
-            fontSize: "20px",
+            fontSize: responsiveValue(20, 18, 15),
 
             justifyContent: "flex-start",
             marginBottom: "10px",
@@ -1222,7 +1250,7 @@ function DbInvestment() {
               <Row
                 style={{
                   alignItems: "flex-start",
-                  fontSize: "18px",
+                  fontSize: responsiveValue(18, 16, 14),
 
                   justifyContent: "flex-start",
                   marginBottom: "20px",
@@ -1231,7 +1259,7 @@ function DbInvestment() {
               >
                 <p
                   style={{
-                    fontSize: "18px",
+                    fontSize: responsiveValue(18, 16, 14),
                     fontWeight: "550",
                     textAlign: "left",
                   }}
@@ -1282,23 +1310,23 @@ function DbInvestment() {
                     textAlign: "center",
                   }}
                 >
-                  <table style={tableStyle}>
+                  <table style={{  width: "100%",borderCollapse: 'collapse', overflowWrap: "anywhere",...tableStyle }}>
                     <thead>
                       <tr>
-                        <th rowSpan={2}>추천시점</th>
-                        <th rowSpan={2}>중요 변수</th>
-                        <th rowSpan={2}>변수 중요도</th>
-                        <th colSpan={8}>중요 변수 제거 결과</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>추천시점</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>중요 변수</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>변수 중요도</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={8}>중요 변수 제거 결과</th>
                       </tr>
                       <tr>
-                        <th>Cash</th>
-                        <th>전체 주식</th>
-                        <th>대형주</th>
-                        <th>ESG</th>
-                        <th>성장</th>
-                        <th>가치</th>
-                        <th>중소형</th>
-                        <th>배당</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>Cash</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>전체 주식</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>대형주</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>ESG</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>성장</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>가치</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>중소형</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>배당</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1333,30 +1361,30 @@ function DbInvestment() {
                   fontWeight: "500",
                 }}> <p
                 style={{
-                  fontSize: "18px",
+                  fontSize: responsiveValue(18, 16, 14),
                   fontWeight: "550",
                   textAlign: "left",
                 }}
               >최근 중요 변수 변화는 다음과 같습니다.</p></Row>
-                  <table style={tableStyle}>
-                    <thead>
+                  <table style={{  width: "100%",borderCollapse: 'collapse', overflowWrap: "anywhere",...tableStyle }}>
+                    <thead >
                       <tr>
-                        <th rowSpan={2}>추천시점</th>
-                        <th colSpan={5}>상위 중요 변수</th>
-                        <th colSpan={5}>상위 변수 중요도</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>추천시점</th>
+                        <th  style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={5}>상위 중요 변수</th>
+                        <th  style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={5}>상위 변수 중요도</th>
                     
                       </tr>
                       <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >1</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >2</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >3</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >4</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >5</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >1</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >2</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >3</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >4</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >5</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1718,7 +1746,7 @@ function DbInvestment() {
           <Row
             style={{
               alignItems: "flex-start",
-              fontSize: "20px",
+              fontSize: responsiveValue(20, 18, 15),
 
               justifyContent: "flex-start",
               marginBottom: "10px",
@@ -1745,7 +1773,7 @@ function DbInvestment() {
                 <Row
                   style={{
                     alignItems: "flex-start",
-                    fontSize: "18px",
+                    fontSize: responsiveValue(18, 16, 14),
 
                     justifyContent: "flex-start",
                     marginBottom: "20px",
@@ -1754,7 +1782,7 @@ function DbInvestment() {
                 >
                   <p
                     style={{
-                      fontSize: "18px",
+                      fontSize: responsiveValue(18, 16, 14),
                       fontWeight: "550",
                       textAlign: "left",
                     }}
@@ -1799,14 +1827,19 @@ function DbInvestment() {
                     }}
                   >
                     <TableContainer>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <Table  sx={{
+      minWidth: 650,
+      '@media (max-width: 600px)': {
+        minWidth: '100%',
+      },
+    }} aria-label="simple table">
                         <TableHead>
                           <TableRow>
                             <TableCell
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -1817,7 +1850,7 @@ function DbInvestment() {
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -1828,7 +1861,7 @@ function DbInvestment() {
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -1847,19 +1880,19 @@ function DbInvestment() {
                               >
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{     fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.date}
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{     fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.sim_var1}
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{     fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.sim_var2}
                                 </TableCell>
@@ -2017,7 +2050,7 @@ function DbInvestment() {
                     <Row
                       style={{
                         alignItems: "flex-start",
-                        fontSize: "18px",
+                        fontSize: responsiveValue(18, 16, 14),
 
                         justifyContent: "flex-start",
                         marginTop: "20px",
@@ -2027,7 +2060,7 @@ function DbInvestment() {
                     >
                       <p
                         style={{
-                          fontSize: "18px",
+                          fontSize: responsiveValue(18, 16, 14),
                           fontWeight: "550",
                           textAlign: "left",
                         }}
@@ -2043,14 +2076,19 @@ function DbInvestment() {
                     </Row>
 
                     <TableContainer>
-                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                      <Table  sx={{
+      minWidth: 650,
+      '@media (max-width: 600px)': {
+        minWidth: '100%',
+      },
+    }}aria-label="simple table">
                         <TableHead>
                           <TableRow>
                             <TableCell
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -2061,7 +2099,7 @@ function DbInvestment() {
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -2072,7 +2110,7 @@ function DbInvestment() {
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -2083,7 +2121,7 @@ function DbInvestment() {
                               sx={{ borderBottom: 0 }}
                               align="center"
                               style={{
-                                fontSize: "1rem",
+                                fontSize:responsiveValue(18, 15, 10),
                                 fontWeight: "550",
                                 color: "#4f4f4f",
                               }}
@@ -2102,25 +2140,25 @@ function DbInvestment() {
                               >
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{    fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.date}
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{    fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.avg_var1}
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{    fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.avg_var2}
                                 </TableCell>
                                 <TableCell
                                   align="center"
-                                  style={{ fontSize: "1rem", color: "#4f4f4f" }}
+                                  style={{     fontSize:responsiveValue(18, 15, 10), color: "#4f4f4f" }}
                                 >
                                   {list.avg_var3}
                                 </TableCell>
@@ -2346,7 +2384,7 @@ function DbInvestment() {
             />
           ) : dbChartData ? (
             <>
-              <LineChart data={dbChartData} />
+              <LineChart data={dbChartData} isMobile={isMobile}/>
               <Row>
                 <p
                   style={{
