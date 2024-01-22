@@ -97,7 +97,7 @@ useEffect(() => {
         <img
           src={"/assets/enterprise_logo1.png"}
           alt="logo"
-          style={{ height:responsiveValue("60px", "60px", "48px"), width: "232px" }}
+          style={{ height:responsiveValue("50px", "50px", "48px"), width: "191px" }}
         />
         {isTablet && <Row style={{ height: "auto" , width:responsiveValue(0, 82, 73), backgroundColor:"#fff", padding:7, borderRadius:5, textAlign:"center"}}>
               <div
