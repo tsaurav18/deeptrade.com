@@ -49,6 +49,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  
 } from "chart.js";
 import zoomPlugin from "chartjs-plugin-zoom";
 ChartJS.register(
@@ -57,6 +58,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  
   Title,
   Tooltip,
   Legend,
@@ -178,6 +180,165 @@ const LineChart = ({ data ,isMobile}) => {
     </div>
   );
 };
+
+
+const MacroSimVarOneLineChart = ({ data ,isMobile, simLabel}) => {
+  console.log("data>>>", data)
+  let chart_data;
+
+  chart_data = {
+    labels: [1, 2,3,4,5,6], // You can use either daily or weekly dates here
+    datasets: [
+      {
+        label: data[0].label.past,
+        data: data[0].past,
+        borderColor: "rgba(0, 141, 196)",
+        backgroundColor: "rgba(0, 141, 196)",
+        borderWidth: 2,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: "y",
+        type: "line",
+      },
+      {
+        label:  data[0].label.now,
+        data: data[0].now,
+        borderColor: "rgb(153, 0, 0)",
+        backgroundColor: "rgba(153, 0, 0, 0.5)",
+        borderWidth: 2,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: "y",
+        type: "line",
+      },
+      
+      // Repeat the same structure for weekly data if needed
+    ],
+  };
+ 
+  const optionsChart = {
+    responsive: true,
+    plugins: {
+  
+      legend: {
+        position: "top",
+        labels: {
+          padding: 20, // Set the desired padding value
+        },
+      },
+      title: {
+        display: true,
+        text: simLabel,
+        fontSize: 20,
+      },
+    },
+    scales: {
+     
+      
+      y: {
+        type: "linear",
+        position: "left",
+        ticks:{
+          // stepSize:100,
+         
+        },
+        grid: {
+          drawOnChartArea: true,
+        },
+      },
+    },
+  };
+
+  return (
+    <div className="chart-container" style={{ width:isMobile?"300px":"436px", height:isMobile?"290px":""}}>
+      {chart_data != undefined && (
+        <Line data={chart_data} options={optionsChart} height={isMobile?"299px":"218px"} width={isMobile?"300px":"436px"}/>
+      )}
+    </div>
+  );
+};
+const MacroSimVarTwoLineChart = ({ data ,isMobile, simLabel}) => {
+  let chart_data;
+
+  chart_data = {
+    labels: [1, 2,3,4,5,6], // You can use either daily or weekly dates here
+    datasets: [
+      {
+        label: data[1].label.past,
+        data: data[1].past,
+        borderColor: "rgba(0, 141, 196)",
+        backgroundColor: "rgba(0, 141, 196)",
+        borderWidth: 2,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: "y",
+        type: "line",
+      },
+      {
+        label:  data[1].label.now,
+        data: data[1].now,
+        borderColor: "rgb(153, 0, 0)",
+        backgroundColor: "rgba(153, 0, 0, 0.5)",
+        borderWidth: 2,
+        fill: false,
+        pointLabelFontColor: "rgba(0, 0, 0, 0)",
+        yAxisID: "y",
+        type: "line",
+      },
+      
+      // Repeat the same structure for weekly data if needed
+    ],
+  };
+  const minYValue = Math.min(...data[1].now);
+  const maxYValue = Math.max(...data[1].now);
+
+  const optionsChart = {
+    responsive: true,
+    plugins: {
+    
+      legend: {
+        position: "top",
+        labels: {
+          padding: 20, // Set the desired padding value
+        },
+      },
+      title: {
+        display: true,
+        text: simLabel,
+        fontSize: 20,
+      },
+    },
+    scales: {
+      
+      
+      y: {
+        type: "linear",
+        position: "left",
+        ticks: {
+
+          min:minYValue,
+          max: maxYValue,
+          callback: function (value, index, values) {
+            return (value / 1000000000).toLocaleString('en-US'); 
+          },
+        },
+        grid: {
+          drawOnChartArea: true,
+        },
+      },
+    },
+  };
+
+  return (
+    <div className="chart-container" style={{ width:isMobile?"300px":"436px", height:isMobile?"299px":""}}>
+      {chart_data != undefined && (
+        <Line data={chart_data} options={optionsChart} height={isMobile?"299px":"218px"} width={isMobile?"300px":"436px"}/>
+      )}
+    </div>
+  );
+};
+
+
 const tableStyle = {
   // borderCollapse: 'collapse',
   width: "100%",
@@ -230,7 +391,7 @@ function DbInvestment() {
   const [limeMacroResult2, setLimeMacroResult2] = useState([]);
   const [limeMacroResultLoader, setLimeMacroResultLoader] = useState(false);
   const [dbChartData, setDbChartData] = useState([]);
-
+  const [limeMacroChartData, setLimeMacroChartData] = useState([])
   const [chartDataLoader, setChartDataLoader] = useState(false);
   const [currentdataLoader, setCurrentdataLoader] = useState(false);
   const [dbSignalCurrentData, setDbSignalCurrentData] = useState([]);
@@ -309,7 +470,20 @@ function DbInvestment() {
         setCurrentEMPTextDate(res.data.date);
         setDbSignalCurrentData(res.data.data);
         setSelectedStockDate(first_row);
-      } else {
+      }
+      else if (res.status === 500) {
+        console.log("getDbInvestmentCurrentSignal res.status 500")
+        const currentDate = new Date();
+      const _currentYear = String(currentDate.getFullYear());
+      const res = await getDtData.getDBInvestCurrentData(_currentYear);
+        console.log("getDbInvestmentCurrentSignal res.data", res.data);
+        const first_row = res.data.data[0]["buying_date"];
+
+        setCurrentEMPTextDate(res.data.date);
+        setDbSignalCurrentData(res.data.data);
+        setSelectedStockDate(first_row);
+      }
+       else {
         setDbSignalCurrentData([]);
         console.log(" getDbInvestmentCurrentSignal res.status", res.status);
       }
@@ -436,6 +610,7 @@ function DbInvestment() {
         setLimeMacroResult2([res.data.data[1]]);
         setLimeMacroAvgVar(res.data.avg_var);
         setLimeMacroSimVar(res.data.sim_var);
+        setLimeMacroChartData(res.data.graph)
       } else {
         setLimeMacroResult([]);
         setLimeMacroResult2([]);
@@ -1902,6 +2077,27 @@ function DbInvestment() {
                       </Table>
                     </TableContainer>
 
+
+                    <Row
+                      style={{
+                        alignItems: "flex-start",
+                        fontSize: responsiveValue(18, 16, 14),
+                        flexWrap:"wrap",
+                        justifyContent:isMobile?'center': "space-around",
+                        marginTop: "20px",
+                        marginBottom: "20px",
+                        fontWeight: "500",
+                      }}
+                    >
+                  
+                      <MacroSimVarOneLineChart simLabel= {limeMacroSimVar[0]} data={limeMacroChartData
+} isMobile={isMobile}/>
+  <MacroSimVarTwoLineChart simLabel= {limeMacroSimVar[1]} data={limeMacroChartData
+} isMobile={isMobile}/>
+
+                    </Row>
+
+        
                     {/* 
 <table  style={tableStyle}>
       <thead>
@@ -2046,6 +2242,10 @@ function DbInvestment() {
                         );
                       })}
                   </Row> */}
+
+
+
+
 
                     <Row
                       style={{
