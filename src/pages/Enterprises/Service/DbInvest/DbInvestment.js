@@ -183,7 +183,7 @@ const LineChart = ({ data ,isMobile}) => {
 
 
 const MacroSimVarOneLineChart = ({ data ,isMobile, simLabel}) => {
-  console.log("data>>>", data)
+ 
   let chart_data;
 
   chart_data = {
@@ -510,7 +510,13 @@ function DbInvestment() {
       if (res.status === 200) {
         console.log("getChartData data", res.data);
         setDbChartData(res.data);
-      } else {
+      } 
+      else if (res.status === 500) {
+        const res = await getDtData.getDBChartData();
+        console.log("getChartData data", res.data);
+        setDbChartData(res.data);
+      } 
+      else {
         setDbChartData([]);
         console.log("getChartData res.status", res.status);
       }
