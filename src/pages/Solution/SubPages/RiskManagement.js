@@ -58,7 +58,7 @@ function RiskManagement() {
     className={"spop_container"}
     style={{ flexDirection: "column", backgroundColor: "#394350" }}
   >
-    <div className="service_intro">위험관리</div>
+    <div className="service_intro">Index Shannon</div>
     {/* <div className="text_title" style={{ color: "white" }}>
     개별 종목 기반 포트폴리오
     </div> */}
@@ -78,7 +78,7 @@ function RiskManagement() {
   >
     <div className={"portfolio_container"} style={{paddingBottom:"3vw"}}>
       <div className="text_title" style={{ color: "#394350" }}>
-      딥트레이드 위험관리 기술의 특징
+      딥트레이드 Index Shannon 기술의 특징
       </div>
     
       <div className="spop_portfolio_inner_container">
@@ -88,11 +88,10 @@ function RiskManagement() {
             <div className="port_top_title">예측 프로세스
 </div>
             <div className="port_top_body">
-           * 거시 데이터와 금리 등의 매크로 데이터를 활용하여 향후 시장의 방향성을 예측합니다.
-
-<br/>
-           * 자체 수수료 절감 모듈을 활용하여 리밸런싱 주기에 맞는 가장 적합한 시장 방향 비중을 결정합니다.
-
+              <ul><li>거시 데이터와 금리 등의 매크로 데이터를 활용하여 향후 시장의 방향성을 예측합니다.</li>
+              <li>자체 수수료 절감 모듈을 활용하여 리밸런싱 주기에 맞는 가장 적합한 시장 방향 비중을 결정합니다.</li>
+              </ul>
+          
 
             </div>
           </div>
@@ -105,19 +104,40 @@ function RiskManagement() {
           <div className="port_top">
             <div className="port_top_title">장점</div>
             <div className="port_top_body">
-      * 패시브보다는 우월한 수익률이지만, 안정성은 상대적으로 높은 준액티브 포트폴리오를 설계할 수 있습니다.
+              <ul>
+     <li> 패시브보다는 우월한 수익률이지만, 안정성은 상대적으로 높은 준액티브 포트폴리오를 설계할 수 있습니다.</li>
+      <li>
+       국내 주식 시장뿐만 아니라 다양한 해외 주식 시장에도 적용이 가능합니다.</li>
 
-<br/>
-      * 국내 주식 시장뿐만 아니라 다양한 해외 주식 시장에도 적용이 가능합니다.
-
-
+</ul>
 
             </div>
           </div>
-      
         </div>
       </div>
-     
+    
+      <div className="spop_portfolio_inner_container">
+      
+      <div className="spop_portfolio_right_container" >
+        <div className="port_top">
+          <div className="port_top_title">왜 Index Shannon일까요?</div>
+          <div className="port_top_body">
+            <ul>
+   <li> 서울대학교 출신 연구진이 개발한 고도의 인공지능으로 예측한 시장 Index</li>
+    <li>
+    거시 경제에 대한 고도의 예측으로 시장 상황에 상관없는 꾸준한 수익 가능</li>
+<li>개별 종목에 대한 리스크 경감</li>
+<li>Index Shannon을 활용하여 시장 수익률 대비 초과 수익률 가능</li>
+<li>패시브 성격이 가능한 펀드 운용과 안정적인 운용에 매우 적합</li>
+
+</ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  
+   
     </div>
   </div>
   <div
@@ -157,13 +177,13 @@ function RiskManagement() {
     className={"spop_container"}
     style={{ flexDirection: "column", backgroundColor: "#394350" }}
   >
-        <div className="service_intro">위험관리의 성과</div>
+        <div className="service_intro">Index Shannon의 성과</div>
         <div className="row gx-0 tech_icon_container">
           
         <div className="register_normal_text" style={{marginBottom:"20px", marginTop:"20px"}}>
-     <div style={{color:"#FFF",fontSize: "1.2vw"}}>   *  코스피 대비 X% 수익 달성 (지난 10년 기준)</div>
+     <div style={{color:"#FFF",fontSize: "1.2vw"}}> <ul><li> 코스피 대비 111.5% 수익 달성 (지난 10년 기준)</li><li>-25.57 MDD 달성 (지난 10년 기준)</li></ul></div>
 <br/>
-<div style={{color:"#FFF", fontSize: "1.2vw"}}>* Y% MDD 달성 (지난 10년 기준)</div>
+{/* <div style={{color:"#FFF", fontSize: "1.2vw"}}>* Y% MDD 달성 (지난 10년 기준)</div> */}
 
             </div>
        <img src='../../../assets/solution/riskchart.png'/>

@@ -88,14 +88,14 @@
     display: flex;
     /* margin-left: auto;
     margin-right: auto; */
-    width: 800px;
+    width: 824px;
     align-items: center;
     justify-content: flex-start;
 }
 
 .spop_portfolio_right_container {
     padding: 1vw;
-    width: 800px
+    width: 824px
 
 }
 
@@ -239,7 +239,7 @@
     margin-left: 1vw;
 }
 .sol_img{
-    padding: 18px 490px
+    padding: 18px 343px
 }
 @media only screen and (min-width: 2100px) {
     .sol_img{
@@ -838,7 +838,7 @@
 }
 
 .tech_icon_container {
-    padding: 72px 300px !important;
+    padding: 72px 212px !important;
 }
 
 

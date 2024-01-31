@@ -60,7 +60,7 @@ function Solution(props) {
             padding: "5px 0",
           }}
         >
-             개별 종목 기반 포트폴리오
+             Stock Shannon
                   </div>
         <div className="row" style={{ marginTop: 10, height:"73px" }}>
           <div
@@ -76,7 +76,7 @@ function Solution(props) {
         <div className="row" style={{ marginTop: 10, padding:"0px 10px"}}>
           <div className="col-12" style={{textAlign:"center",backgroundColor:"#e7e7e7",borderRadius:4}}>
             <img
-              src="assets/product/stockPortfolio.png"
+              src="assets/product/stockPortfolio1.png"
               alt="image"
               style={{ width: "100%" }}
             />
@@ -103,7 +103,7 @@ function Solution(props) {
                       padding: "5px 0",
                     }}
                   >
-                    EMP
+                    EMP Shannon
                   </div>
             <div className="row" style={{ marginTop: 10 }}>
               <div
@@ -124,9 +124,9 @@ function Solution(props) {
             <div className="row" style={{ marginTop: 10 ,padding:"0px 10px"}}>
               <div className="col-12"style={{textAlign:"center", backgroundColor:"#e7e7e7",borderRadius:4}}>
                 <img
-                  src="assets/product/etfport_logo.png"
+                  src="assets/product/etfport_logo1.png"
                   alt="etf_image"
-                  style={{ width: "100%", }}
+                  style={{ width: "100%" }}
                 />
               </div>
             </div>
@@ -151,7 +151,7 @@ function Solution(props) {
                       padding: "5px 0",
                     }}
                   >
-                    위험관리 
+                    Index Shannon 
                   </div>
             <div className="row" style={{ marginTop: 10 , }}>
               <div
@@ -171,9 +171,9 @@ function Solution(props) {
             <div className="row" style={{ marginTop: 10,padding:"0px 10px"}}>
               <div className="col-12" style={{textAlign:"center",backgroundColor:"#e7e7e7", borderRadius:4}}>
                 <img
-                  src="assets/product/riskmang_logo.png"
+                  src="assets/product/riskmang_logo1.png"
                   alt="riskmang_logo"
-                  style={{ width: "100%" }}
+                  style={{ width: "100%"}}
                 />
               </div>
             </div>
