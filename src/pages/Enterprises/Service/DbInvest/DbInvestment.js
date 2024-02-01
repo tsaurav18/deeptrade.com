@@ -2817,7 +2817,7 @@ function DbInvestment() {
                 >
                   {" "}
                   DeeptradeTechnologies EMP Management (DT-EMP) 기술의 월단위
-                  성능과 시장 지표 (전체 ETF 평균) 비교
+                  성능과 시장 지표 (코스피 지수) 비교
                 </p>
                 <br />
               </Row>
