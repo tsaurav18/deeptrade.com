@@ -6,6 +6,8 @@ import "swiper/css/navigation";
 import React, {useState} from "react";
 function News(props) {
   const [toggleStatus, setToggleStatus] = useState(false)
+  const [toggleFundStatus, setToggleFundStatus] = useState(false)
+  
   return (
     <div className="news_container" ref={props.refProp}>
       <div className="news_title_container">
@@ -42,6 +44,141 @@ function News(props) {
           loop={true}
           navigation={true}
         >
+                          <SwiperSlide>
+                  {!toggleFundStatus?   <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news22.png" alt="news22"/>
+              </div>
+              <div className="news_content">
+                <h6>
+                
+                딥트레이드테크놀로지스, 펀드 추천 장치 및 펀드 추천 방법 특허 등록 완료
+                </h6>
+                <p>2024/01</p>
+                <p>
+         
+                딥트레이드테크놀로지스가 '펀드 추천 장치 및 펀드 추천 방법' 기술에 대해 특허 등록을 완료하였습니다. 이 기술은 다양한 자산 유형 (주식형, 채권형, 혼합형)의 펀드에 대하여 인공지능이 글로벌 매크로 현황을 충분히 반영한 후 펀드 유형 및 해당 유형에 속하는 개별 펀드 중 가장 투자 수익률이 높게 예상되는 유형의 펀드에 투자하는 기술입니다. 딥트레이드는 현재까지 총 5건의 금융 AI관련 특허를 출원했으며 (등록 2건) AI 금융을 선도하고 있습니다.
+              
+                </p>
+                <button
+                    className="news_link_button"
+                    onClick={() =>{
+                      console.log("click")
+                      setToggleFundStatus(!toggleFundStatus)
+                    }
+                  
+                    }
+                  >
+                   딥트레이드 특허 목록 보기
+                  </button>
+              </div>
+            </div>:
+            <div className="news_slide" style={{  height:"610px"}}>
+            
+              <div className="news_content news_content_patent" style={{paddingTop:20}}>
+                <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+                 EMP 운용 장치 및 방법
+                </span>
+                <span>2023/12</span></div>
+                <p style={{fontSize:"12px"}}>
+       
+                강화학습을 이용하여 ETF Managed Portfolio의 자산을 효과적으로 동적 배분하는 기술
+              
+                </p>
+                </div>
+                <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+              가격 상관관계와 콘텐츠의 관련도를 동시에 반영한 주식 종목 관련 뉴스 추천 시스템
+                </span>
+                <span>2023/05</span></div>
+                <p style={{fontSize:"12px"}}>
+       
+                특정 종목에 대하여 가격 움직임의 관련성이 높은 종목과 뉴스 콘텐츠의 관련성이 높은 종목의 뉴스를 요약하고 추천하는 특허 기술
+              
+                </p>
+                </div>
+
+
+                <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+              펀드 추천 장치 및 펀드 추천 방법 (등록 완료)
+                </span>
+                <span>2023/01</span></div>
+                <p style={{fontSize:"12px"}}>
+       다양한 운용 스타일을 보유한 개별 펀드가 경제 상황에 따라 움직이는 패턴을 학습하여 펀드별 가격 방향성을 예측하는 기술
+              
+                </p>
+                </div>
+
+                <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+              연금 투자를 위한 변동성 최소화 기반 포트폴리오 관리 방법 및 장치
+                </span>
+                <span>2023/01</span></div>
+                <p style={{fontSize:"12px"}}>
+       
+             개별 종목의 상승폭 및 하락폭을 예측하여 변동성을 최소화하고, 이를 통해 안정적인 연금 투자를 하는 기술
+              
+                </p>
+                </div>
+                <div style={{border:"1px solid #990000", padding:5,borderRadius:4}}>
+              <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
+                
+              로보어드바이저를 이용한 위험 관리 장치 및 방법
+                </span>
+                <span>2022/12</span></div>
+                <p style={{fontSize:"12px"}}>
+       
+            시장의 방향성과 임의의 알고리즘의 성능을 기반으로 투자 비중을 조절하여 샤프 지수와 최대 하락폭을 개선하는 시스템
+              
+                </p>
+                </div>
+                <button
+                //  style={{marginBottom:-15}}
+                    className="news_link_button"
+                    onClick={() =>{
+                      console.log("click")
+                      setToggleFundStatus(!toggleFundStatus)
+                    }
+                  
+                    }
+                  >
+                    뉴스 보기
+                  </button>
+              </div>
+        
+            </div>
+            
+            }
+                     
+          </SwiperSlide>
+
+
+            <SwiperSlide>
+            <div className="news_slide">
+              <div className="news_image" style={{ paddingTop: 15 }}>
+                <img src="assets/news/news21.png" alt="news20" />
+              </div>
+              <div className="news_content">
+                <h6>
+                
+                딥트레이드테크놀로지스, 삼성증권 신규 MP 3종 출시
+                </h6>
+                <p>2024/01</p>
+                <p>
+                딥트레이드테크놀지스가 삼성증권 mPOP 서비스에 신규 MP 3종을 출시하였습니다. 딥트레이드테크놀로지스가 보유한 고도의 인공지능 전체 종목 예측 기술을 기반으로, 고객이 성향에 맞게 적절한 상품을 선택할 수 있도록 3단계로 출시하였습니다. 이를 통해 고객은 딥트레이드테크놀로지스의 금융 인공지능 기술력을 삼성증권 mPOP 채널을 통해 경험할 수 있습니다.
+<br />
+              
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+
                 <SwiperSlide>
                   {!toggleStatus?   <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
@@ -91,7 +228,7 @@ function News(props) {
                 
               가격 상관관계와 콘텐츠의 관련도를 동시에 반영한 주식 종목 관련 뉴스 추천 시스템
                 </span>
-                <span>2023/5</span></div>
+                <span>2023/05</span></div>
                 <p style={{fontSize:"12px"}}>
        
                 특정 종목에 대하여 가격 움직임의 관련성이 높은 종목과 뉴스 콘텐츠의 관련성이 높은 종목의 뉴스를 요약하고 추천하는 특허 기술
@@ -103,9 +240,9 @@ function News(props) {
                 <div style={{border:"1px solid #990000", padding:5, marginBottom:10, borderRadius:4}}>
               <div className="headlines" style={{display:"flex", alignItems:"flex-start", justifyContent:"space-between"}}> <span style={{fontWeight:700, fontSize:"13px"}}>
                 
-              펀드 추천 장치 및 펀드 추천 방법
+              펀드 추천 장치 및 펀드 추천 방법 (등록 완료)
                 </span>
-                <span>2023/1</span></div>
+                <span>2023/01</span></div>
                 <p style={{fontSize:"12px"}}>
        다양한 운용 스타일을 보유한 개별 펀드가 경제 상황에 따라 움직이는 패턴을 학습하여 펀드별 가격 방향성을 예측하는 기술
               
@@ -117,7 +254,7 @@ function News(props) {
                 
               연금 투자를 위한 변동성 최소화 기반 포트폴리오 관리 방법 및 장치
                 </span>
-                <span>2023/1</span></div>
+                <span>2023/01</span></div>
                 <p style={{fontSize:"12px"}}>
        
              개별 종목의 상승폭 및 하락폭을 예측하여 변동성을 최소화하고, 이를 통해 안정적인 연금 투자를 하는 기술
@@ -155,6 +292,9 @@ function News(props) {
             }
                      
           </SwiperSlide>
+
+        
+
            <SwiperSlide>
             <div className="news_slide">
               <div className="news_image" style={{ paddingTop: 15 }}>
