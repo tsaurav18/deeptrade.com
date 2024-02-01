@@ -340,9 +340,12 @@ const MacroSimVarTwoLineChart = ({ data ,isMobile, simLabel}) => {
 
 
 const tableStyle = {
-  // borderCollapse: 'collapse',
   width: "100%",
-  // border: '1px solid #ddd', // Add border to the table
+  // Add border to the table
+  borderTop: '3px double',
+  borderBottom: '3px double',
+  // borderTopborderTop: '2px solid'
+  
 };
 
 const thStyle = {
@@ -350,6 +353,12 @@ const thStyle = {
   padding: "8px",
   textAlign: "center",
 };
+
+const tableHeadBorderLeft = {
+  borderRight: '1px solid',
+  borderColor: "#aaa",
+  marginLeft: -10
+}
 
 
 
@@ -378,6 +387,36 @@ function DbInvestment() {
     fontSize:responsiveValue(18, 15, 10)
   
   };
+  
+  const tdStyleUp = {
+    // border: '1px solid #ddd', // Add border to the table data cells
+    // padding: "8px",
+    paddingBottom: 0,
+    textAlign: "center",
+    borderBottom: "none",
+    fontSize:responsiveValue(18, 15, 10)
+  
+  };
+
+  const tdStyleDown = {
+    // border: '1px solid #ddd', // Add border to the table data cells
+    // padding: "0 8px",
+    paddingBottom: 0,
+    textAlign: "center",
+    borderBottom: "none",
+    fontSize:responsiveValue(18, 15, 10)
+  
+  };
+
+  const tdStyleRed = {
+    // backgroundColor: "#FF4200",
+    // color: "#fff"
+  };
+
+  const tdStyleBlue = {
+    // backgroundColor: "#00b0f0",
+  };
+  
   const [pastEMPTextDate, setPastEMPTextDate] = useState(options[0].label);
   const [currentEMPTextDate, setCurrentEMPTextDate] = useState("");
   const [limeResultVar, setLimeResultVar] = useState([]);
@@ -1376,8 +1415,8 @@ function DbInvestment() {
           </Row>
         </Col>
         {dbSignalData.length > 5 && (
-          <a
-            onClick={() => {
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <a onClick={() => {
               setOpen((prev) => !prev);
             }}
             style={{
@@ -1491,13 +1530,30 @@ function DbInvestment() {
                     textAlign: "center",
                   }}
                 >
-                  <table style={{  width: "100%",borderCollapse: 'collapse', overflowWrap: "anywhere",...tableStyle }}>
-                    <thead>
+                  <table style={{  
+                    width: "100%",
+                    borderCollapse: 'collapse', 
+                    overflowWrap: "anywhere",
+
+                    ...tableStyle 
+                  }}>
+                    <thead style={{
+                      paddingTop: '2px'
+                    }}>
                       <tr>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>추천시점</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>중요 변수</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>변수 중요도</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={8}>중요 변수 제거 결과</th>
+                        <th colSpan={7}
+                            style={{
+                              paddingTop: responsiveValue(10, 5, 5)
+                            }}/>
+                      </tr>
+                      <tr>
+                        <th rowSpan={2} style={{fontSize: responsiveValue(18, 15, 10)}}>추천시점</th>
+                        <th rowSpan={2} style={{fontSize: responsiveValue(18, 15, 10)}}>중요 변수</th>
+                        <th rowSpan={2} style={{fontSize: responsiveValue(18, 15, 10)}}>변수 중요도</th>
+                        <th colSpan={8} 
+                            style={{
+                              fontSize: responsiveValue(18, 15, 10),
+                              paddingBottom: responsiveValue(7, 2, 2)}}>중요 변수 제거 결과</th>
                       </tr>
                       <tr>
                         <th style={{fontSize:responsiveValue(18, 15, 10)}}>Cash</th>
@@ -1540,360 +1596,517 @@ function DbInvestment() {
                   justifyContent: "flex-start",
                   marginBottom: "10px",
                   fontWeight: "500",
-                }}> <p
-                style={{
-                  fontSize: responsiveValue(18, 16, 14),
-                  fontWeight: "550",
-                  textAlign: "left",
-                }}
-              >최근 중요 변수 변화는 다음과 같습니다.</p></Row>
-                  <table style={{  width: "100%",borderCollapse: 'collapse', overflowWrap: "anywhere",...tableStyle }}>
-                    <thead >
+                }}> 
+                  <p
+                    style={{
+                      fontSize: responsiveValue(18, 16, 14),
+                      fontWeight: "550",
+                      textAlign: "left",
+                    }}>
+                      최근 중요 변수 변화는 다음과 같습니다.
+                  </p>
+                  </Row>
+                  <table style={{ 
+                    width: "100%", 
+                    borderCollapse: 'collapse',
+                    overflowWrap: "anywhere",
+                    ...tableStyle 
+                  }}>
+                    <thead>
                       <tr>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} rowSpan={2}>추천시점</th>
-                        <th  style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={5}>상위 중요 변수</th>
-                        <th  style={{fontSize:responsiveValue(18, 15, 10)}} colSpan={5}>상위 변수 중요도</th>
-                    
+                        <th colSpan={7}
+                            style={{
+                              paddingTop: responsiveValue(10, 5, 5)
+                            }}/>
                       </tr>
                       <tr>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >1</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >2</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >3</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >4</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >5</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >1</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >2</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >3</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >4</th>
-                        <th style={{fontSize:responsiveValue(18, 15, 10)}} >5</th>
+                        <th rowSpan={2} style={{fontSize: responsiveValue(18, 15, 10)}} >추천시점</th>
+                        <th colSpan={5}
+                            style={{
+                              fontSize: responsiveValue(18, 15, 10), 
+                              paddingBottom: responsiveValue(7, 2, 2)}} >상위 중요 변수 및 중요도</th>
+                      </tr>
+
+                      <tr>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>1위</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>2위</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>3위</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>4위</th>
+                        <th style={{fontSize:responsiveValue(18, 15, 10)}}>5위</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <td style={tdStyle}>{"2024-01-19"}</td>
+                        <td style={tdStyle}>NASDAQ<br />119</td>
+                        <td style={tdStyle}>S&P500<br />119 </td>
+                        <td style={tdStyle}>USDKRW<br />119</td>
+                        <td style={tdStyle}>DOW JONES<br />119</td>
+                        <td style={tdStyle}>KOSPI<br />119</td>
+                      </tr>
+
+                      <tr>
+                        <td style={tdStyle}>{"2023-12-19"}</td>
+                        <td style={tdStyle}>NASDAQ<br />121</td>
+                        <td style={tdStyle}>USDKRW<br />119</td>
+                        <td style={tdStyle}>S&P500<br />117</td>
+                        <td style={tdStyle}>DOW JONES<br />114</td>
+                        <td style={tdStyle}>KOSPI<br />107</td>
+                      </tr>
+
+                      <tr>
+                      <td style={tdStyle}>{"2023-11-20"}</td>
+                        <td style={tdStyle}>NASDAQ<br />123</td>
+                        <td style={tdStyle}>S&P500<br />122</td>
+                        <td style={tdStyle}>USDKRW<br />121</td>
+                        <td style={tdStyle}>DOW JONES<br />116</td>
+                        <td style={tdStyle}>KOSPI<br />108</td>
+                      </tr>
+                      <tr>
+                        <td style={{padding: responsiveValue(5,2,2)}} colSpan={7}></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <Row style={{
+                            alignItems: "flex-start",
+                            fontSize: "18px",
+                            marginTop:"30px",
+                            justifyContent: "flex-start",
+                            marginBottom: "10px",
+                            fontWeight: "500",}}> 
+                  <p style={{
+                     fontSize: responsiveValue(18, 16, 14),
+                     fontWeight: "550",
+                     textAlign: "left",}}
+                  >
+                    <span style={{ color: "#990000" }}>{"DT-XAI"}</span>를 적용한 최근 3개월간의 중요 변수(해당 기간 평균)와 그 변수의 중요도는 아래와 같습니다.</p>
+                </Row>
+                <table style={{  width: "100%",borderCollapse: 'collapse', overflowWrap: "anywhere",...tableStyle }}>
+                  <thead>
                     <tr>
-                              <td style={tdStyle}>{"2024-01-19"}</td>
-                              <td style={tdStyle}>NASDAQ</td>
-                              <td style={tdStyle}>S&P500 </td>
-                              <td style={tdStyle}>USDKRW</td>
-                              <td style={tdStyle}>DOW JONES</td>
-                              <td style={tdStyle}>KOSPI</td>
-                              <td style={tdStyle}>119</td>
-                              <td style={tdStyle}>111</td>
-                              <td style={tdStyle}>110</td>
-                              <td style={tdStyle}>108</td>
-                              <td style={tdStyle}>103</td>
-                            </tr>
-
-                            <tr>
-                              <td style={tdStyle}>{"2023-12-19"}</td>
-                              <td style={tdStyle}>NASDAQ</td>
-                              <td style={tdStyle}>USDKRW</td>
-                              <td style={tdStyle}>S&P500</td>
-                              <td style={tdStyle}>DOW JONES</td>
-                              <td style={tdStyle}>KOSPI</td>
-                              <td style={tdStyle}>121</td>
-                              <td style={tdStyle}>119</td>
-                              <td style={tdStyle}>117</td>
-                              <td style={tdStyle}>114</td>
-                              <td style={tdStyle}>107</td>
-                            </tr>
-
-                            <tr>
-                            <td style={tdStyle}>{"2023-11-20"}</td>
-                              <td style={tdStyle}>NASDAQ</td>
-                              <td style={tdStyle}>S&P500</td>
-                              <td style={tdStyle}>USDKRW</td>
-                              <td style={tdStyle}>DOW JONES</td>
-                              <td style={tdStyle}>KOSPI</td>
-                              <td style={tdStyle}>123</td>
-                              <td style={tdStyle}>122</td>
-                              <td style={tdStyle}>121</td>
-                              <td style={tdStyle}>116</td>
-                              <td style={tdStyle}>108</td>
-                            </tr>
-                      </tbody>
-                      </table>
-                  {/* <Row
-                    style={{
-                      alignItems: "center",
-
-                      height: 70,
-                      justifyContent: "space-around",
-                      borderTopLeftRadius: "10px",
-                      borderTopRightRadius: "10px",
-                    }}
-                  >
-
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      날짜
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      중요 변수
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      변수 중요도
-                    </div>
-
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      Cash
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      전체 주식
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      대형주
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      ESG
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      성장
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      가치
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      중소형
-                    </div>
-                    <div
-                      style={{
-                        width: 110,
-                        display: "table-cell",
-                        fontWeight: 700,
-                        transition: "all 0.3s ease-in-out",
-                      }}
-                    >
-                      배당
-                    </div>
-                  </Row>
-                  <Row
-                    style={{
-                      flexDirection: "column",
-                      height: "auto",
-                    }}
-                  >
-                    {limeResult &&
-                      limeResult.length > 0 &&
-                      limeResult.map((list, index) => {
-                        return (
-                          <Row
-                            key={index}
+                      <th colSpan={7}
+                          style={{
+                            paddingTop: responsiveValue(10, 5, 5)
+                          }}/>
+                    </tr>
+                    <tr>
+                      <th rowSpan={2} style={{fontSize: responsiveValue(18, 15, 10)}}>추천시점 (기간)</th>
+                      <th colSpan={5}
                             style={{
-                              height: 50,
+                              fontSize: responsiveValue(18, 15, 10), 
+                              paddingBottom: responsiveValue(7, 2, 2)}} >상위 중요 변수 및 중요도</th>
+                    </tr>
+                    <tr>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}}>1위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}}>2위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}}>3위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}}>4위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}}>5위</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={tdStyle}>2023-12-19 ~ 2024-01-19</td>
+                      <td style={tdStyleUp}>NASDAQ<br />121</td>
+                      <td style={tdStyleUp}>S&P500<br />119</td>
+                      <td style={tdStyleUp}>USDKRW<br />117</td>
+                      <td style={tdStyleUp}>DOW JONES<br />114</td>
+                      <td style={tdStyleUp}>KOSPI<br />107</td>
+                    </tr>
+
+                    <tr>
+                      <td style={tdStyle}>2023-11-20 ~ 2023-12-19</td>
+                      <td style={tdStyleUp}>NASDAQ<br />121</td>
+                      <td style={tdStyleUp}>USDKRW<br />119</td>
+                      <td style={tdStyleUp}>S&P500<br />117</td>
+                      <td style={tdStyleUp}>DOW JONES<br />114</td>
+                      <td style={tdStyleUp}>KOSPI<br />107</td>
+                    </tr>
+
+                    <tr>
+                      <td style={tdStyle}>2023-10-20 ~ 2023-11-20</td>
+                      <td style={tdStyleUp}>NASDAQ<br />121</td>
+                      <td style={tdStyleUp}>S&P500<br />119</td>
+                      <td style={tdStyleUp}>USDKRW<br />117</td>
+                      <td style={tdStyleUp}>DOW JONES<br />114</td>
+                      <td style={tdStyleUp}>KOSPI<br />107</td>
+                    </tr>
+                    <tr>
+                      <td style={{padding: responsiveValue(5,2,2)}} colSpan={7}></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <Row style={{
+                  alignItems: "flex-start",
+                  fontSize: "18px",
+                  marginTop:"30px",
+                  justifyContent: "flex-start",
+                  marginBottom: "10px",
+                  fontWeight: "500",}}
+                > 
+                  <p style={{
+                     fontSize: responsiveValue(18, 16, 14),
+                     fontWeight: "550",
+                     textAlign: "left",}}
+                  >
+                    장기 대비 단기 중요도의 변화 정도는 아래와 같습니다.  <br />
+                    <ul>중요도 변화
+                      <ol>
+                        &#183; 양수: 중요도의 순위가 올라간 변수
+                      </ol> 
+                      <ol>
+                        &#183; 음수: 중요도의 순위가 내려간 변수
+                      </ol>
+                    </ul>
+                    {/* 가 인 것은 그만큼 중요도의 순위가 올라간 것을 의미하며 음수인 것은 그만큼 중요도의 순위가 내려간 변수임을 의미합니다. */}
+                  </p>
+                </Row>
+                <table style={{ 
+                  width: "100%" ,
+                  borderCollapse: 'collapse', 
+                  overflowWrap: "anywhere", 
+                  ...tableStyle }}
+                >
+                  <thead>
+                    <tr>
+                      <th colSpan={7}
+                          style={{
+                            paddingTop: responsiveValue(10, 5, 5)
+                          }}/>
+                    </tr>
+                    <tr>
+                      <th rowSpan={2}
+                          style={{
+                            fontSize: responsiveValue(18, 15, 10),
+                          }}> 추천시점 (기준)</th>
+                      <th  style={{
+                        fontSize:responsiveValue(18, 15, 10),
+                        paddingBottom: responsiveValue(7, 2, 2)}} colSpan={5}>상위 중요 변수 변수 중요도</th>
+                  
+                    </tr>
+                    <tr>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}} >1위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}} >2위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}} >3위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}} >4위</th>
+                      <th style={{fontSize:responsiveValue(18, 15, 10)}} >5위</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={tdStyle}>3개월 전 ~ 5일 전 </td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>OIL<br />6</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>KOSDAQ<br />6</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>USDKRW<br />-6</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>S&P500<br />-3</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>DOW JONES<br />-3</td>
+                    </tr>
+
+                    <tr>
+                      <td style={tdStyle}>3개월 전 ~ 1개월 전</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>OIL<br />4</td> 
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>USDKRW<br />-3</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>KOSPI<br />-3</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>KOSPI200<br />2</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>DOW JONES<br />-2</td>
+                    </tr>
+
+                    <tr>
+                      <td style={tdStyle}>6개월 전 ~ 1개월 전</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>GOLD<br />5</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>OIL<br />4</td>
+                      <td style={{...tdStyleUp, ...tdStyleBlue}}>USDKRW<br />-4</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>KOSPI<br />-4</td>
+                      <td style={{...tdStyleUp, ...tdStyleRed}}>DOW JONES<br />-4</td>
+                    </tr>
+                    <tr>
+                      <td style={{padding: responsiveValue(5,2,2)}} colSpan={7}></td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/* <Row
+                  style={{
+                    alignItems: "center",
+
+                    height: 70,
+                    justifyContent: "space-around",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }}
+                >
+
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    날짜
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    중요 변수
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    변수 중요도
+                  </div>
+
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    Cash
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    전체 주식
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    대형주
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    ESG
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    성장
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    가치
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    중소형
+                  </div>
+                  <div
+                    style={{
+                      width: 110,
+                      display: "table-cell",
+                      fontWeight: 700,
+                      transition: "all 0.3s ease-in-out",
+                    }}
+                  >
+                    배당
+                  </div>
+                </Row>
+                <Row
+                  style={{
+                    flexDirection: "column",
+                    height: "auto",
+                  }}
+                >
+                  {limeResult &&
+                    limeResult.length > 0 &&
+                    limeResult.map((list, index) => {
+                      return (
+                        <Row
+                          key={index}
+                          style={{
+                            height: 50,
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            fontSize: responsiveValue(16, 14, 12),
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              overflow: "hidden",
+                              display: "table-cell",
                               justifyContent: "space-around",
-                              alignItems: "center",
-                              fontSize: responsiveValue(16, 14, 12),
+
+                              transition: "all 0.3s ease-in-out",
                             }}
                           >
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                overflow: "hidden",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                            {list.date}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.date}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {list.lime_var}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                                overflow: "hidden",
-                              }}
-                            >
-                              {list.lime_var}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.lime_imp}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.lime_imp}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.cash}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.cash}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.all_stocks}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.all_stocks}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.large_cap}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.large_cap}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.esg}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.esg}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.growth}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.growth}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.value}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.value}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.mid_small}
+                          </div>
+                          <div
+                            style={{
+                              width: 110,
+                              height: "auto",
+                              display: "table-cell",
+                              justifyContent: "space-around",
 
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.mid_small}
-                            </div>
-                            <div
-                              style={{
-                                width: 110,
-                                height: "auto",
-                                display: "table-cell",
-                                justifyContent: "space-around",
-
-                                transition: "all 0.3s ease-in-out",
-                              }}
-                            >
-                              {list.dividend}
-                            </div>
-                          </Row>
-                        );
-                      })}
-                  </Row> */}
-                </Col>
-
+                              transition: "all 0.3s ease-in-out",
+                            }}
+                          >
+                            {list.dividend}
+                          </div>
+                        </Row>
+                      );
+                    })}
+                </Row> */}
+              </Col>
               ) : (
                 <div
                   style={{
@@ -2630,3 +2843,5 @@ function DbInvestment() {
 }
 
 export default DbInvestment;
+
+
