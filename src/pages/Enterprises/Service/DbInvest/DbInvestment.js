@@ -416,7 +416,7 @@ function DbInvestment() {
   const tdStyleBlue = {
     // backgroundColor: "#00b0f0",
   };
-  
+  const [limeMacroPastDate, setLimeMacroPastDate] = useState('');
   const [pastEMPTextDate, setPastEMPTextDate] = useState(options[0].label);
   const [currentEMPTextDate, setCurrentEMPTextDate] = useState("");
   const [limeResultVar, setLimeResultVar] = useState([]);
@@ -2181,7 +2181,7 @@ function DbInvestment() {
                       textAlign: "left",
                     }}
                   >
-                    최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {}{" "}
+                    최근 6개월 간 경제 상황을 종합적으로 분석해보았을 때, {limeMacroResult[0].date}{" "}
                     기간과 경제상황이 유사했고, 이 시점에 가장 중요했던 변수는{" "}
                     <span style={{ color: "#990000" }}>
                       {limeMacroSimVar[0]}, {limeMacroSimVar[1]}
